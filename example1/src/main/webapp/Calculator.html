@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form method="get" action="/example1/Calculator">
+    
+    <input type="number" id="num1" name="num1"><br>
+    <input type="number" id="num2" name="num2"><br>
+      
+    <input type="radio" name="operation" value="add" required>더하기
+    <input type="radio" name="operation" value="sub" required>빼기
+    <input type="radio" name="operation" value="multi" required>곱하기
+    <input type="radio" name="operation" value="divide" required>나누기
+    <br>
+    <input type="submit" value="계산" onclick="return validateForm()">
+</form>
+</body>
+</html>
