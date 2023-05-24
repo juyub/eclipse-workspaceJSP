@@ -12,7 +12,7 @@ import javax.servlet.annotation.WebFilter;
 /**
  * Servlet Filter implementation class CharacterEncodingFilter
  */
-@WebFilter("/")
+@WebFilter("/*")
 public class CharacterEncodingFilter implements Filter {
 
     /**
@@ -33,13 +33,13 @@ public class CharacterEncodingFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		System.out.println("Begin of Filter");
+//		System.out.println("Begin of Filter");
 		
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		// pass the request along the filter chain
 		chain.doFilter(request, response);
-		System.out.println("End of Filter");
+//		System.out.println("End of Filter");
 	}
 
 	/**

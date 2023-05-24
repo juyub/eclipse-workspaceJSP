@@ -20,11 +20,11 @@ session : <%= sessionValid %><br/>
 	String sessionID = (String) session.getAttribute("id");
 	--%>
 
-	<h1><%=sessionID%>�� �α��� �Ͽ����ϴ�.</h1><br />
+	<h1><%=sessionID%>로 로그인 하였습니다.</h1><br />
 	
 
 	<form method="post" action="logout.jsp">
-    <input type="submit" value="�α׾ƿ�">
+    <input type="submit" value="로그아웃">
 </form>
 </body>
 </html>

@@ -40,7 +40,7 @@ if (isValidCredentials) {
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>Á¦¸ñÀ» ÀÔ·ÂÇÏ¼¼¿ä</title>
+<title>ì œëª©ì„ ì…ë ¥í•˜ì„¸ìš”</title>
 </head>
 <body>
 
