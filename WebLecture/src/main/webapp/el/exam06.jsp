@@ -1,17 +1,48 @@
-<%@page import="java.util.List"%>
-<%@page import="java.util.Map"%>
-<%@page import="java.util.ArrayList"%>
+<%@page import="book.BookVO"%>
 <%@page import="java.util.HashMap"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 
 <%
     List<Map<String, String>> books = new ArrayList<>();
-    Map<String, String> book = new HashMap<>();
-    book.put("title", "己傍");
+    
+	Map<String, String> book = new HashMap<>();
+    book.put("title", "靹标车");
     books.add(book);
+    
+    pageContext.setAttribute("books", books);
 %>
-<%= books.get(0).get("title") %>
+
+<%
+    BookVO book2 = new BookVO();
+    book2.setTitle("靹标车");
+
+    List<BookVO> books2 = new ArrayList<>();
+    books2.add(book2);
+
+    pageContext.setAttribute("books2", books2);
+%>
+
+<%
+	Map<String,String>[] books3 = new HashMap[1];
+	Map<String, String> book3 = new HashMap<String, String>();
+	book3.put("title", "靹标车");
+	books3[0] = book3;
+		
+	pageContext.setAttribute("books3", books3);
+%>
+
+<%
+	BookVO[] books4 = new BookVO[1];
+	BookVO book4 = new BookVO();
+	book4.setTitle("靹标车");
+	books4[0] = book4;
+
+	pageContext.setAttribute("books4", books4);
+%>
 
 <!DOCTYPE html>
 <html>
@@ -21,9 +52,14 @@
 </head>
 <body>
 
-	<%-- 己傍 免仿 4啊瘤 规侥 --%>
-	${ books[0].title }
+	<%-- 靹标车 於滊牓 4臧�歆� 氚╈嫕 --%>
+	${ books[0].title } <br>
 	
+	${ books2[0].title } <br>
+
+	${ books3[0].title } <br>
+
+	${ books4[0].title } <br>
 
 </body>
 </html>
