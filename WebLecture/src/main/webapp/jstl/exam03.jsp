@@ -15,6 +15,7 @@
 </head>
 <body>
 	
+	<%-- 마지막 출력값위엔 ","가 찍히지 않도록 만들어 보기 --%>
 	<c:forEach items="${ names }" var="name">
 		${ name },
 	</c:forEach> <br>
