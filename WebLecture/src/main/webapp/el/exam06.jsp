@@ -17,10 +17,10 @@
 %>
 
 <%
+    List<BookVO> books2 = new ArrayList<>();
+
     BookVO book2 = new BookVO();
     book2.setTitle("성공");
-
-    List<BookVO> books2 = new ArrayList<>();
     books2.add(book2);
 
     pageContext.setAttribute("books2", books2);
