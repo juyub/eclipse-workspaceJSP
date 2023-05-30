@@ -8,3 +8,7 @@ Servers/
 WebLecture/.settings/
 WebTest/.settings/
 JooLib/.settings/
+BoardLab/.settings/.jsdtscope
+BoardLab/.settings/
+demo/bin/.mvn/wrapper/maven-wrapper.properties
+demo/bin/
