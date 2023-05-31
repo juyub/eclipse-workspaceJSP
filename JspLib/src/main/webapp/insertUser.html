@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-eqiv="Content-Type" content="text/html; charset=euc-kr">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/JspLib/css/log.css">
+</head>
+<body>
+<div id="log-box">
+<h2> 회원가입 </h2>
+<form action="insertUser.do" method="post">
+	<table>
+		<tr>
+			<td>아이디</td>
+			<td><input type="text" name="id"/></td>
+		</tr>
+		<tr>
+			<td>비밀번호</td>
+			<td><input type="password" name="password"/></td>
+		</tr>
+		<tr>
+			<td>이름</td>
+			<td><input type="text" name="name"/></td>
+		</tr>
+		<tr>
+			<td>권한</td>
+			<td><input type="radio" name="role" value="Admin" checked="checked"/>관리자
+			<input type="radio" name="role" value="User" />사용자</td>
+		</tr>
+		<tr>
+			<td colspan="2"><input type="submit" value="회원가입"/></td>
+		</tr>
+	</table>
+</form>
+<br>
+<a href="login.html" style="color: white;">로그인</a>
+</div>
+</body>
+</html>
