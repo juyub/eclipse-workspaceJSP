@@ -26,7 +26,7 @@ public class LoginController implements Controller{
 		if(user != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
-			return "Ok.jsp";
+			return "getBoardList.do";
 		} else {
 			return "login.html";
 		}

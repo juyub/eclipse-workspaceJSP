@@ -15,8 +15,8 @@ public class InsertBoardController implements Controller{
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
 		
 //		HttpSession session = request.getSession();
-//		UserVO user = (UserVO) session.getAttribute("user"); // 세션에서 user 객체를 가져옵니다
-//		String writer = user.getId(); // writer를 ID로 사용하고 싶다면, 이 코드를 사용해 user의 ID를 가져옵니다.
+//		UserVO user = (UserVO) session.getAttribute("user"); // 세션에서 user 객체를 
+//		String writer = user.getId(); // writer를 ID로 
 		
 		String title = request.getParameter("title");
 		String writer = request.getParameter("writer");
@@ -30,7 +30,7 @@ public class InsertBoardController implements Controller{
 		BoardDAO dao = new BoardDAO();
 		dao.insertBoard(vo);
 	
-		return "Ok.jsp";
+		return "getBoardList.do";
 	}
 
 }

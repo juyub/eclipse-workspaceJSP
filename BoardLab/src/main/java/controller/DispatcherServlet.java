@@ -49,7 +49,5 @@ public class DispatcherServlet extends HttpServlet {
 		
 		RequestDispatcher rd = request.getRequestDispatcher(viewPage);
 		rd.forward(request, response);
-	
-	
 	}
 }

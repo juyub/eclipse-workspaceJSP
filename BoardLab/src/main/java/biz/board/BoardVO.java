@@ -9,7 +9,15 @@ public class BoardVO {
 	private String writer;
 	private String content;
 	private Date regDate;
+	private int hit;
 	
+	
+	public int getHit() {
+		return hit;
+	}
+	public void setHit(int hit) {
+		this.hit = hit;
+	}
 	public int getSeq() {
 		return seq;
 	}
