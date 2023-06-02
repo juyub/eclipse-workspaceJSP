@@ -20,12 +20,12 @@
 			 게시판 |
 			<c:choose> 
 				<c:when test="${ empty user }"> 
-			 		회원가입 | 
-			 		<a href="/JyLib/login.jsp">로그인</a> |
+			 		<a href="/JooLib/addUser.jsp">회원가입</a> | 
+			 		<a href="/JooLib/login.jsp">로그인</a> |
 			 	</c:when>
 			 	<c:otherwise> 
 			 		마이페이지 | 
-			 		<a href="/JyLib/jsp/login/logout.jsp">로그아웃</a>
+			 		<a href="logout.do">로그아웃</a>
 			 	</c:otherwise>
 			</c:choose>  
 		</td>

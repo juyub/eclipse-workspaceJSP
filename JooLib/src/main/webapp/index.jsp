@@ -49,13 +49,14 @@ footer {
 </head>
 <body>
 	<header>
-		<jsp:include page="/jsp/include/topMenu.jsp" />
+		<jsp:include page="/include/topMenu.jsp" />
 	</header>
 	<section>
 	메인페이지입니다
+		<jsp:include page="/getBookList.jsp" />
 	</section>
 	<footer>
-		<%@ include file="/jsp/include/bottom.jsp" %>
+		<%@ include file="/include/bottom.jsp" %>
 	</footer>
 </body>
 </html>

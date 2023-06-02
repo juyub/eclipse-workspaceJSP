@@ -35,7 +35,7 @@
 </script>
 <style>
 html{
-	background: url("/JyLib/image/wall.jpg");
+	background: url("/JooLib/image/wall.jpg");
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	background-attachment: fixed;

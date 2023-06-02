@@ -42,17 +42,26 @@ public class UserDAO {
 		return user;
 	}
 
-	public void insertUser(UserVO vo) {
-		// TODO Auto-generated method stub
-		
+    // 회원가입 메서드
+	private static String USER_ADD =
+			" insert into users (userid, password, name, phone) " +
+			" values (?,?,?,?) ";
+	
+	public void addUser(UserVO vo) {
+		try {
+			conn = JDBCUtil.getConnection();
+			stmt = conn.prepareStatement(USER_ADD);
+			stmt.setString(1, vo.getUserid() );
+			stmt.setString(2, vo.getPassword());
+			stmt.setString(3, vo.getName());
+			stmt.setString(4, vo.getPhone());
+			stmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(stmt, conn);
+		}
 	}
-
-	// JDBC driver, url, username, password 설정
-    
-    // 데이터베이스 연결 메서드
-
-    // 사용자 정보 추가 메서드
-
     // 사용자 정보 조회(전체 또는 특정 조건) 메서드
 
     // 사용자 정보 수정 메서드
@@ -60,3 +69,24 @@ public class UserDAO {
     // 사용자 정보 삭제 메서드
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

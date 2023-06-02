@@ -26,4 +26,59 @@ public class BookVO {
     private int totaln;
     private int availablen;
 	
+    public int getBookno() {
+		return bookno;
+	}
+	public void setBookno(int bookno) {
+		this.bookno = bookno;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getAuthor() {
+		return author;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+	public String getPublisher() {
+		return publisher;
+	}
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
+	}
+	public int getPublicationyear() {
+		return publicationyear;
+	}
+	public void setPublicationyear(int publicationyear) {
+		this.publicationyear = publicationyear;
+	}
+	public String getIsbn() {
+		return isbn;
+	}
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public int getTotaln() {
+		return totaln;
+	}
+	public void setTotaln(int totaln) {
+		this.totaln = totaln;
+	}
+	public int getAvailablen() {
+		return availablen;
+	}
+	public void setAvailablen(int availablen) {
+		this.availablen = availablen;
+	}
+    
 }

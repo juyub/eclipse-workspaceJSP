@@ -1,15 +1,81 @@
 package dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import board.BoardVO;
+import common.JDBCUtil;
+import vo.BookVO;
+
 public class BookDAO {
 
-	// JDBC driver, url, username, password 설정
-    
-    // 데이터베이스 연결 메서드
+	private Connection conn;
+	private PreparedStatement stmt;
+	private ResultSet rs;
 
     // 도서 정보 추가 메서드
+	private static String BOOK_ADD =
+			" insert into books " +
+		    " (title, author, publisher, publicationyear, isbn, category, totaln, availablen) " +
+			" values(?,?,?,?,?,?,?,?) ";
+	
+	public void addBook(BookVO vo) {
+	    try {
+	        conn = JDBCUtil.getConnection();
+	        stmt = conn.prepareStatement(BOOK_ADD);
 
-    // 도서 정보 조회(전체 또는 특정 조건) 메서드
+	        stmt.setString(1, vo.getTitle());
+	        stmt.setString(2, vo.getAuthor());
+	        stmt.setString(3, vo.getPublisher());
+	        stmt.setInt(4, vo.getPublicationyear());
+	        stmt.setString(5, vo.getIsbn());
+	        stmt.setString(6, vo.getCategory());
+	        stmt.setInt(7, vo.getTotaln());
+	        stmt.setInt(8, vo.getAvailablen());
 
+	        stmt.executeUpdate();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        JDBCUtil.close(stmt, conn);
+	    }
+	}
+	
+    // 전체 도서 조회 메서드
+	private static String BOOK_LIST =
+			" select * from books ";
+	
+	public List<BookVO> getBookList(BookVO vo){
+		List<BookVO> bookList = new ArrayList<BookVO>();
+		try {
+			conn = JDBCUtil.getConnection();
+			stmt = conn.prepareStatement(BOOK_LIST);
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				BookVO book = new BookVO();
+				book.setBookno(rs.getInt("bookno"));
+				book.setTitle(rs.getString("title"));
+				book.setAuthor(rs.getString("author"));
+				book.setPublisher(rs.getString("publisher"));
+				book.setPublicationyear(rs.getInt("publicationyear"));
+				book.setIsbn(rs.getString("isbn"));
+				book.setCategory(rs.getString("category"));
+				book.setTotaln(rs.getInt("totaln"));
+				book.setAvailablen(rs.getInt("availablen"));
+				bookList.add(book);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(rs, stmt, conn);
+		}
+		return bookList;
+	}
+	
+	// 도서 정보 조회(전체 또는 특정 조건) 메서드
     // 도서 정보 수정 메서드
 
     // 도서 정보 삭제 메서드

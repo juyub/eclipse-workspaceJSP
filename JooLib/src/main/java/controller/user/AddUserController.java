@@ -7,25 +7,25 @@ import controller.Controller;
 import dao.UserDAO;
 import vo.UserVO;
 
-public class InsertUserController implements Controller{
+public class AddUserController implements Controller{
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
 		String password = request.getParameter("password");
 		String name = request.getParameter("name");
-		String role = request.getParameter("role");
+		String phone = request.getParameter("phone");
 		
 		UserVO vo = new UserVO();
 		vo.setUserid(id);
 		vo.setPassword(password);
 		vo.setName(name);
-		vo.setRole(role);
+		vo.setPhone(phone);
 		
 		UserDAO dao = new UserDAO();
-		dao.insertUser(vo);
+		dao.addUser(vo);
 		
-		return "login.html";
+		return "index.jsp";
 	}
 
 }
