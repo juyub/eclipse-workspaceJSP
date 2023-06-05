@@ -3,9 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
 <table style="width:100%" border="1">
 	<tr>
-		<td rowspan="2">로고</td>
+		<td rowspan="2" align="center">로고</td>
 		<td align="right">
-			<span style="padding-right: 5px">즐겨찾기</span>
+			환영합니다
+			<!-- <span style="padding-right: 5px">즐겨찾기</span> -->
 			<c:if test="${ not empty user }">
 			[${ user.name }(${ user.userid })님 로그인중...]
 			</c:if>
@@ -14,14 +15,16 @@
 	<tr>
 		<td align="right">
 			<c:if test="${ user.role eq 'admin' }">
+				<a href="getBorrowList.do">대출현황</a> |
 				회원관리 |
-				도서관리 |
+				<a href="/JooLib/addBook.jsp">도서등록</a> |
 			</c:if>
+			<a href="getBookList.do">도서목록</a> |
 			 게시판 |
 			<c:choose> 
 				<c:when test="${ empty user }"> 
 			 		<a href="/JooLib/addUser.jsp">회원가입</a> | 
-			 		<a href="/JooLib/login.jsp">로그인</a> |
+			 		<a href="loginPage.do">로그인</a> |
 			 	</c:when>
 			 	<c:otherwise> 
 			 		마이페이지 | 

@@ -40,7 +40,7 @@ public class AddBookController implements Controller{
 		BookDAO dao = new BookDAO();
 		dao.addBook(vo);
 	
-		return "/JooLib/index.jsp";
+		return "index.jsp";
 	}
 
 }

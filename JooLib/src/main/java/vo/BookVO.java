@@ -2,15 +2,15 @@ package vo;
 
 /*
 	CREATE TABLE books (
-	    book_no NUMBER(10, 0) GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	    bookno NUMBER(10, 0) GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	    title VARCHAR2(255) NOT NULL,
 	    author VARCHAR2(255) NOT NULL,
 	    publisher VARCHAR2(255),
-	    publication_year NUMBER(4, 0),
+	    publicationyear NUMBER(4, 0),
 	    isbn VARCHAR2(13) UNIQUE,
 	    category VARCHAR2(255),
-	    total_n NUMBER(10, 0),
-	    available_n NUMBER(10, 0)
+	    totaln NUMBER(10, 0),
+	    availablen NUMBER(10, 0)
 	);
 */
 
@@ -25,8 +25,8 @@ public class BookVO {
     private String category;
     private int totaln;
     private int availablen;
-	
-    public int getBookno() {
+    
+	public int getBookno() {
 		return bookno;
 	}
 	public void setBookno(int bookno) {
@@ -80,5 +80,5 @@ public class BookVO {
 	public void setAvailablen(int availablen) {
 		this.availablen = availablen;
 	}
-    
+	
 }

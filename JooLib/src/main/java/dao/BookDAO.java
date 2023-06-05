@@ -10,6 +10,7 @@ import board.BoardVO;
 import common.JDBCUtil;
 import vo.BookVO;
 
+
 public class BookDAO {
 
 	private Connection conn;
@@ -74,8 +75,108 @@ public class BookDAO {
 		}
 		return bookList;
 	}
+
+	// 도서 상세 보기 메서드
+	private static String BOOK_GET =
+			" select * from books where bookno = ? ";
+	
+	public BookVO getBook(BookVO vo) {
+		BookVO book = null; 
+		try {
+			conn = JDBCUtil.getConnection();
+			stmt = conn.prepareStatement(BOOK_GET);
+			stmt.setInt(1, vo.getBookno());
+			
+			rs = stmt.executeQuery();
+			if(rs.next()) {
+				book = new BookVO();
+				book.setBookno(rs.getInt("bookno"));
+				book.setTitle(rs.getString("title"));
+				book.setAuthor(rs.getString("author"));
+				book.setPublisher(rs.getString("publisher"));
+				book.setPublicationyear(rs.getInt("publicationyear"));
+				book.setIsbn(rs.getString("isbn"));
+				book.setCategory(rs.getString("category"));
+				book.setTotaln(rs.getInt("totaln"));
+				book.setAvailablen(rs.getInt("availablen"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(rs, stmt, conn);
+		}
+		return book;
+	}
 	
 	// 도서 정보 조회(전체 또는 특정 조건) 메서드
+	private static String BOOK_SEARCH_TITLE =
+			" select * from books " +
+			" WHERE title LIKE '%' || ? || '%' " +
+			" ORDER BY bookno DESC ";	
+	
+	public List<BookVO> searchBookTitle(BookVO vo) {
+		List<BookVO> bookList = new ArrayList<BookVO>();
+		try {
+			conn = JDBCUtil.getConnection();
+			stmt = conn.prepareStatement(BOOK_SEARCH_TITLE);
+			stmt.setString(1, vo.getTitle());
+			
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				BookVO book = new BookVO();
+				book.setBookno(rs.getInt("bookno"));
+				book.setTitle(rs.getString("title"));
+				book.setAuthor(rs.getString("author"));
+				book.setPublisher(rs.getString("publisher"));
+				book.setPublicationyear(rs.getInt("publicationyear"));
+				book.setIsbn(rs.getString("isbn"));
+				book.setCategory(rs.getString("category"));
+				book.setTotaln(rs.getInt("totaln"));
+				book.setAvailablen(rs.getInt("availablen"));
+				bookList.add(book);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(rs, stmt, conn);
+		}
+		return bookList;
+	}
+	
+	private static String BOOK_SEARCH_AUTHOR =
+			" select * from books " +
+			" WHERE author LIKE '%' || ? || '%' " +
+			" ORDER BY bookno DESC ";	
+	
+	public List<BookVO> searchBookAuthor(BookVO vo) {
+		List<BookVO> bookList = new ArrayList<BookVO>();
+		try {
+			conn = JDBCUtil.getConnection();
+			stmt = conn.prepareStatement(BOOK_SEARCH_AUTHOR);
+			stmt.setString(1, vo.getAuthor());
+			
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				BookVO book = new BookVO();
+				book.setBookno(rs.getInt("bookno"));
+				book.setTitle(rs.getString("title"));
+				book.setAuthor(rs.getString("author"));
+				book.setPublisher(rs.getString("publisher"));
+				book.setPublicationyear(rs.getInt("publicationyear"));
+				book.setIsbn(rs.getString("isbn"));
+				book.setCategory(rs.getString("category"));
+				book.setTotaln(rs.getInt("totaln"));
+				book.setAvailablen(rs.getInt("availablen"));
+				bookList.add(book);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(rs, stmt, conn);
+		}
+		return bookList;
+	}
+	
     // 도서 정보 수정 메서드
 
     // 도서 정보 삭제 메서드

@@ -1,36 +1,47 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
-<h1>°Ô½Ã±Û ¸ñ·Ï</h1>
-<hr>
-<h3>${ user.name }´Ô È¯¿µÇÕ´Ï´Ù. <button> <a href="logout.do"> logout </a> </button></h3>
-<button> <a href="insertBoard.html"> ±Û ÀÛ¼º </a> </button>
-<button> <a href="getBoardList.do"> ÀüÃ¼±Û </a> </button>
-<br><br>
-<table border="1">
-	<tr>
-		<td>no. </td><td>title</td><td>writer</td><td>date</td><td>hit</td>
-	</tr>
-	<c:forEach var="book" items="${ bookList }" >
-	<tr>
-		<td>${ book.bookno }</td>
-		<td><a href="getBook.do?seq=${ book.bookno }">${ book.title }</a></td>
-		<td>${ book.author } </td>
-		<td>${ book.publisher } </td>
-		<td>${ book.category } </td>
-	</tr>
-	</c:forEach>
-</table>
-<br>
-<form action="searchBoard.do" method="post">
-	<input type="text" name="writer"> <input type="submit" value="°Ë»ö">
-</form>
+	<header>
+		<jsp:include page="./topMenu.jsp" />
+	</header>
+	<section>
+
+		<table border="1">
+			<tr>
+				<td>no.</td>
+				<td>title</td>
+				<td>writer</td>
+				<td>date</td>
+				<td>hit</td>
+			</tr>
+			<c:forEach var="book" items="${ bookList }">
+				<tr>
+					<td>${ book.bookno }</td>
+					<td><a href="getBook.do?bookno=${ book.bookno }">${ book.title }</a></td>
+					<td>${ book.author }</td>
+					<td>${ book.publisher }</td>
+					<td>${ book.category }</td>
+				</tr>
+			</c:forEach>
+		</table>
+		<br>
+		<form action="searchBook.do" method="post">
+			<select name="searchBy" id="searchBy">
+				<option value="title">ì œëª©</option>
+				<option value="author">ìž‘ê°€</option>
+			</select>
+			<input type="text" name="search">
+			<input type="submit" value="ê²€ìƒ‰">
+		</form>
+	</section>
+
 </body>
 </html>

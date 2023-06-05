@@ -18,8 +18,6 @@ public class GetBookListController implements Controller{
 		BookVO vo = new BookVO();
 		BookDAO dao = new BookDAO();
 		List<BookVO> bookList = dao.getBookList(vo);
-		
-		System.out.println(bookList);
 				
 		request.setAttribute("bookList", bookList);
 		

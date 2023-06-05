@@ -4,14 +4,14 @@ import java.util.Date;
 
 /*
 	CREATE TABLE borrows (
-		borrow_no NUMBER(10, 0) GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-		user_no NUMBER(10, 0) NOT NULL,
-		book_no NUMBER(10, 0) NOT NULL,
-		borrow_date DATE NOT NULL,
-		due_date DATE NOT NULL,
-		return_date DATE,
-		FOREIGN KEY (user_no) REFERENCES users(user_no),
-		FOREIGN KEY (book_no) REFERENCES books(book_no)
+	    borrowno NUMBER(10, 0) GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	    userno NUMBER(10, 0) NOT NULL,
+	    bookno NUMBER(10, 0) NOT NULL,
+	    borrowdate DATE NOT NULL,
+	    duedate DATE NOT NULL,
+	    returndate DATE,
+	    FOREIGN KEY (userno) REFERENCES users(userno),
+	    FOREIGN KEY (bookno) REFERENCES books(bookno)
 	);
 */
 
@@ -23,5 +23,58 @@ public class BorrowVO {
     private Date borrowdate;
     private Date duedate;
     private Date returndate;
+    
+    private String username;
+    private String title;
 	
+    public int getBorrowno() {
+		return borrowno;
+	}
+	public void setBorrowno(int borrowno) {
+		this.borrowno = borrowno;
+	}
+	public int getUserno() {
+		return userno;
+	}
+	public void setUserno(int userno) {
+		this.userno = userno;
+	}
+	public int getBookno() {
+		return bookno;
+	}
+	public void setBookno(int bookno) {
+		this.bookno = bookno;
+	}
+	public Date getBorrowdate() {
+		return borrowdate;
+	}
+	public void setBorrowdate(Date borrowdate) {
+		this.borrowdate = borrowdate;
+	}
+	public Date getDuedate() {
+		return duedate;
+	}
+	public void setDuedate(Date duedate) {
+		this.duedate = duedate;
+	}
+	public Date getReturndate() {
+		return returndate;
+	}
+	public void setReturndate(Date returndate) {
+		this.returndate = returndate;
+	}
+	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+    
 }

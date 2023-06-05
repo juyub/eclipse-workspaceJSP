@@ -29,9 +29,11 @@ public class UserDAO {
 			rs = stmt.executeQuery();
 			if(rs.next()) {
 				user = new UserVO();
+				user.setUserno(rs.getInt("userno"));
 				user.setUserid(rs.getString("userid"));
 				user.setPassword(rs.getString("password"));
 				user.setName(rs.getString("name"));
+				user.setBorrown(rs.getInt("borrown"));
 				user.setRole(rs.getString("role"));
 			}
 		} catch (Exception e) {

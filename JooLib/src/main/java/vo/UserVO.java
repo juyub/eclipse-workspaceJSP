@@ -4,13 +4,14 @@ import java.util.Date;
 
 /*
 	CREATE TABLE users (
-	    user_no NUMBER(10, 0) GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-	    user_id VARCHAR2(255) NOT NULL UNIQUE,
-	    password VARCHAR2(255) NOT NULL,
-	    name VARCHAR2(255) NOT NULL,
-	    phone VARCHAR2(20) NOT NULL,
-	    join_date DATE DEFAULT CURRENT_DATE,
-	    ROLE VARCHAR2(5)
+        userno NUMBER(10, 0) GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+        userid VARCHAR2(255) NOT NULL UNIQUE,
+        password VARCHAR2(255) NOT NULL,
+        name VARCHAR2(255) NOT NULL,
+        phone VARCHAR2(20) NOT NULL,
+        borrown NUMBER(2, 0) DEFAULT '3',
+        joindate DATE DEFAULT CURRENT_DATE,
+        ROLE VARCHAR2(5) DEFAULT 'user'
 	);
  */
 
@@ -21,10 +22,11 @@ public class UserVO {
     private String password;
     private String name;
     private String phone;
+    private int borrown;
     private Date joindate;
     private String role;
 	
-    public int getUserno() {
+	public int getUserno() {
 		return userno;
 	}
 	public void setUserno(int userno) {
@@ -53,6 +55,12 @@ public class UserVO {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	public int getBorrown() {
+		return borrown;
+	}
+	public void setBorrown(int borrown) {
+		this.borrown = borrown;
 	}
 	public Date getJoindate() {
 		return joindate;
