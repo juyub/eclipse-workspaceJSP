@@ -9,6 +9,7 @@ import java.util.List;
 import board.BoardVO;
 import common.JDBCUtil;
 import vo.BookVO;
+import vo.UserVO;
 
 
 public class BookDAO {
@@ -176,9 +177,48 @@ public class BookDAO {
 		}
 		return bookList;
 	}
-	
+
     // 도서 정보 수정 메서드
 
     // 도서 정보 삭제 메서드
+	private static String BOOK_DElETE =
+			" delete books " +
+			" where bookno = ? ";
+	
+	public void deleteBook(BookVO vo) {
+		try {
+			conn = JDBCUtil.getConnection();
+	        stmt = conn.prepareStatement(BOOK_DElETE);
+	        stmt.setInt(1, vo.getBookno());
+			stmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(stmt, conn);
+		}
+	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

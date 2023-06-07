@@ -16,8 +16,7 @@
 		<td align="right">
 			<c:if test="${ user.role eq 'admin' }">
 				<a href="getBorrowList.do">대출현황</a> |
-				회원관리 |
-				<a href="/JooLib/addBook.jsp">도서등록</a> |
+				<a href="getUserList.do"> 회원목록</a> |
 			</c:if>
 			<a href="getBookList.do">도서목록</a> |
 			 게시판 |
@@ -27,7 +26,7 @@
 			 		<a href="loginPage.do">로그인</a> |
 			 	</c:when>
 			 	<c:otherwise> 
-			 		마이페이지 | 
+			 		<a href="getUserNo.do">마이페이지</a> | 
 			 		<a href="logout.do">로그아웃</a>
 			 	</c:otherwise>
 			</c:choose>  

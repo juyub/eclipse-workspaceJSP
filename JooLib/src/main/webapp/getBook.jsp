@@ -12,6 +12,8 @@
 		let borrowForm = document.forms[0];
 		let availablen = parseInt("${book.availablen}");
 		let borrown = parseInt("${user.borrown}");
+		let userno1 = parseInt("${user.userno}");
+		let userno2 = parseInt("${borrow.userno}");
 		
 		if (availablen <= 0) {
 			alert('대여가능도서가 없습니다.');
@@ -21,7 +23,11 @@
 			alert('대출가능권수를 초과하였습니다.');
 			return false;
 		}
-	
+		if (userno1 == userno2) {
+		      alert('이미 대출하신 도서입니다');
+		      return false;
+		}
+
 		return true;
 	}
 </script>
