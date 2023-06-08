@@ -7,21 +7,24 @@
 		<td align="right">
 			환영합니다
 			<!-- <span style="padding-right: 5px">즐겨찾기</span> -->
-			<c:if test="${ not empty user }">
-			[${ user.name }(${ user.userid })님 로그인중...]
+			<c:if test="${ not empty login }">
+			[${ login.name }(${ login.userid })님 로그인중...]
 			</c:if>
 		</td>
 	</tr>
 	<tr>
 		<td align="right">
-			<c:if test="${ user.role eq 'admin' }">
+			<c:if test="${ login.role eq 'admin' }">
 				<a href="getBorrowList.do">대출현황</a> |
 				<a href="getUserList.do"> 회원목록</a> |
 			</c:if>
 			<a href="getBookList.do">도서목록</a> |
-			 게시판 |
+			 <!-- 게시판 | -->
+			<c:if test="${ login.role eq 'user' }">
+			 	<a href="getBorrowUser.do">대출내역</a> | 
+			</c:if>
 			<c:choose> 
-				<c:when test="${ empty user }"> 
+				<c:when test="${ empty login }"> 
 			 		<a href="/JooLib/addUser.jsp">회원가입</a> | 
 			 		<a href="loginPage.do">로그인</a> |
 			 	</c:when>

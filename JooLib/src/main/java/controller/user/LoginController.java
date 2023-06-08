@@ -25,10 +25,13 @@ public class LoginController implements Controller {
 
 		if (user != null) {
 			HttpSession session = request.getSession();
+			HttpSession session2 = request.getSession();
 			session.setAttribute("user", user);
+			session2.setAttribute("login", user);
 //			request.setAttribute("user", user);
 			return "index.jsp";
 		} else {
+			request.setAttribute("loginFailed", true);
 			return "login.jsp";
 		}
 

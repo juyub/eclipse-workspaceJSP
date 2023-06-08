@@ -25,7 +25,7 @@ public class BorrowVO {
     private Date returndate;
     
     private String username;
-    private String title;
+    private String booktitle;
 	
     public int getBorrowno() {
 		return borrowno;
@@ -70,11 +70,18 @@ public class BorrowVO {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getTitle() {
-		return title;
+	public String getBooktitle() {
+		return booktitle;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public void setBooktitle(String booktitle) {
+		this.booktitle = booktitle;
 	}
+	@Override
+	public String toString() {
+		return "BorrowVO [borrowno=" + borrowno + ", userno=" + userno + ", bookno=" + bookno + ", borrowdate="
+				+ borrowdate + ", duedate=" + duedate + ", returndate=" + returndate + ", username=" + username
+				+ ", booktitle=" + booktitle + "]";
+	}
+	
     
 }

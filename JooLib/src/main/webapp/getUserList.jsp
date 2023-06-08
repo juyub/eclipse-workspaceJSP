@@ -1,33 +1,42 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/main.css">
+<style>
+	.bottom-line td {
+		border-bottom: 1px solid black;
+	}
+</style>
 </head>
 <body>
 	<header>
 		<jsp:include page="./topMenu.jsp" />
 	</header>
 	<section>
-		<table border="1">
-			<tr>
-				<td>no.</td>
-				<td>title</td>
-				<td>writer</td>
-				<td>date</td>
-				<td>hit</td>
+		<table >
+			<tr class="bottom-line">
+				<td>no</td>
+				<td>아이디</td>
+				<td>이름</td>
+				<td>연락처</td>
+				<td>가입일</td>
 			</tr>
 			<c:forEach var="user" items="${ userList }">
-				<tr>
+				<tr class="bottom-line">
 					<td>${ user.userno }</td>
 					<td><a href="getUserNo.do?userno=${ user.userno }">${ user.userid }</a></td>
 					<td>${ user.name }</td>
 					<td>${ user.phone }</td>
-					<td>${ user.joindate }</td>
+					<td>
+					<fmt:formatDate value="${user.joindate}" pattern="yy/MM/dd" var="formattedDate" />
+					${formattedDate}
+					</td>
 				</tr>
 			</c:forEach>
 		</table>

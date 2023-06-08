@@ -48,7 +48,7 @@ public class BookDAO {
 	
     // 전체 도서 조회 메서드
 	private static String BOOK_LIST =
-			" select * from books ";
+			" select * from books order by bookno desc";
 	
 	public List<BookVO> getBookList(BookVO vo){
 		List<BookVO> bookList = new ArrayList<BookVO>();

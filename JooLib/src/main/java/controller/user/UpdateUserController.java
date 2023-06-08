@@ -12,12 +12,14 @@ public class UpdateUserController implements Controller{
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
 		
+		String userno = request.getParameter("userno");
 		String password = request.getParameter("password");
 		String phone = request.getParameter("phone");
 		String borrown = request.getParameter("borrown");
 		String role = request.getParameter("role");
 		
 		UserVO vo = new UserVO();
+		vo.setUserno(Integer.parseInt(userno));
 		vo.setPassword(password);
 		vo.setPhone(phone);
 		vo.setBorrown(Integer.parseInt(borrown));

@@ -11,7 +11,8 @@ import controll.book.SearchBookController;
 import controller.borrow.BorrowBookController;
 import controller.borrow.GetBorrowListController;
 import controller.borrow.GetBorrowUserController;
-import controller.page.GetBookListPageController;
+import controller.borrow.ReturnBookController;
+import controller.page.AddUserPageController;
 import controller.page.IndexPageController;
 import controller.page.LoginPageController;
 import controller.user.AddUserController;
@@ -45,6 +46,7 @@ public class HandlerMapping {
 		mappings.put("/borrowBook.do", new BorrowBookController());
 		mappings.put("/getBorrowList.do", new GetBorrowListController());
 		mappings.put("/getBorrowUser.do", new GetBorrowUserController());
+		mappings.put("/returnBook.do", new ReturnBookController());
 		
 		
 //		mappings.put("/updateBoard.do", new UpdateBoardController());
@@ -52,7 +54,8 @@ public class HandlerMapping {
 		
 		mappings.put("/loginPage.do", new LoginPageController());
 		mappings.put("/indexPage.do", new IndexPageController());
-		mappings.put("/getBookListPage.do", new GetBookListPageController());
+		mappings.put("/addUserPage.do", new AddUserPageController());
+//		mappings.put("/goBorrowListPage.do", new GoBorrowListPageController());
 		
 	}
 	

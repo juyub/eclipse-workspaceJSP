@@ -34,65 +34,43 @@
 	}
 </script>
 <style>
-html{
-	background: url("/JooLib/image/wall.jpg");
-	background-size: 100% 100%;
-	background-repeat: no-repeat;
-	background-attachment: fixed;
+.user-box{
+width: 400px;
 }
 
-body {
-	width : 500px;
-	padding: 0;
-	font-family: verdana, sans-serif;
-	font-size: 15px;
-	margin: 0 auto;
-	margin-top:5%;
-}
-
-#join-box {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	padding: 20px;
-	transform: translate(-50%, -50%);
-	background: rgba(0, 0, 0, .8);
-	box-sizing: border-box;
-	box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
-	border-radius: 10px;
-	color: white;
-}
 #join-table{
-margin : 1%;
+ margin : 5%;
 }
 </style>
+<link rel="stylesheet" type="text/css" href="css/user.css">
 </head>
 <body>
-<div id="join-box" align="center">
+<div id="user-box" class="user-box" align="center">
 <h1> 회원가입 </h1>
-<form action="addUser.do" method="post">
-	<table id="join-table" >
+<form action="addUser.do" method="post" >
+	<table id="join-table">
 		<tr>
-			<td>아이디</td>
-			<td><input type="text" name="id"/></td>
+			<td><label for="id">아이디</label></td>
+			<td><input type="text" class="form-control" name="id"/></td>
 		</tr>
 		<tr>
 			<td>비밀번호</td>
-			<td><input type="password" name="password"/></td>
+			<td><input type="password" class="form-control" name="password"/></td>
 		</tr>
 		<tr>
 			<td>이름</td>
-			<td><input type="text" name="name"/></td>
+			<td><input type="text" class="form-control" name="name"/></td>
 		</tr>
 		<tr>
 			<td>연락처</td>
-			<td><input type="text" name="phone"/></td>
+			<td><input type="text" class="form-control" name="phone"/></td>
 		</tr>
 	</table>
-			<input type="submit" name="회원가입"/>
+		<button type="submit" class="btn btn-primary">회원가입</button>
 </form>
 <br>
-<a href="loginPage.do">로그인</a>
+<a href="loginPage.do">로그인</a> <br> <br>
+<a href="indexPage.do"> 뒤로가기 </a>
 </div>
 </body>
 </html>

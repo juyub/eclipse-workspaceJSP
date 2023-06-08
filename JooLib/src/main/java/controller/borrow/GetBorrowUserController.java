@@ -9,24 +9,27 @@ import javax.servlet.http.HttpSession;
 import controller.Controller;
 import dao.BorrowDAO;
 import vo.BorrowVO;
+import vo.UserVO;
 
 public class GetBorrowUserController implements Controller{
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
 
-		String userno = request.getParameter("userno");
+		HttpSession session = request.getSession();
+		UserVO user = (UserVO) session.getAttribute("login");
+		
+//		String userno = request.getParameter("userno");
 		
 		BorrowVO vo = new BorrowVO();
-		vo.setUserno(Integer.parseInt(userno));
+		vo.setUserno(user.getUserno());
+//		vo.setUserno(Integer.parseInt(userno));
 		BorrowDAO dao = new BorrowDAO();
-		List<BorrowVO> borrowList = dao.getBorrowUserNo(vo);
+		List<BorrowVO> borrowUser = dao.getBorrowUserNo(vo);
+				
+		session.setAttribute("borrowUser", borrowUser);
 		
-		HttpSession session = request.getSession();
-		session.setAttribute("borrowList", borrowList);
-		
-		return "getUserNo.jsp";
+		return "getBorrowUser.jsp";
 	}
 
-	
 }

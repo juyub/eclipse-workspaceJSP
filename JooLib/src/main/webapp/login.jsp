@@ -33,39 +33,10 @@
 		return true
 	}
 </script>
-<style>
-html{
-	background: url("/JooLib/image/wall.jpg");
-	background-size: 100% 100%;
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-}
-
-body {
-	width : 500px;
-	padding: 0;
-	font-family: verdana, sans-serif;
-	font-size: 15px;
-	margin: 0 auto;
-	margin-top:5%;
-}
-
-#login-box {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	padding: 20px;
-	transform: translate(-50%, -50%);
-	background: rgba(0, 0, 0, .8);
-	box-sizing: border-box;
-	box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
-	border-radius: 10px;
-	color: white;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="css/user.css">
 </head>
 <body>
-	<div id="login-box" align="center">
+	<div id="user-box" align="center">
 		<h1>로그인</h1>
 		<br>
 		<form method="post" action="login.do" name="loginForm"
@@ -80,8 +51,12 @@ body {
 			</div>
 			<button type="submit" class="btn btn-primary">로그인</button>
 		</form> <br>		
-	<a href=> 회원가입 </a> <br> <br>
-	<a href=> 뒤로가기 </a>
+	<a href="addUserPage.do"> 회원가입 </a> <br> <br>
+	<a href="indexPage.do"> 뒤로가기 </a>
 	</div>
+	
+	<% if (request.getAttribute("loginFailed") != null) { %>
+    <script>alert("아이디 또는 비밀번호가 잘못되었습니다.");</script>
+  	<% } %>
 </body>
 </html>

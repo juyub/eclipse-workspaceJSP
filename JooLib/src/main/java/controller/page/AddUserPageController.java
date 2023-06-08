@@ -5,11 +5,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import controller.Controller;
 
-public class GetBookListPageController implements Controller{
+public class AddUserPageController implements Controller {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
-		return "getBookList.jsp";
+		return "addUser.jsp";
 	}
-	
+
 }

@@ -7,6 +7,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/main.css">
+<style>
+	.bottom-line td {
+		border-bottom: 1px solid black;
+	}
+</style>
 </head>
 <body>
 	<header>
@@ -17,16 +22,16 @@
 			<button><a href="/JooLib/addBook.jsp">도서등록</a></button>
 			<hr>
 		</c:if>
-		<table border="1">
-			<tr>
-				<td>no.</td>
-				<td>title</td>
-				<td>writer</td>
-				<td>date</td>
-				<td>hit</td>
+		<table >
+			<tr class="bottom-line">
+				<td>no</td>
+				<td>제목</td>
+				<td>저자</td>
+				<td>출판사</td>
+				<td>장르</td>
 			</tr>
 			<c:forEach var="book" items="${ bookList }">
-				<tr>
+				<tr class="bottom-line">
 					<td>${ book.bookno }</td>
 					<td><a href="getBook.do?bookno=${ book.bookno }">${ book.title }</a></td>
 					<td>${ book.author }</td>

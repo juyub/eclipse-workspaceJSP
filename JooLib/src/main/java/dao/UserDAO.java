@@ -16,6 +16,7 @@ public class UserDAO {
 	private PreparedStatement stmt;
 	private ResultSet rs;
 	
+	// 로그인 메서드
 	private static String USER_GET =
 			" select * from users " +
 			" where userid = ? and password = ? ";
