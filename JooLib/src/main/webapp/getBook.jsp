@@ -53,35 +53,35 @@ td {
     <table border="1"> 
         <tr> 
             <th>제목</th> 
-            <td><input type="" name="title" value="${book.title}" ${user.role == 'admin' ? '' : 'readonly'} /></td> 
+            <td><input type="" name="title" value="${book.title}" ${login.role == 'admin' ? '' : 'readonly'} /></td> 
         </tr>
         <tr> 
             <th>작성자</th> 
-            <td><input type="text" name="author" value="${book.author}" ${user.role == 'admin' ? '' : 'readonly'} /></td> 
+            <td><input type="text" name="author" value="${book.author}" ${login.role == 'admin' ? '' : 'readonly'} /></td> 
         </tr>
         <tr> 
             <th>출판사</th> 
-            <td><input type="text" name="publisher" value="${book.publisher}" ${user.role == 'admin' ? '' : 'readonly'} /></td> 
+            <td><input type="text" name="publisher" value="${book.publisher}" ${login.role == 'admin' ? '' : 'readonly'} /></td> 
         </tr>
         <tr> 
             <th>출판연도</th> 
-            <td><input type="text" name="publicationyear" value="${book.publicationyear}" ${user.role == 'admin' ? '' : 'readonly'} /></td> 
+            <td><input type="text" name="publicationyear" value="${book.publicationyear}" ${login.role == 'admin' ? '' : 'readonly'} /></td> 
         </tr>
         <tr> 
             <th>ISBN</th> 
-            <td><input type="text" name="isbn" value="${book.isbn}" ${user.role == 'admin' ? '' : 'readonly'} /></td> 
+            <td><input type="text" name="isbn" value="${book.isbn}" ${login.role == 'admin' ? '' : 'readonly'} /></td> 
         </tr>
         <tr> 
             <th>장르</th> 
-            <td><input type="text" name="category" value="${book.category}" ${user.role == 'admin' ? '' : 'readonly'} /></td> 
+            <td><input type="text" name="category" value="${book.category}" ${login.role == 'admin' ? '' : 'readonly'} /></td> 
         </tr>
         <tr>
             <th>보유권수</th>
-            <td><input type="text" name="totaln" value="${book.totaln}" ${user.role == 'admin' ? '' : 'readonly'} /></td>
+            <td><input type="text" name="totaln" value="${book.totaln}" ${login.role == 'admin' ? '' : 'readonly'} /></td>
         </tr>
         <tr>
             <th>대여가능권수</th>
-            <td><input type="text" name="availablen" value="${book.availablen}" ${user.role == 'admin' ? '' : 'readonly'} />
+            <td><input type="text" name="availablen" value="${book.availablen}" ${login.role == 'admin' ? '' : 'readonly'} />
             </td>
             <td>	
             	<c:choose>

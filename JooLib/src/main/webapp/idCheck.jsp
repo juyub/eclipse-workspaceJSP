@@ -1,39 +1,42 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-     <jsp:useBean id="userdao" class="dao.UserDAO"/>
-<%
-	//function.js->userID값을 받아서 처리
-	String userID = request.getParameter("userID");
-	/* System.out.println("userID=" + userID); */
-	//중복id체크 메서드 호출
-	boolean check = userdao.checkId(userID);
-	/* System.out.println("check=" + check); */
-%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<jsp:useBean id="userdao" class="dao.UserDAO"/>
+
+<c:set var="userID" value="${param.userID}" />
+<c:set var="check" value="${userdao.checkId(userID)}" />
+
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>중복ID체크</title>
-<style>
-.center-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-</style>
+    <meta charset="UTF-8">
+    <title>중복ID체크</title>
+    <style>
+        .center-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        a {
+		    text-decoration: none; /* 밑줄 제거 */
+		}
+    </style>
 </head>
 <body>
-	<br>
-	<div class="center-section">
-		<b><%=userID%></b>
-		<%
-			if (check) {
-				out.println("는 이미 존재하는 ID입니다<p>");
-			} else {
-				out.println("는 사용가능 합니다<p>");
-			}
-		%>
-		<a href="#" onClick="self.close()">닫기</a>
-	</div>
+    <br/>
+    <div class="center-section">
+        <c:choose>
+            <c:when test="${check}">
+               <b>${userID}</b>는 이미 존재하는 ID입니다.<p/>
+            </c:when>
+            <c:otherwise>
+                <b>${userID}</b>는 사용 가능합니다.<p/>
+            </c:otherwise>
+        </c:choose>
+    </div>
+    <br>
+    <div class="center-section">
+        <a href="#" onclick="self.close()">닫기</a>
+    </div>
 </body>
 </html>

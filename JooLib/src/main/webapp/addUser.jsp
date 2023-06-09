@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,93 +32,81 @@
 		}
 		return true
 	}
-	
-	function idCheck(id){
+
+	function idCheck(id) {
 		var form = document.joinForm;
-		if(id==""){
-	          alert("아이디를 먼저 입력해주세요!");
-			  form.userID.focus();
-		}else{
-			url="idCheck.jsp?userID="+id;
-			window.open(url,"post","width=300,height=150,left=800,top=400");
+		if (id == "") {
+			alert("아이디를 먼저 입력해주세요!");
+			form.userID.focus();
+		} else {
+			url = "idCheck.jsp?userID=" + id;
+			window.open(url, "post", "width=300,height=150,left=800,top=400");
 		}
 	}
 </script>
 <style>
-.user-box{
-width: 400px;
+.user-box {
+	width: 400px;
 }
 
-#join-table{
- margin : 5%;
+#join-table {
+	margin: 5%;
 }
 
 .btc {
 	display: inline-block;
 	color: #fff;
-    background-color: #007bff;
-    margin : 3%;
-    border: 1px solid transparent;
-    border-radius: 0.25rem;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+	background-color: #007bff;
+	margin: 3%;
+	border: 1px solid transparent;
+	border-radius: 0.25rem;
+	transition: color .15s ease-in-out, background-color .15s ease-in-out,
+		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
-td{
-padding:5px;
+
+td {
+	padding: 5px;
 }
 </style>
 <link rel="stylesheet" type="text/css" href="css/user.css">
 </head>
 <body>
-<div id="user-box" class="user-box" align="center">
-<h1> 회원가입 </h1>
-<form action="addUser.do" method="post" name="joinForm"
+	<div id="user-box" class="user-box" align="center">
+		<h1>회원가입</h1>
+		<form action="addUser.do" method="post" name="joinForm"
 			onsubmit="return checkForm()">
- <table id="join-table">
-		<tr>
-			<td><label for="id">아이디</label></td>
-			<td><input type="text" class="form-control"  id="id" name="id"/></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><input type="button" value="ID중복확인" class="btc" onClick="idCheck(this.form.id.value)"></td>
-		</tr>
-		<tr>
-			<td>비밀번호</td>
-			<td><input type="password" class="form-control" id="password" name="password"/></td>
-		</tr>
-		<tr>
-			<td>이름</td>
-			<td><input type="text" class="form-control" id="name" name="name"/></td>
-		</tr>
-		<tr>
-			<td>연락처</td>
-			<td><input type="text" class="form-control" id="phone" name="phone"/></td>
-		</tr>
-	</table>
-		<button type="submit" class="btn btn-primary">회원가입</button>	
-	
-</form>
-<br>
-<a href="loginPage.do"> 로그인 </a> <br> <br>
-<a href="indexPage.do"> 뒤로가기 </a>
-</div>
-
-		<!-- <label for="id">아이디</label> 
-		<input type="button" value="ID중복확인" class="btc" onClick="idCheck(this.form.id.value)">
-		<input type="text" class="form-control" id="id" name="id"/>
-	
-		<label for="password">비밀번호</label>
-		<input type="password" class="form-control" id="password" name="password"/>
-		
-	<div class="form-group">
-		<label for="name">이름</label>
-		<input type="text" class="form-control" id="name" name="name"/>	
+			<table id="join-table">
+				<tr>
+					<td><label for="id">아이디</label></td>
+					<td><input type="text" class="form-control" id="id" name="id"
+						pattern="[a-z0-9]+" required /></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="button" value="ID중복확인" class="btc"
+						onClick="idCheck(this.form.id.value)"></td>
+				</tr>
+				<tr>
+					<td>비밀번호</td>
+					<td><input type="password" class="form-control" id="password"
+						name="password" /></td>
+				</tr>
+				<tr>
+					<td>이름</td>
+					<td><input type="text" class="form-control" id="name"
+						name="name" /></td>
+				</tr>
+				<tr>
+					<td>연락처</td>
+					<td><input type="text" class="form-control" id="phone"
+						name="phone" /></td>
+				</tr>
+			</table>
+			<button type="submit" class="btn btn-primary">회원가입</button>
+		</form>
+		<br> 
+		<a href="loginPage.do"> 로그인 </a> <br> <br> 
+		<a href="indexPage.do"> 뒤로가기 </a>
 	</div>
-	<div class="form-group">
-		<label for="phone">연락처</label>	
-		<input type="text" class="form-control" id="phone" name="phone"/>	
-	</div>
-	<button type="submit" class="btn btn-primary">회원가입</button> -->
-
 </body>
 </html>

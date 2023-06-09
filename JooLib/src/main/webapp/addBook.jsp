@@ -7,6 +7,9 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/main.css">
 <style>
+table {
+  border-collapse: collapse;
+}
 td {
   padding: 5px;
 }
@@ -19,7 +22,7 @@ td {
 	<section>
 		<h1>도서 등록</h1>
 		<form action="addBook.do" method="post">
-			<table>
+			<table border="1">
 				<tr>
 					<td>제목</td>
 					<td><input type="text" name="title" /></td>

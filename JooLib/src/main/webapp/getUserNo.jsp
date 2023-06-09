@@ -15,10 +15,14 @@ td {
 </style>
 <script>
 	function confirmDelete() {
+	    confirm("정말로 탈퇴하시겠습니까?")
+	}
+	
+/* 	function confirmDelete() {
 	    if (confirm("정말로 탈퇴하시겠습니까?")) {
 	        location.href = "deleteUser.do?userno=${user.userno}";
 	    }
-	}
+	} */
 	
 	<c:if test="${deleteFailed != null}">
    		alert("대여중인 도서가 있어 탈퇴가 불가합니다");
@@ -92,7 +96,11 @@ table {
  		
 		</form>
 		<br>
-		<button onClick="confirmDelete()">탈퇴</button>
+		<form action="deleteUser.do" method="post" onsubmit="confirmDelete()">
+        <input name="userno" type="hidden" value="${ user.userno }"> 
+        <button type="submit">탈퇴</button>
+    </form>
+		<!-- <button type="submit" onClick="confirmDelete()">탈퇴</button> -->
 	</section>
 </body>
 </html>

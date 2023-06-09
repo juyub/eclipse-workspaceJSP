@@ -18,8 +18,8 @@ public class DeleteUserController implements Controller {
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
+		UserVO user = (UserVO) session.getAttribute("login");
 		String userno = request.getParameter("userno");
-		UserVO user = (UserVO) session.getAttribute("user");
 		
 		UserVO vo = new UserVO();
 		vo.setUserno(Integer.parseInt(userno));
@@ -27,8 +27,8 @@ public class DeleteUserController implements Controller {
 		UserDAO dao = new UserDAO();
 
 		BorrowVO vo1 = new BorrowVO();
-//		vo1.setUserno(Integer.parseInt(userno));
-		vo1.setUserno(user.getUserno());
+		vo1.setUserno(Integer.parseInt(userno));
+//		vo1.setUserno(user.getUserno());
 		BorrowDAO dao1 = new BorrowDAO();
 		List<BorrowVO> borrowUser = dao1.getBorrowingUser(vo1);
 
@@ -36,12 +36,16 @@ public class DeleteUserController implements Controller {
 			request.setAttribute("deleteFailed", true);
 			return "getUserNo.do";
 		} else {
-			
-			dao.deleteUser(vo);
-			session.invalidate();
-			
-			return "indexPage.do";
+			if (user.getRole().equals("admin")) {
+				dao.deleteUser(vo);
+				return "getUserList.do";
+			} else if (user.getRole().equals("user")) {
+				dao.deleteUser(vo);
+				session.invalidate();
+			}
 		}
+
+		return "indexPage.do";
 
 	}
 

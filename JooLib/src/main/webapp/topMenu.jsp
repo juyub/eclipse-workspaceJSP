@@ -2,6 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
 
+<style>
+hr{
+border-color: transparent;
+padding:0;
+magin:0;
+}
+</style>
+
 <table style="width:100%" >
 	<tr>
 		<td rowspan="2" align="center">로고</td>
@@ -36,7 +44,7 @@
 		</td>
 	</tr>
 </table>
-<hr style="border-color: transparent;">
+<hr>
 
 
 
