@@ -15,23 +15,21 @@ public class UserDAO {
 	private Connection conn;
 	private PreparedStatement stmt;
 	private ResultSet rs;
-	
+
 	// 로그인 메서드
-	private static String USER_GET =
-			" select * from users " +
-			" where userid = ? and password = ? ";
-	
+	private static String USER_GET = " select * from users " + " where userid = ? and password = ? ";
+
 	public UserVO getUser(UserVO vo) {
 		UserVO user = null;
-		
+
 		try {
 			conn = JDBCUtil.getConnection();
-	        stmt = conn.prepareStatement(USER_GET);
-			stmt.setString(1, vo.getUserid() );
+			stmt = conn.prepareStatement(USER_GET);
+			stmt.setString(1, vo.getUserid());
 			stmt.setString(2, vo.getPassword());
-			
+
 			rs = stmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				user = new UserVO();
 				user.setUserno(rs.getInt("userno"));
 				user.setUserid(rs.getString("userid"));
@@ -48,16 +46,14 @@ public class UserDAO {
 		return user;
 	}
 
-    // 회원가입 메서드
-	private static String USER_ADD =
-			" insert into users (userid, password, name, phone) " +
-			" values (?,?,?,?) ";
-	
+	// 회원가입 메서드
+	private static String USER_ADD = " insert into users (userid, password, name, phone) " + " values (?,?,?,?) ";
+
 	public void addUser(UserVO vo) {
 		try {
 			conn = JDBCUtil.getConnection();
 			stmt = conn.prepareStatement(USER_ADD);
-			stmt.setString(1, vo.getUserid() );
+			stmt.setString(1, vo.getUserid());
 			stmt.setString(2, vo.getPassword());
 			stmt.setString(3, vo.getName());
 			stmt.setString(4, vo.getPhone());
@@ -68,18 +64,17 @@ public class UserDAO {
 			JDBCUtil.close(stmt, conn);
 		}
 	}
-    
+
 	// 전체 사용자 목록 조회 메서드
-	private static String USER_LIST =
-			" select * from users ";
-	
+	private static String USER_LIST = " select * from users order by userno desc";
+
 	public List<UserVO> getUserList(UserVO vo) {
 		List<UserVO> userList = new ArrayList<UserVO>();
 		try {
 			conn = JDBCUtil.getConnection();
 			stmt = conn.prepareStatement(USER_LIST);
 			rs = stmt.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				UserVO user = new UserVO();
 				user.setUserno(rs.getInt("userno"));
 				user.setUserid(rs.getString("userid"));
@@ -100,20 +95,18 @@ public class UserDAO {
 	}
 
 	// userno로 사용자 정보 조회 메서드
-	private static String USER_GET_NO =
-			" select * from users " +
-			" where userno = ? ";
-	
+	private static String USER_GET_NO = " select * from users " + " where userno = ? ";
+
 	public UserVO getUserNo(UserVO vo) {
 		UserVO user = null;
-		
+
 		try {
 			conn = JDBCUtil.getConnection();
-	        stmt = conn.prepareStatement(USER_GET_NO);
-			stmt.setInt(1, vo.getUserno() );
-			
+			stmt = conn.prepareStatement(USER_GET_NO);
+			stmt.setInt(1, vo.getUserno());
+
 			rs = stmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				user = new UserVO();
 				user.setUserno(rs.getInt("userno"));
 				user.setUserid(rs.getString("userid"));
@@ -132,11 +125,10 @@ public class UserDAO {
 		return user;
 	}
 
-    // 사용자 정보 수정 메서드
-	private static String USER_UPDATE =
-			" update users " +
-			" set password=?, phone=?, borrown=?, role=? where userno=? ";
-	
+	// 사용자 정보 수정 메서드
+	private static String USER_UPDATE = " update users "
+			+ " set password=?, phone=?, borrown=?, role=? where userno=? ";
+
 	public void updateUser(UserVO vo) {
 		try {
 			conn = JDBCUtil.getConnection();
@@ -153,17 +145,15 @@ public class UserDAO {
 			JDBCUtil.close(stmt, conn);
 		}
 	}
-	
-    // 사용자 정보 삭제 메서드
-	private static String USER_DElETE =
-			" delete users " +
-			" where userno = ? ";
-	
+
+	// 사용자 정보 삭제 메서드
+	private static String USER_DElETE = " delete users " + " where userno = ? ";
+
 	public void deleteUser(UserVO vo) {
 		try {
 			conn = JDBCUtil.getConnection();
-	        stmt = conn.prepareStatement(USER_DElETE);
-	        stmt.setInt(1, vo.getUserno());
+			stmt = conn.prepareStatement(USER_DElETE);
+			stmt.setInt(1, vo.getUserno());
 			stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -171,26 +161,57 @@ public class UserDAO {
 			JDBCUtil.close(stmt, conn);
 		}
 	}
+
+	public UserVO getUserByID(String id) {
+		String query = " select * from users where userid = ? ";
+		UserVO user = null;
+
+		try {
+			conn = JDBCUtil.getConnection();
+			stmt = conn.prepareStatement(query);
+			stmt.setString(1, id);
+
+			rs = stmt.executeQuery();
+			if (rs.next()) {
+				user = new UserVO();
+				user.setUserno(rs.getInt("userno"));
+				user.setUserid(rs.getString("userid"));
+				user.setPassword(rs.getString("password"));
+				user.setName(rs.getString("name"));
+				user.setBorrown(rs.getInt("borrown"));
+				user.setRole(rs.getString("role"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(stmt, conn);
+		}
+		return user;
+	}
+	
+	//중복ID를 체크하는 메서드
+		 public boolean checkId(String id){
+		    
+			boolean check = false;//중복ID유무
+			//DB작업(select)
+			
+			try
+			{
+			  //DB접속구문
+			  conn = JDBCUtil.getConnection();
+			  String query = " select * from users where userid = ? ";
+			  stmt = conn.prepareStatement(query);
+			  stmt.setString(1,id);
+			  rs = stmt.executeQuery();
+			  check = rs.next();//true
+			  
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {	//DB객체를 해제
+				JDBCUtil.close(rs, stmt, conn);
+			}
+		   return check;
+		 }
+	
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

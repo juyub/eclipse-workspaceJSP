@@ -19,7 +19,7 @@ public class GetBookController implements Controller {
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
 		
 		HttpSession session = request.getSession();
-		UserVO user = (UserVO) session.getAttribute("user");
+//		UserVO user = (UserVO) session.getAttribute("user");
 		
 		String bookno = request.getParameter("bookno");
 //		String userno = request.getParameter("userno");
@@ -30,14 +30,14 @@ public class GetBookController implements Controller {
 		BookDAO dao = new BookDAO();
 		BookVO book = dao.getBook(vo);
 		
-		BorrowVO vo1 = new BorrowVO();
-		vo1.setBookno(Integer.parseInt(bookno));
-		vo1.setUserno(user.getUserno());
-		BorrowDAO dao1 = new BorrowDAO();
-		BorrowVO borrow = dao1.getBorrow(vo1);
+//		BorrowVO vo1 = new BorrowVO();
+//		vo1.setBookno(Integer.parseInt(bookno));
+//		vo1.setUserno(user.getUserno());
+//		BorrowDAO dao1 = new BorrowDAO();
+//		BorrowVO borrow = dao1.getBorrow(vo1);
 				
 		session.setAttribute("book", book);
-		session.setAttribute("borrow", borrow);
+//		session.setAttribute("borrow", borrow);
 		
 //		request.setAttribute("book", book);
 		

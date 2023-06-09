@@ -8,17 +8,21 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/main.css">
+<style>
+table {
+  border-collapse: collapse;
+}
+td {
+  padding: 5px;
+}
+</style>
 <script>
 	function showAlertAndRedirect() {
 		alert('접근 권한이 없습니다.');
 		location.href = "indexPage.do";
 	}
 </script>
-<style>
-	.bottom-line td {
-		border-bottom: 1px solid black;
-	}
-</style>
+
 </head>
 <body>
 	<c:if test="${ login.role == 'admin'}">
@@ -26,7 +30,12 @@
 			<jsp:include page="/topMenu.jsp" />
 		</header>
 		<section>
-			<table class="bottom-line">
+			<c:choose> 
+				<c:when test="${ empty borrowList }"> 
+			 		대출중인 도서가 없습니다.
+			 	</c:when>
+			 	<c:otherwise> 
+			<table class="bottom-line" border="1">
 				<tr>
 					<td>no</td>
 					<td>도서</td>
@@ -51,7 +60,7 @@
 							</td>
 							<c:if test="${borrow.returndate == null}">
 								<td>
-									미반납
+									대출중
 								</td>
 							</c:if>
 							<c:if test="${borrow.returndate != null}">
@@ -72,6 +81,10 @@
 					</tr>
 				</c:forEach>
 			</table>
+			
+				 	</c:otherwise>
+			</c:choose>  
+			
 		</section>
 	</c:if>
 	<c:if test="${ login.role != 'admin'}">

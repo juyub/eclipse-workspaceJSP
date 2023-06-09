@@ -23,7 +23,7 @@ public class DeleteUserController implements Controller {
 		
 		UserVO vo = new UserVO();
 		vo.setUserno(Integer.parseInt(userno));
-		vo.setUserno(user.getUserno());
+//		vo.setUserno(user.getUserno());
 		UserDAO dao = new UserDAO();
 
 		BorrowVO vo1 = new BorrowVO();
@@ -32,14 +32,15 @@ public class DeleteUserController implements Controller {
 		BorrowDAO dao1 = new BorrowDAO();
 		List<BorrowVO> borrowUser = dao1.getBorrowingUser(vo1);
 
-		if (borrowUser.isEmpty()) {
-			dao.deleteUser(vo);
-
-			session.invalidate();
-
-			return "indexPage.do";
-		} else {
+		if (!borrowUser.isEmpty()) {
+			request.setAttribute("deleteFailed", true);
 			return "getUserNo.do";
+		} else {
+			
+			dao.deleteUser(vo);
+			session.invalidate();
+			
+			return "indexPage.do";
 		}
 
 	}

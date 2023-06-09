@@ -60,7 +60,7 @@ table {
 				<tr>
 					<th>이름</th>
 					<td><input type="text" name="name" value="${user.name}"
-						${ login.role == 'admin' ? '' : 'readonly'} /></td>
+						readonly /></td>
 				</tr>
 				<tr>
 					<th>연락처</th>
@@ -69,7 +69,7 @@ table {
 				<tr>
 					<th>대출가능권수</th>
 					<td><input type="text" name="borrown" value="${user.borrown}"
-						${ login.role == 'admin' ? '' : 'readonly'} /></td>
+						readonly /></td>
 				</tr>
 				<tr>
 					<th>가입일</th>
@@ -81,7 +81,7 @@ table {
 				<tr>
 					<th>권한</th>
 					<td><input type="text" name="role" value="${user.role}"
-						${ login.role == 'admin' ? '' : 'readonly'} /></td>
+						readonly /></td>
 				</tr>
 				<tr>
 					<td colspan="2">

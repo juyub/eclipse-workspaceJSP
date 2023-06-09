@@ -79,7 +79,7 @@ public class BorrowDAO {
 				+ " FROM borrows b "
 				+ " JOIN users u ON b.userno = u.userno "
 				+ " JOIN books bo ON b.bookno = bo.bookno "
-				+ " order by returndate desc ";
+				+ " order by borrowdate desc ";
 
 		try {
 			conn = JDBCUtil.getConnection();
@@ -187,7 +187,7 @@ public class BorrowDAO {
 				BorrowVO borrow = new BorrowVO();
 				borrow.setBorrowno(rs.getInt("borrowno"));
 				borrow.setUserno(rs.getInt("userno"));
-				borrow.setBookno(rs.getInt("boono"));
+				borrow.setBookno(rs.getInt("bookno"));
 				borrow.setBorrowdate(rs.getDate("borrowdate"));
 				borrow.setDuedate(rs.getDate("duedate"));
 				borrow.setReturndate(rs.getDate("returndate"));

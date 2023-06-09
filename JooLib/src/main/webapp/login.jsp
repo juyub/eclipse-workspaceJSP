@@ -42,12 +42,12 @@
 		<form method="post" action="login.do" name="loginForm"
 			onsubmit="return checkForm()">
 			<div class="form-group">
-				<label for="id">ID</label> <input type="text" class="form-control"
-					id="id" name="id">
+				<label for="id">ID</label> 
+				<input type="text" class="form-control" id="id" name="id">
 			</div>
 			<div class="form-group">
-				<label for="password">Password</label> <input type="password"
-					class="form-control" id="password" name="password">
+				<label for="password">Password</label>
+				<input type="password" class="form-control" id="password" name="password">
 			</div>
 			<button type="submit" class="btn btn-primary">로그인</button>
 		</form> <br>		

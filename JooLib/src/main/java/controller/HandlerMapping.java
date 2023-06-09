@@ -18,6 +18,7 @@ import controller.page.LoginPageController;
 import controller.user.AddUserController;
 import controller.user.DeleteUserController;
 import controller.user.GetUserListController;
+import controller.user.GetUserMyController;
 import controller.user.GetUserNoController;
 import controller.user.LoginController;
 import controller.user.LogoutController;
@@ -36,6 +37,7 @@ public class HandlerMapping {
 		mappings.put("/getUserNo.do", new GetUserNoController());
 		mappings.put("/updateUser.do", new UpdateUserController());
 		mappings.put("/deleteUser.do", new DeleteUserController());
+		mappings.put("/getUserMy.do", new GetUserMyController());
 		
 		mappings.put("/addBook.do", new AddBookController());
 		mappings.put("/getBookList.do", new GetBookListController());
@@ -47,10 +49,6 @@ public class HandlerMapping {
 		mappings.put("/getBorrowList.do", new GetBorrowListController());
 		mappings.put("/getBorrowUser.do", new GetBorrowUserController());
 		mappings.put("/returnBook.do", new ReturnBookController());
-		
-		
-//		mappings.put("/updateBoard.do", new UpdateBoardController());
-//		mappings.put("/deleteBoard.do", new DeleteBoardController());
 		
 		mappings.put("/loginPage.do", new LoginPageController());
 		mappings.put("/indexPage.do", new IndexPageController());

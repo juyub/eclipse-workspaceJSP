@@ -9,9 +9,12 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/main.css">
 <style>
-	.bottom-line td {
-		border-bottom: 1px solid black;
-	}
+table {
+  border-collapse: collapse;
+}
+td {
+  padding: 5px;
+}
 </style>
 </head>
 <body>
@@ -19,40 +22,49 @@
 		<jsp:include page="/topMenu.jsp" />
 	</header>
 	<section>
-		<table >
-			<tr class="bottom-line">
-				<td>no</td>
-				<td>제목</td>
-				<td>대출일</td>
-				<td>대출기일</td>
-				<td>반납일</td>
-			</tr>
-			<c:forEach var="borrow" items="${ borrowUser }">
-				<tr class="bottom-line">
-					<td>${ borrow.borrowno }</td>
-					<td>${ borrow.booktitle }</td>
-					<td>
-					<fmt:formatDate value="${ borrow.borrowdate }" pattern="yy/MM/dd" var="formattedBorrowDate" />
-					${formattedBorrowDate}
-					</td>
-					<td>
-					<fmt:formatDate value="${borrow.duedate}" pattern="yy/MM/dd" var="formattedDueDate" />
-					${formattedDueDate}
-					</td>
-					<c:if test="${borrow.returndate == null}">
-						<td>
-							미반납
-						</td>
-					</c:if>
-					<c:if test="${borrow.returndate != null}">
-						<td>
-							<fmt:formatDate value="${borrow.returndate}" pattern="yy/MM/dd" var="formattedReturnDate" />
-							${formattedReturnDate}
-						</td>
-					</c:if>
-				</tr>
-			</c:forEach>
-		</table>
+		
+		<c:choose> 
+			<c:when test="${ empty borrowUser }"> 
+		 		대여중인 도서가 없습니다.
+		 	</c:when>
+		 	<c:otherwise> 	
+				<table border="1">
+					<tr >
+						<td>no</td>
+						<td>제목</td>
+						<td>대출일</td>
+						<td>대출기일</td>
+						<td>반납일</td>
+					</tr>
+					<c:forEach var="borrow" items="${ borrowUser }">
+						<tr class="bottom-line">
+							<td>${ borrow.borrowno }</td>
+							<td>${ borrow.booktitle }</td>
+							<td>
+							<fmt:formatDate value="${ borrow.borrowdate }" pattern="yy/MM/dd" var="formattedBorrowDate" />
+							${formattedBorrowDate}
+							</td>
+							<td>
+							<fmt:formatDate value="${borrow.duedate}" pattern="yy/MM/dd" var="formattedDueDate" />
+							${formattedDueDate}
+							</td>
+							<c:if test="${borrow.returndate == null}">
+								<td>
+									대여중
+								</td>
+							</c:if>
+							<c:if test="${borrow.returndate != null}">
+								<td>
+									<fmt:formatDate value="${borrow.returndate}" pattern="yy/MM/dd" var="formattedReturnDate" />
+									${formattedReturnDate}
+								</td>
+							</c:if>
+						</tr>
+					</c:forEach>
+				</table>
+			</c:otherwise>
+		</c:choose>  
+		
 	</section>
 </body>
 </html>

@@ -7,6 +7,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/main.css">
+<style>
+table {
+  border-collapse: collapse;
+}
+td {
+  padding: 5px;
+}
+</style>
 <script>
 	function checkForm() {
 		let borrowForm = document.forms[0];
@@ -38,7 +46,8 @@
 	</header>
 	
 	<section>
-	
+	<button><a href="javascript:history.back()">뒤로가기</a></button>
+	<br> <br>
 	<form action="updateBook.do" method="post"> 
     <input name="bookno" type="hidden" value="${ book.bookno }"> 
     <table border="1"> 
@@ -71,30 +80,39 @@
             <td><input type="text" name="totaln" value="${book.totaln}" ${user.role == 'admin' ? '' : 'readonly'} /></td>
         </tr>
         <tr>
-            <th>대여능권수</th>
-            <td><input type="text" name="availablen" value="${book.availablen}" ${user.role == 'admin' ? '' : 'readonly'} /></td>
+            <th>대여가능권수</th>
+            <td><input type="text" name="availablen" value="${book.availablen}" ${user.role == 'admin' ? '' : 'readonly'} />
+            </td>
+            <td>	
+            	<c:choose>
+           			<c:when test="${book.availablen == 0}">
+                		대여불가
+            		</c:when>
+           			<c:otherwise>
+              		  	대여가능
+           		 	</c:otherwise>
+        		</c:choose>
+            </td>
         </tr>
-        <c:if test="${ user.role == 'admin' }">
+        <c:if test="${ login.role == 'admin' }">
             <tr>
-                <td colspan="2">
+                <td colspan="3">
                     <input type="submit" value="수정" />
                     <button><a href="deleteBook.do?bookno=${ book.bookno }">삭제</a></button>
                 </td>
             </tr>
         </c:if>
     </table>
-</form>
-	<c:if test="${ user.role == 'user' }">
+	</form>
+	<c:if test="${ login.role == 'user' }">
+	<br>
     <form action="borrowBook.do" method="post" onsubmit="return checkForm()">
         <input name="bookno" type="hidden" value="${ book.bookno }">
-        <input name="userno" type="hidden" value="${ user.userno }"> 
-        <input name="userno" type="hidden" value="${ user.borrown }"> 
+        <input name="userno" type="hidden" value="${ login.userno }"> 
+        <input name="userno" type="hidden" value="${ login.borrown }"> 
         <button type="submit">대출</button>
     </form>
 	</c:if>
-		<!-- <a href="getBookList.do">list</a> -->
-		<!-- <button><a href="borrowBook.do">대출</a></button> -->
-		<button><a href="getBookList.do">뒤로가기</a></button>
 	</section>
 	
 </body>

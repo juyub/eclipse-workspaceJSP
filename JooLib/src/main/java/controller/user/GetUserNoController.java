@@ -13,19 +13,19 @@ public class GetUserNoController implements Controller{
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
 
-		HttpSession session = request.getSession();
-		UserVO user = (UserVO) session.getAttribute("user");
+//		HttpSession session = request.getSession();
+//		UserVO user = (UserVO) session.getAttribute("user");
 		
-//		String userno = request.getParameter("userno");
+		String userno = request.getParameter("userno");
 		
 		UserVO vo = new UserVO();
-		vo.setUserno(user.getUserno());
-//		vo.setUserno(Integer.parseInt(userno));
+//		vo.setUserno(user.getUserno());
+		vo.setUserno(Integer.parseInt(userno));
 		
 		UserDAO dao = new UserDAO();
-		UserVO user1 = dao.getUserNo(vo);
+		UserVO user = dao.getUserNo(vo);
 		
-		request.setAttribute("user", user1);
+		request.setAttribute("user", user);
 		
 		return "getUserNo.jsp";
 	}

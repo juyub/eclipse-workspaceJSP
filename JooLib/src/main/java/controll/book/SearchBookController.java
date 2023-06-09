@@ -36,6 +36,6 @@ public class SearchBookController implements Controller{
 
 		request.setAttribute("bookList", bookList);
 
-		return "getBookListPage.do";
+		return "getBookList.jsp";
 	}
 }

@@ -8,22 +8,29 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/main.css">
 <style>
-	.bottom-line td {
-		border-bottom: 1px solid black;
-	}
+table {
+  border-collapse: collapse;
+}
+td {
+  padding: 5px;
+}
 </style>
 </head>
-<body>
+<body >
+
 	<header>
 		<jsp:include page="./topMenu.jsp" />
 	</header>
+	
 	<section>
-		<c:if test="${ user.role == 'admin'}">
+		<c:if test="${ login.role == 'admin'}">
 			<button><a href="/JooLib/addBook.jsp">도서등록</a></button>
-			<hr>
+			<br> <br>
 		</c:if>
-		<table >
-			<tr class="bottom-line">
+		<button><a href="javascript:history.back()">뒤로가기</a></button>
+		<br> <br>
+		<table border="1">
+			<tr>
 				<td>no</td>
 				<td>제목</td>
 				<td>저자</td>
@@ -31,7 +38,7 @@
 				<td>장르</td>
 			</tr>
 			<c:forEach var="book" items="${ bookList }">
-				<tr class="bottom-line">
+				<tr>
 					<td>${ book.bookno }</td>
 					<td><a href="getBook.do?bookno=${ book.bookno }">${ book.title }</a></td>
 					<td>${ book.author }</td>

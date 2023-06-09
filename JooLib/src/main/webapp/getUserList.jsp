@@ -9,9 +9,12 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/main.css">
 <style>
-	.bottom-line td {
-		border-bottom: 1px solid black;
-	}
+table {
+  border-collapse: collapse;
+}
+td {
+  padding: 5px;
+}
 </style>
 </head>
 <body>
@@ -19,7 +22,7 @@
 		<jsp:include page="./topMenu.jsp" />
 	</header>
 	<section>
-		<table >
+		<table border="1">
 			<tr class="bottom-line">
 				<td>no</td>
 				<td>아이디</td>
