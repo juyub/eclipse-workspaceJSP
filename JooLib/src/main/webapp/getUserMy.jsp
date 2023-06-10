@@ -36,50 +36,47 @@ table {
 	</header>
 
 	<section>
-		<button>
-			<a href="javascript:history.back()">뒤로가기</a>
-		</button>
-		<br> <br>
+		
 		<form action="updateUser.do" method="post">
 			<table border="1">
 				<tr>
-					<th>회원번호</th>
+					<td>회원번호</td>
 					<td><input name="userno" type="text" value="${user.userno}"
 						readonly /></td>
 				</tr>
 				<tr>
-					<th>아이디</th>
+					<td>아이디</td>
 					<td><input type="text" name="userid" value="${user.userid}"
 						readonly /></td>
 				</tr>
 				<tr>
-					<th>비밀번호</th>
+					<td>비밀번호</td>
 					<td><input type="password" name="password"
 						value="${user.password}" /></td>
 				</tr>
 				<tr>
-					<th>이름</th>
+					<td>이름</td>
 					<td><input type="text" name="name" value="${user.name}"
 						readonly /></td>
 				</tr>
 				<tr>
-					<th>연락처</th>
+					<td>연락처</td>
 					<td><input type="text" name="phone" value="${user.phone}" /></td>
 				</tr>
 				<tr>
-					<th>대출가능권수</th>
+					<td>대출가능권수</td>
 					<td><input type="text" name="borrown" value="${user.borrown}"
 						readonly /></td>
 				</tr>
 				<tr>
-					<th>가입일</th>
+					<td>가입일</td>
 					<td>
 						<fmt:formatDate value="${user.joindate}" pattern="yy/MM/dd" var="formattedDate" />
        				 	<input type="text" name="joindate" value="${formattedDate}" readonly />
 					</td>
 				</tr>
 				<tr>
-					<th>권한</th>
+					<td>권한</td>
 					<td><input type="text" name="role" value="${user.role}"
 						readonly /></td>
 				</tr>

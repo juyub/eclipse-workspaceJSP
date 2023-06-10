@@ -109,7 +109,7 @@ public class BookDAO {
 		return book;
 	}
 	
-	// 도서 정보 조회(전체 또는 특정 조건) 메서드
+	// 도서 검색 - 제목
 	private static String BOOK_SEARCH_TITLE =
 			" select * from books " +
 			" WHERE title LIKE '%' || ? || '%' " +
@@ -144,6 +144,7 @@ public class BookDAO {
 		return bookList;
 	}
 	
+	// 도서 검색 - 저자
 	private static String BOOK_SEARCH_AUTHOR =
 			" select * from books " +
 			" WHERE author LIKE '%' || ? || '%' " +
@@ -179,7 +180,33 @@ public class BookDAO {
 	}
 
     // 도서 정보 수정 메서드
+	private static String BOOK_UPDATE = 
+			  " update books "
+			+ " set title=?, author=?, publisher=?, publicationyear=?,"
+			+     " isbn=?, category=?, totaln=?, availablen=? "
+			+ " where bookno=? ";
 
+	public void updateBook(BookVO vo) {
+		try {
+			conn = JDBCUtil.getConnection();
+			stmt = conn.prepareStatement(BOOK_UPDATE);
+			stmt.setString(1, vo.getTitle());
+			stmt.setString(2, vo.getAuthor());
+			stmt.setString(3, vo.getPublisher());
+			stmt.setInt(4, vo.getPublicationyear());
+			stmt.setString(5, vo.getIsbn());
+			stmt.setString(6, vo.getCategory());
+			stmt.setInt(7, vo.getTotaln());
+			stmt.setInt(8, vo.getAvailablen());
+			stmt.setInt(9, vo.getBookno());
+			stmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(stmt, conn);
+		}
+	}
+	
     // 도서 정보 삭제 메서드
 	private static String BOOK_DElETE =
 			" delete books " +

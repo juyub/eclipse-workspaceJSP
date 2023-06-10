@@ -23,16 +23,46 @@
 		if (f.id.value == '') {
 			alert('ID를 입력하세요')
 			f.id.focus()
-			return false
+			return false;
 		}
 		if (f.password.value == '') {
 			alert('패스워드를 입력하세요')
 			f.password.focus()
-			return false
+			return false;
 		}
-		return true
+		
+		if(idCheck(f.id.value)){
+			return false;
+		}
+		
+		return true;
 	}
+	
+	function passwordChecked() {
+		  var password = document.getElementById("password").value;
+		  var passwordCheck = document.getElementById("passwordCheck").value;
 
+		  if (password !== passwordCheck) {
+		    alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+		    return false;
+		  }
+
+		  return true;
+	}
+	
+	function formatPhoneNumber(input) {
+		  // 입력 내용에서 하이픈을 제거
+		  var phoneNumber = input.value.replace(/-/g, '');
+
+		  // 입력 내용이 10자리 이상일 때만 하이픈 추가
+		  if (phoneNumber.length >= 10) {
+		    phoneNumber = phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+		  }
+
+		  // 변경된 값을 다시 입력 필드에 설정
+		  input.value = phoneNumber;
+		}
+	
 	function idCheck(id) {
 		var form = document.joinForm;
 		if (id == "") {
@@ -79,7 +109,8 @@ td {
 				<tr>
 					<td><label for="id">아이디</label></td>
 					<td><input type="text" class="form-control" id="id" name="id"
-						pattern="[a-z0-9]+" required /></td>
+						pattern="[a-z0-9]+" 
+						placeholder="영어 소문자와 숫자" /></td>
 				</tr>
 				<tr>
 					<td></td>
@@ -89,7 +120,15 @@ td {
 				<tr>
 					<td>비밀번호</td>
 					<td><input type="password" class="form-control" id="password"
-						name="password" /></td>
+						name="password" pattern="[a-z0-9]+" required 
+						placeholder="영어 소문자와 숫자"/></td>
+				</tr>
+				<tr>
+					<td>비밀번호<br>
+					확인</td>
+					<td><input type="password" class="form-control" id="passwordCheck"
+						name="passwordCheck" pattern="[a-z0-9]+" required 
+						placeholder="영어 소문자와 숫자" /></td>
 				</tr>
 				<tr>
 					<td>이름</td>
@@ -99,13 +138,15 @@ td {
 				<tr>
 					<td>연락처</td>
 					<td><input type="text" class="form-control" id="phone"
-						name="phone" /></td>
+						name="phone" maxlength="13"
+           				oninput="formatPhoneNumber(this)"
+           				placeholder="000-0000-0000"/></td>
 				</tr>
 			</table>
 			<button type="submit" class="btn btn-primary">회원가입</button>
 		</form>
 		<br> 
-		<a href="loginPage.do"> 로그인 </a> <br> <br> 
+		<a href="loginPage.do"> 로그인 </a> &nbsp;&nbsp;&nbsp;
 		<a href="indexPage.do"> 뒤로가기 </a>
 	</div>
 </body>

@@ -162,56 +162,140 @@ public class UserDAO {
 		}
 	}
 
-	public UserVO getUserByID(String id) {
+//	public UserVO getUserByID(String id) {
+//		String query = " select * from users where userid = ? ";
+//		UserVO user = null;
+//
+//		try {
+//			conn = JDBCUtil.getConnection();
+//			stmt = conn.prepareStatement(query);
+//			stmt.setString(1, id);
+//
+//			rs = stmt.executeQuery();
+//			if (rs.next()) {
+//				user = new UserVO();
+//				user.setUserno(rs.getInt("userno"));
+//				user.setUserid(rs.getString("userid"));
+//				user.setPassword(rs.getString("password"));
+//				user.setName(rs.getString("name"));
+//				user.setBorrown(rs.getInt("borrown"));
+//				user.setRole(rs.getString("role"));
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			JDBCUtil.close(stmt, conn);
+//		}
+//		return user;
+//	}
+
+	// 중복ID를 체크하는 메서드
+	public boolean checkId(String id) {
+		boolean check = false; // 중복ID유무
 		String query = " select * from users where userid = ? ";
-		UserVO user = null;
 
 		try {
 			conn = JDBCUtil.getConnection();
 			stmt = conn.prepareStatement(query);
 			stmt.setString(1, id);
-
 			rs = stmt.executeQuery();
-			if (rs.next()) {
-				user = new UserVO();
+
+			check = rs.next();// true
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally { 
+			JDBCUtil.close(rs, stmt, conn);
+		}
+		return check;
+	}
+
+	// 회원 검색 - 이름
+	public List<UserVO> searchUserName(UserVO vo) {
+		List<UserVO> userList = new ArrayList<UserVO>();
+		String query = " select * from users where name LIKE '%' || ? || '%' ";
+		
+		try {
+			conn = JDBCUtil.getConnection();
+			stmt = conn.prepareStatement(query);
+			stmt.setString(1, vo.getName());
+			
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				UserVO user = new UserVO();
 				user.setUserno(rs.getInt("userno"));
 				user.setUserid(rs.getString("userid"));
 				user.setPassword(rs.getString("password"));
 				user.setName(rs.getString("name"));
+				user.setPhone(rs.getString("phone"));
 				user.setBorrown(rs.getInt("borrown"));
+				user.setJoindate(rs.getDate("joindate"));
 				user.setRole(rs.getString("role"));
+				userList.add(user);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			JDBCUtil.close(stmt, conn);
+			JDBCUtil.close(rs, stmt, conn);
 		}
-		return user;
+		return userList;
+	}
+	// 회원 검색 - 연락처
+	public List<UserVO> searchUserPhone(UserVO vo) {
+		List<UserVO> userList = new ArrayList<UserVO>();
+		String query = " select * from users where phone LIKE '%' || ? || '%' ";
+		
+		try {
+			conn = JDBCUtil.getConnection();
+			stmt = conn.prepareStatement(query);
+			stmt.setString(1, vo.getPhone());
+			
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				UserVO user = new UserVO();
+				user.setUserno(rs.getInt("userno"));
+				user.setUserid(rs.getString("userid"));
+				user.setPassword(rs.getString("password"));
+				user.setName(rs.getString("name"));
+				user.setPhone(rs.getString("phone"));
+				user.setBorrown(rs.getInt("borrown"));
+				user.setJoindate(rs.getDate("joindate"));
+				user.setRole(rs.getString("role"));
+				userList.add(user);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(rs, stmt, conn);
+		}
+		return userList;
 	}
 	
-	//중복ID를 체크하는 메서드
-		 public boolean checkId(String id){
-		    
-			boolean check = false;//중복ID유무
-			//DB작업(select)
-			
-			try
-			{
-			  //DB접속구문
-			  conn = JDBCUtil.getConnection();
-			  String query = " select * from users where userid = ? ";
-			  stmt = conn.prepareStatement(query);
-			  stmt.setString(1,id);
-			  rs = stmt.executeQuery();
-			  check = rs.next();//true
-			  
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {	//DB객체를 해제
-				JDBCUtil.close(rs, stmt, conn);
-			}
-		   return check;
-		 }
 	
-	
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

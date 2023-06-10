@@ -3,25 +3,43 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
 
 <style>
-hr{
-border-color: transparent;
-padding:0;
-magin:0;
+.b-image {
+    width: 20px;
+    height: 20px;
+}
+.l-image {
+    width: 80px;
 }
 </style>
 
-<table style="width:100%" >
+<table style="width:90%" align="center">
 	<tr>
-		<td rowspan="2" align="center">로고</td>
-		<td align="right">
-			환영합니다
+		<td rowspan="2" align="left" >
+		<img src="/JooLib/image/libraryb.png" class="l-image" alt="로고">
+		</td>
+		<td align="center">
+			&nbsp;
 			<c:if test="${ not empty login }">
-			[${ login.name }(${ login.userid })님 로그인중...]
+			[ ${ login.name }(${ login.userid })님 로그인중... ]
 			</c:if>
 		</td>
 	</tr>
 	<tr>
-		<td align="right">
+		
+		<td align="center">환영합니다</td>
+	</tr>
+	<tr>
+		<td>
+		<button>
+			<a href="javascript:history.back()">
+			<img src="/JooLib/image/back.png" class="b-image" alt="뒤로가기"></a>
+		</button>
+		<button>
+			<a href="indexPage.do">
+			<img src="/JooLib/image/home.png" class="b-image" alt="홈"></a>
+		</button>
+		</td>
+		<td align="center">
 			<a href="getBookList.do">도서목록</a> |
 			<c:if test="${ login.role eq 'admin' }">
 				<a href="getBorrowList.do">대출현황</a> |
@@ -44,9 +62,7 @@ magin:0;
 		</td>
 	</tr>
 </table>
-<hr>
-
-
+	
 
 
 

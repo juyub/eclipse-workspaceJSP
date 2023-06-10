@@ -28,8 +28,7 @@ td {
 			<button><a href="/JooLib/addBook.jsp">도서등록</a></button>
 			<br> <br>
 		</c:if>
-		<button><a href="javascript:history.back()">뒤로가기</a></button>
-		<br> <br>
+		
 		<table border="1">
 			<tr>
 				<td>no</td>

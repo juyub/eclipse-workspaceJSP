@@ -18,12 +18,15 @@ td {
 </style>
 </head>
 <body>
+
 	<header>
 		<jsp:include page="./topMenu.jsp" />
 	</header>
+	
 	<section>
+		
 		<table border="1">
-			<tr class="bottom-line">
+			<tr>
 				<td>no</td>
 				<td>아이디</td>
 				<td>이름</td>
@@ -31,7 +34,7 @@ td {
 				<td>가입일</td>
 			</tr>
 			<c:forEach var="user" items="${ userList }">
-				<tr class="bottom-line">
+				<tr>
 					<td>${ user.userno }</td>
 					<td><a href="getUserNo.do?userno=${ user.userno }">${ user.userid }</a></td>
 					<td>${ user.name }</td>
@@ -44,14 +47,14 @@ td {
 			</c:forEach>
 		</table>
 		<br>
-		<!-- <form action="searchBook.do" method="post">
+		<form action="searchUser.do" method="post">
 			<select name="searchBy" id="searchBy">
-				<option value="title">제목</option>
-				<option value="author">작가</option>
+				<option value="name">이름</option>
+				<option value="phone">연락처</option>
 			</select>
 			<input type="text" name="search">
 			<input type="submit" value="검색">
-		</form> -->
+		</form>
 	</section>
 
 </body>
