@@ -16,7 +16,7 @@ td {
 	<header>
 		<jsp:include page="/topMenu.jsp" />
 	</header>
-	<section>
+	<section style="display: flex; justify-content: center;  align-items: center;">
 	메인페이지입니다
 	</section>
 </body>

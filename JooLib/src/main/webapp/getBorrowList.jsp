@@ -15,6 +15,7 @@ table {
 td {
   padding: 5px;
 }
+
 </style>
 <script>
 	function showAlertAndRedirect() {
@@ -25,11 +26,12 @@ td {
 
 </head>
 <body>
-	<c:if test="${ login.role == 'admin'}">
+
 		<header>
 			<jsp:include page="/topMenu.jsp" />
 		</header>
-		<section>
+		<section style="display: flex; justify-content: center;">
+			<div>
 			<c:choose> 
 				<c:when test="${ empty borrowList }"> 
 			 		대출중인 도서가 없습니다.
@@ -42,7 +44,7 @@ td {
 					<td>아이디</td>
 					<td>대출일</td>
 					<td>만료일</td>
-					<td>반납일</td>
+					<td>반납</td>
 				</tr>
 				<c:forEach var="borrow" items="${ borrowList }">
 					<tr class="bottom-line">
@@ -84,9 +86,9 @@ td {
 			
 				 	</c:otherwise>
 			</c:choose>  
-			
+			</div>
 		</section>
-	</c:if>
+		
 	<c:if test="${ login.role != 'admin'}">
 		<script>
 			showAlertAndRedirect();

@@ -23,7 +23,17 @@ td {
 		<jsp:include page="./topMenu.jsp" />
 	</header>
 	
-	<section>
+	<section style="display: flex; justify-content: center;">
+		<div>
+		<form action="searchUser.do" method="post">
+			<select name="searchBy" id="searchBy">
+				<option value="name">이름</option>
+				<option value="phone">연락처</option>
+			</select>
+			<input type="text" name="search">
+			<input type="submit" value="검색">
+		</form>
+		<br> <br>
 		
 		<table border="1">
 			<tr>
@@ -46,15 +56,7 @@ td {
 				</tr>
 			</c:forEach>
 		</table>
-		<br>
-		<form action="searchUser.do" method="post">
-			<select name="searchBy" id="searchBy">
-				<option value="name">이름</option>
-				<option value="phone">연락처</option>
-			</select>
-			<input type="text" name="search">
-			<input type="submit" value="검색">
-		</form>
+		</div>
 	</section>
 
 </body>

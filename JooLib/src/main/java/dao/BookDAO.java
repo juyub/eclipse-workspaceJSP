@@ -212,14 +212,15 @@ public class BookDAO {
 			" delete books " +
 			" where bookno = ? ";
 	
-	public void deleteBook(BookVO vo) {
+	public void deleteBook(BookVO vo) throws Exception {
 		try {
 			conn = JDBCUtil.getConnection();
 	        stmt = conn.prepareStatement(BOOK_DElETE);
 	        stmt.setInt(1, vo.getBookno());
 			stmt.executeUpdate();
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
+			throw new Exception("도서 정보 삭제 중 오류가 발생했습니다.", e);
 		} finally {
 			JDBCUtil.close(stmt, conn);
 		}

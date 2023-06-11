@@ -19,10 +19,19 @@ public class DeleteBookController implements Controller{
 		vo.setBookno(Integer.parseInt(bookno));		
 		
 		BookDAO dao = new BookDAO();
-		dao.deleteBook(vo);
+		
+		try {
+            dao.deleteBook(vo);
+            request.setAttribute("message", "도서 정보가 성공적으로 삭제되었습니다.");
+        } catch (Exception e) {
+            request.setAttribute("message", e.getMessage());
+        }
 						
-		return "getBookList.do";
+		return "deleteBookResult.jsp";
+		
+//		dao.deleteBook(vo);
+		
+//		return "getBookList.do";
 	}
 
-	
 }

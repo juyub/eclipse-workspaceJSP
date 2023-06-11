@@ -27,6 +27,15 @@ td {
 	<c:if test="${deleteFailed != null}">
    		alert("대여중인 도서가 있어 탈퇴가 불가합니다");
 	</c:if>
+	
+	function togglePasswordVisibility(id) {
+		  var input = document.getElementById(id);
+		  if (input.type === "password") {
+		    input.type = "text";
+		  } else {
+		    input.type = "password";
+		  }
+	}
 </script>
 <style>
 table {
@@ -39,8 +48,8 @@ table {
 		<jsp:include page="./topMenu.jsp" />
 	</header>
 
-	<section>
-		
+	<section style="display: flex; justify-content: center;">
+		<div>
 		<form action="updateUser.do" method="post">
 			<table border="1">
 				<tr>
@@ -55,8 +64,13 @@ table {
 				</tr>
 				<tr>
 					<td>비밀번호</td>
-					<td><input type="password" name="password"
-						value="${user.password}" /></td>
+					<td>
+					<span>
+					<input type="password" name="password" id="password"
+						value="${user.password}" /> <br>
+					<input type="checkbox" onclick="togglePasswordVisibility('password')"> 비밀번호 보기
+					</span>	
+					</td>
 				</tr>
 				<tr>
 					<td>이름</td>
@@ -96,8 +110,8 @@ table {
 		<form action="deleteUser.do" method="post" onsubmit="confirmDelete()">
         <input name="userno" type="hidden" value="${ user.userno }"> 
         <button type="submit">탈퇴</button>
-    </form>
-		<!-- <button type="submit" onClick="confirmDelete()">탈퇴</button> -->
+    	</form>
+		</div>
 	</section>
 </body>
 </html>

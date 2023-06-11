@@ -109,7 +109,7 @@ public class BorrowDAO {
 	public BorrowVO getBorrow(BorrowVO vo) {
 		BorrowVO borrow = null;
 
-		String query = " SELECT * from borrows " + " where userno = ? and bookno = ? ";
+		String query = " SELECT * from borrows where userno = ? and bookno = ? ";
 
 		try {
 			conn = JDBCUtil.getConnection();
@@ -213,7 +213,7 @@ public class BorrowDAO {
 		addUserBorrown(vo);
 	}
 
-	// 대출 정보를 추가하는 메서드
+	// 대출 정보를 삭제하는 메서드
 	private void deleteBorrowInfo(BorrowVO vo) {
 		String query = " delete borrows WHERE borrowno = ? ";
 

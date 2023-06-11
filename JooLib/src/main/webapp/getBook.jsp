@@ -19,8 +19,8 @@ td {
 	function checkForm() {
 		let borrowForm = document.forms[0];
 		let availablen = parseInt("${book.availablen}");
-		let borrown = parseInt("${user.borrown}");
-		let userno1 = parseInt("${user.userno}");
+		let borrown = parseInt("${login.borrown}");
+		let userno1 = parseInt("${login.userno}");
 		let userno2 = parseInt("${borrow.userno}");
 		
 		if (availablen <= 0) {
@@ -45,8 +45,8 @@ td {
 		<jsp:include page="./topMenu.jsp" />
 	</header>
 	
-	<section>
-	
+	<section style="display: flex; justify-content: center;">
+	<div>
 	<form action="updateBook.do" method="post"> 
     <input name="bookno" type="hidden" value="${ book.bookno }"> 
     <table border="1"> 
@@ -108,10 +108,12 @@ td {
     <form action="borrowBook.do" method="post" onsubmit="return checkForm()">
         <input name="bookno" type="hidden" value="${ book.bookno }">
         <input name="userno" type="hidden" value="${ login.userno }"> 
-        <input name="userno" type="hidden" value="${ login.borrown }"> 
+        <input name="userno" type="hidden" value="${ borrow.userno }"> 
+        <%-- <input name="userno" type="hidden" value="${ login.borrown }">  --%>
         <button type="submit">대출</button>
     </form>
 	</c:if>
+	</div>
 	</section>
 	
 </body>

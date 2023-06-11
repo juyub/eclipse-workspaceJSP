@@ -59,6 +59,7 @@ public class HandlerMapping {
 		mappings.put("/indexPage.do", new IndexPageController());
 		mappings.put("/addUserPage.do", new AddUserPageController());
 		mappings.put("/goUserListPage.do", new GoUserListPageController());
+//		mappings.put("/goGetBookPage.do", new GoGetBookPageController());
 //		mappings.put("/goBorrowListPage.do", new GoBorrowListPageController());
 		
 	}

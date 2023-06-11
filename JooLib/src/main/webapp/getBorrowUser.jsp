@@ -21,8 +21,8 @@ td {
 	<header>
 		<jsp:include page="/topMenu.jsp" />
 	</header>
-	<section>
-		
+	<section style="display: flex; justify-content: center;">
+		 <div>
 		<c:choose> 
 			<c:when test="${ empty borrowUser }"> 
 		 		대여중인 도서가 없습니다.
@@ -34,7 +34,7 @@ td {
 						<td>제목</td>
 						<td>대출일</td>
 						<td>대출기일</td>
-						<td>반납일</td>
+						<td>반납</td>
 					</tr>
 					<c:forEach var="borrow" items="${ borrowUser }">
 						<tr class="bottom-line">
@@ -64,6 +64,7 @@ td {
 				</table>
 			</c:otherwise>
 		</c:choose>  
+		 </div>
 		
 	</section>
 </body>
