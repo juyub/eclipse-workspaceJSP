@@ -52,7 +52,7 @@
 			</c:if>
 			<c:choose> 
 				<c:when test="${ empty login }"> 
-			 		<a href="/JooLib/addUser.jsp">회원가입</a> | 
+			 		<a href="addUserPage.do">회원가입</a> | 
 			 		<a href="loginPage.do">로그인</a>
 			 	</c:when>
 			 	<c:otherwise> 
