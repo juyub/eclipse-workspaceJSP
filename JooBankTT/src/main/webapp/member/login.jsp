@@ -35,7 +35,7 @@
 </script>
 <style>
 html{
-	background: url("/JooBank/image/backWall.jpg");
+	background: url("/JooBankTT/image/backWall.jpg");
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	background-attachment: fixed;

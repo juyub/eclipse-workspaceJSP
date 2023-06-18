@@ -13,7 +13,7 @@ function toggleSubMenu(show) {
 <table style="width:90%" align="center" >
   <tr>
     <td class="cell1">
-      <img src="/JooBank/image/logoicon.png" class="l-image" alt="로고">
+      <img src="/JooBankT/image/logoicon.png" class="l-image" alt="로고">
     </td>
     <td class="cell2" align="center">
       <c:if test="${ not empty login }">
@@ -31,7 +31,7 @@ function toggleSubMenu(show) {
     <td class="cell4" align="center">
       <ul>
         <li id="menu4" onmouseover="toggleSubMenu(true)" onmouseout="toggleSubMenu(false)">
-          <img src="/JooBank/image/login.png" id="li-image" alt="로고">
+          <img src="/JooBankT/image/user.png" id="li-image" alt="로고">
           <ul id="submenu4">
             <c:choose>
               <c:when test="${ empty login }">
