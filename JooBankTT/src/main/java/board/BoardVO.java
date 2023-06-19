@@ -13,6 +13,11 @@ import java.util.Date;
 		hit NUMBER(10, 0),
 		FOREIGN KEY (memberNO) REFERENCES jb_member(memberNO)
 	);
+	
+	CREATE SEQUENCE jb_board_seq
+	START WITH 6
+	INCREMENT BY 1
+	NOCACHE;	
  */
 
 public class BoardVO {

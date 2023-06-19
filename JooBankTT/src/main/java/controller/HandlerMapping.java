@@ -3,10 +3,20 @@ package controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import board.AddBoardController;
+import board.AddReplyController;
+import board.DeleteBoardController;
+import board.GetBoardController;
 import board.GetBoardListController;
+import board.UpdateBoardController;
+import comment.AddCommentController;
+import comment.DeleteCommentController;
+import comment.GetCommentListController;
+import comment.UpdateCommentController;
 import member.JoinController;
 import member.LoginController;
 import member.LogoutController;
+import page.MyPageController;
 
 public class HandlerMapping {
 
@@ -18,6 +28,7 @@ public class HandlerMapping {
 		mappings.put("/join.do", new JoinController());
 		mappings.put("/login.do", new LoginController());
 		mappings.put("/logout.do", new LogoutController());
+		mappings.put("/myPage.do", new MyPageController());
 //		mappings.put("/getUserList.do", new GetUserListController());
 //		mappings.put("/getUserNo.do", new GetUserNoController());
 //		mappings.put("/updateUser.do", new UpdateUserController());
@@ -25,7 +36,18 @@ public class HandlerMapping {
 //		mappings.put("/getUserMy.do", new GetUserMyController());
 //		mappings.put("/searchUser.do", new SearchUserController());
 //		
+		mappings.put("/addBoard.do", new AddBoardController());
 		mappings.put("/getBoardList.do", new GetBoardListController());
+		mappings.put("/getBoard.do", new GetBoardController());
+		mappings.put("/updateBoard.do", new UpdateBoardController());
+		mappings.put("/deleteBoard.do", new DeleteBoardController());
+		mappings.put("/addReply.do", new AddReplyController());
+		
+		mappings.put("/addComment.do", new AddCommentController());
+		mappings.put("/commentList.do", new GetCommentListController());
+		mappings.put("/updateComment.do", new UpdateCommentController());
+		mappings.put("/deleteComment.do", new DeleteCommentController());
+		
 		
 //		mappings.put("/addBook.do", new AddBookController());
 //		mappings.put("/getBookList.do", new GetBookListController());

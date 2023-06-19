@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
-
-<link rel="stylesheet" type="text/css" href="css/topmenu.css">
-
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <script>
 function toggleSubMenu(show) {
     var submenu = document.getElementById('submenu4');
@@ -10,7 +8,9 @@ function toggleSubMenu(show) {
 }
 </script>
 
-<table style="width:90%" align="center" >
+ <link rel="stylesheet" type="text/css" href="/JooBankTT/css/topmenu.css">
+ 
+<table style="width:90%" align="center">
   <tr>
     <td class="cell1">
       <img src="/JooBankTT/image/logoicon.png" class="l-image" alt="로고">
@@ -19,7 +19,7 @@ function toggleSubMenu(show) {
       <c:if test="${ not empty login }">
         <a href="getBorrowList.do" class="link-spacing">계좌</a>
     <a href="getBookList.do" class="link-spacing">오픈뱅킹</a>
-    <a href="getBoardList.do" class="link-spacing">게시판</a>
+    <a href="${contextPath}/getBoardList.do" class="link-spacing">게시판</a>
       </c:if>
     </td>
     <td class="cell3" align="center">
@@ -39,8 +39,8 @@ function toggleSubMenu(show) {
                 <li><a href="/JooBankTT/member/login.jsp">로그인</a></li>
               </c:when>
               <c:otherwise>
-                <li><a href="getUserMy.do">마이페이지</a></li>
-                <li><a href="logout.do">로그아웃</a></li>
+                <li><a href="${contextPath}/myPage.do">마이페이지</a></li>
+                <li><a href="${contextPath}/logout.do">로그아웃</a></li>
               </c:otherwise>
             </c:choose>
           </ul>
