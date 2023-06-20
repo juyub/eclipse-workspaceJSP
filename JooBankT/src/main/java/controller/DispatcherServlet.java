@@ -27,6 +27,8 @@ public class DispatcherServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		request.setCharacterEncoding("UTF-8"); // 이 부분을 추가합니다. 시험적으로 추가
+		
 		String uri = request.getRequestURI();
 		System.out.println("uri : " + uri);
 		uri = uri.substring(request.getContextPath().length());

@@ -28,7 +28,7 @@ li {
   position: absolute;
   right: -40px;
   display: none;
- background: rgba(135, 207, 235, 0.85);
+  background: rgba(135, 207, 235, 0.85);
   border: 1px solid #ccc;
   margin-top: 0px;
   width: 120px;

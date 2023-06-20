@@ -4,31 +4,33 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import board.BoardDAO;
 import board.BoardVO;
 import controller.Controller;
+import member.MemberVO;
 
-public class InsertBoardController implements Controller{
+public class AddBoardController implements Controller{
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
 		
-//		HttpSession session = request.getSession();
-//		UserVO user = (UserVO) session.getAttribute("user"); // 세션에서 user 객체를 
-//		String writer = user.getId(); // writer를 ID로 
+		HttpSession session = request.getSession();
+		MemberVO login = (MemberVO) session.getAttribute("login"); // 세션에서 user 객체를 
+		int memberNO = login.getMemberNO(); // writer를 ID로 
 		
 		String title = request.getParameter("title");
-		String writer = request.getParameter("writer");
+//		String memberNO = request.getParameter("memberNO");
 		String content = request.getParameter("content");
-		
+
 		BoardVO vo = new BoardVO();
 		vo.setTitle(title);
-		vo.setWriter(writer);
+		vo.setMemberNO(memberNO);
 		vo.setContent(content);
 		
 		BoardDAO dao = new BoardDAO();
-		dao.insertBoard(vo);
+		dao.addBoard(vo);
 	
 		return "getBoardList.do";
 	}

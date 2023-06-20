@@ -9,7 +9,7 @@ import java.util.List;
 
 import common.JDBCUtil;
 
-public class BoardDAO {
+public class BoardDAO2 {
 
 	private Connection conn;
 	private PreparedStatement stmt;
@@ -17,49 +17,40 @@ public class BoardDAO {
 	
 	// 모든 게시글 조회
 	public List getAllBoard() {
-	    List boardList = new ArrayList();
-	    try {
-	        conn = JDBCUtil.getConnection();
-	        String query = 
-	        	      " SELECT LEVEL, b.boardNO, b.parentNO, b.title, b.content, b.memberNO, b.REGDATE, m.memberID, m.name "
-	                + " FROM jb_board b "
-	                + " JOIN jb_member m ON b.memberNO = m.memberNO "
-	                + " START WITH b.parentNO = 0 "
-	                + " CONNECT BY PRIOR b.boardNO = b.parentNO "
-	                + " ORDER SIBLINGS BY b.boardNO DESC ";
-	        stmt = conn.prepareStatement(query);
-	        ResultSet rs = stmt.executeQuery();
-	        while (rs.next()) {
-	            int level = rs.getInt("level");
-	            int boardNO = rs.getInt("boardNO");
-	            int parentNO = rs.getInt("parentNO");
-	            String title = rs.getString("title");
-	            String content = rs.getString("content");
-	            int memberNO = rs.getInt("memberNO");
-	            Date regdate = rs.getDate("REGDATE");
-	            String memberID = rs.getString("memberID"); // memberID 추가
-	            String name = rs.getString("name"); // name 추가
-
-	            BoardVO board = new BoardVO();
-	            board.setLevel(level);
-	            board.setBoardNO(boardNO);
-	            board.setParentNO(parentNO);
-	            board.setTitle(title);
-	            board.setContent(content);
-	            board.setMemberNO(memberNO);
-	            board.setRegdate(regdate);
-	            board.setMemberID(memberID); // memberID 값 설정
-	            board.setName(name); // name 값 설정
-
-	            boardList.add(board);
-	        }
-	        rs.close();
-	        stmt.close();
-	        conn.close();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    return boardList;
+		List boardList = new ArrayList();
+		try {
+			conn = JDBCUtil.getConnection();
+			String query = " SELECT LEVEL,boardNO,parentNO,title,content,memberNO,REGDATE " 
+			             + " from jb_board "
+					     + " START WITH  parentNO=0 " + " CONNECT BY PRIOR boardNO=parentNO "
+					     + " ORDER SIBLINGS BY boardNO DESC ";
+			stmt = conn.prepareStatement(query);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				int level = rs.getInt("level");
+				int boardNO = rs.getInt("boardNO");
+				int parentNO = rs.getInt("parentNO");
+				String title = rs.getString("title");
+				String content = rs.getString("content");
+				int memberNO = rs.getInt("memberNO");
+				Date regdate = rs.getDate("REGDATE");
+				BoardVO board = new BoardVO();
+				board.setLevel(level);
+				board.setBoardNO(boardNO);
+				board.setParentNO(parentNO);
+				board.setTitle(title);
+				board.setContent(content);
+				board.setMemberNO(memberNO);
+				board.setRegdate(regdate);
+				boardList.add(board);
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return boardList;
 	}
 	
 	// 게시글 추가

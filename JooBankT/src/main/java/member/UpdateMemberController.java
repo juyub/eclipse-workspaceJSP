@@ -1,34 +1,34 @@
-package controller.user;
+package member;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import controller.Controller;
 import dao.UserDAO;
 import vo.UserVO;
 
-public class GetUserNoController implements Controller{
+public class UpdateMemberController implements Controller{
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
-
-//		HttpSession session = request.getSession();
-//		UserVO user = (UserVO) session.getAttribute("user");
 		
 		String userno = request.getParameter("userno");
+		String password = request.getParameter("password");
+		String phone = request.getParameter("phone");
+		String borrown = request.getParameter("borrown");
+		String role = request.getParameter("role");
 		
 		UserVO vo = new UserVO();
-//		vo.setUserno(user.getUserno());
 		vo.setUserno(Integer.parseInt(userno));
+		vo.setPassword(password);
+		vo.setPhone(phone);
+		vo.setBorrown(Integer.parseInt(borrown));
+		vo.setRole(role);
 		
 		UserDAO dao = new UserDAO();
-		UserVO user = dao.getUserNo(vo);
+		dao.updateUser(vo);
 		
-		request.setAttribute("user", user);
+		return "getUserNo.do";
 		
-		return "getUserNo.jsp";
 	}
-
-	
 }

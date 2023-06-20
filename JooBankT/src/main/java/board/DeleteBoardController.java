@@ -3,24 +3,19 @@ package board;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import board.BoardDAO;
-import board.BoardVO;
 import controller.Controller;
 
-public class DeleteBoardController implements Controller{
+public class DeleteBoardController implements Controller {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
 		
-		String seq = request.getParameter("seq");
-		
-		BoardVO vo = new BoardVO();
-		vo.setSeq(Integer.parseInt(seq));		
+		String boardNO = request.getParameter("boardNO");
 		
 		BoardDAO dao = new BoardDAO();
-		dao.deleteBoard(vo);
+		dao.deleteBoard(Integer.parseInt(boardNO));
 		
-		return "getBoardList.do";
+		return "/board/boardList.jsp";
 	}
 
 }

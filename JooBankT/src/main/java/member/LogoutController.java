@@ -1,4 +1,4 @@
-package controller.user;
+package member;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +14,7 @@ public class LogoutController implements Controller{
 		HttpSession session = request.getSession();
 		session.invalidate();
 		
-		return "redirect:" + request.getContextPath();
+		return "index.jsp";
 	}
 	
 }

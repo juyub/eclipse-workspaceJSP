@@ -1,43 +1,40 @@
-package board;
+package comment;
 
 import java.util.Date;
 
 /*
-	CREATE TABLE jb_board (
-		boardNO number(10) PRIMARY KEY,
-		parentNO number(10) default 0,
+	CREATE TABLE jb_comment (
+		commentNO number(10) PRIMARY KEY,
+		boardNO number(10),
 		memberNO NUMBER(10, 0),
-		TITLE VARCHAR2(200),
 		CONTENT VARCHAR2(2000),
 		REGDATE DATE DEFAULT CURRENT_DATE,
-		hit NUMBER(10, 0),
-		FOREIGN KEY (memberNO) REFERENCES jb_member(memberNO)
+		FOREIGN KEY (memberNO) REFERENCES jb_member(memberNO),
+		FOREIGN KEY (boardNO) REFERENCES jb_board(boardNO)
 	);
 	
-	CREATE SEQUENCE jb_board_seq
-	START WITH 6
+	CREATE SEQUENCE jb_comment_seq
+	START WITH 1
 	INCREMENT BY 1
-	NOCACHE;	
+	NOCACHE;
  */
 
-public class BoardVO {
-
-	private int level;
+public class CommentVO {
+	
+	private int commentNO;
 	private int boardNO;
-	private int parentNO;
 	private int memberNO;
-	private String title;
 	private String content;
 	private Date regdate;
 	
 	private String memberID;
 	private String name;
 	
-	public int getLevel() {
-		return level;
+	public int getCommentNO() {
+		return commentNO;
 	}
-	public void setLevel(int level) {
-		this.level = level;
+	public void setCommentNO(int commentNO) {
+		this.commentNO = commentNO;
 	}
 	public int getBoardNO() {
 		return boardNO;
@@ -45,23 +42,11 @@ public class BoardVO {
 	public void setBoardNO(int boardNO) {
 		this.boardNO = boardNO;
 	}
-	public int getParentNO() {
-		return parentNO;
-	}
-	public void setParentNO(int parentNO) {
-		this.parentNO = parentNO;
-	}
 	public int getMemberNO() {
 		return memberNO;
 	}
 	public void setMemberNO(int memberNO) {
 		this.memberNO = memberNO;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
 	}
 	public String getContent() {
 		return content;
@@ -75,6 +60,7 @@ public class BoardVO {
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
+	
 	public String getMemberID() {
 		return memberID;
 	}
@@ -87,5 +73,5 @@ public class BoardVO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 }

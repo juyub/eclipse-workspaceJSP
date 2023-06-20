@@ -1,12 +1,12 @@
-package controller.user;
+package member;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controller.Controller;
-import user.UserDAO;
-import user.UserVO;
+import member.MemberDAO;
+import member.MemberVO;
 
 public class LoginController implements Controller {
 
@@ -16,24 +16,23 @@ public class LoginController implements Controller {
 		String id = request.getParameter("id");
 		String password = request.getParameter("password");
 
-		UserVO vo = new UserVO();
-		vo.setUserid(id);
+		MemberVO vo = new MemberVO();
+		vo.setMemberID(id);
 		vo.setPassword(password);
 
-		UserDAO dao = new UserDAO();
-		UserVO user = dao.getUser(vo);
+		MemberDAO dao = new MemberDAO();
+		MemberVO member = dao.getMember(vo);
 
-		if (user != null) {
+		if (member != null) {
 			HttpSession session = request.getSession();
 //			HttpSession session2 = request.getSession();
 //			session.setAttribute("user", user);
-			session.setAttribute("login", user);
-			request.setAttribute("user", user);
-//			return "index.jsp";
-			return "redirect:" + request.getContextPath();
+			session.setAttribute("login", member);
+			request.setAttribute("member", member);
+			return "index.jsp";
 		} else {
 			request.setAttribute("loginFailed", true);
-			return "login/login.jsp";
+			return "JooBankTT/login/login.jsp";
 		}
 
 	}

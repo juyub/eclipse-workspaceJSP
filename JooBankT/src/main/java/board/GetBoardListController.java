@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import board.BoardDAO;
 import board.BoardVO;
@@ -16,11 +17,13 @@ public class GetBoardListController implements Controller{
 
 		BoardVO vo = new BoardVO();
 		BoardDAO dao = new BoardDAO();
-		List<BoardVO> boardList = dao.getBoardList(vo);
+		List boardList = dao.getAllBoard();
 		
+//		HttpSession session = request.getSession();
+//		session.setAttribute("boardList", boardList);
 		request.setAttribute("boardList", boardList);
 		
-		return "board/getBoardList.jsp";
+		return "/board/boardList.jsp";
 	}
 	
 }

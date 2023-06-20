@@ -77,7 +77,7 @@
 				</tr>
 				<tr>
 					<td width="150" align="center" bgcolor="#FF9933">작성자 아이디</td>
-					<td><input type="text" value="${board.memberNO }" name="id"
+					<td><input type="text" value="${board.memberID }" name="id"
 						disabled /></td>
 				</tr>
 				<tr>

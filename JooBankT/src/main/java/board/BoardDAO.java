@@ -4,198 +4,250 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import common.JDBCUtil;
 
-
-
 public class BoardDAO {
-	
+
 	private Connection conn;
 	private PreparedStatement stmt;
 	private ResultSet rs;
 	
-	private static String BOARD_INSERT =
-			" insert into board(seq, title, writer, content, hit) " +
-			" values((select nvl(max(seq),0)+1 from board),?,?,?,?) ";
-	
-	public void insertBoard(BoardVO vo) {
-		try {
-			conn = JDBCUtil.getConnection();
-			stmt = conn.prepareStatement(BOARD_INSERT);
-			stmt.setString(1, vo.getTitle());
-			stmt.setString(2, vo.getWriter());
-			stmt.setString(3, vo.getContent());
-			stmt.setInt(4, vo.getHit());
-			stmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			JDBCUtil.close(stmt, conn);
-		}
+	// 모든 게시글 조회
+	public List getAllBoard() {
+	    List boardList = new ArrayList();
+	    try {
+	        conn = JDBCUtil.getConnection();
+	        String query = 
+	        	      " SELECT LEVEL, b.boardNO, b.parentNO, b.title, b.content, b.memberNO, b.REGDATE, m.memberID, m.name "
+	                + " FROM jb_board b "
+	                + " JOIN jb_member m ON b.memberNO = m.memberNO "
+	                + " START WITH b.parentNO = 0 "
+	                + " CONNECT BY PRIOR b.boardNO = b.parentNO "
+	                + " ORDER SIBLINGS BY b.boardNO DESC ";
+	        stmt = conn.prepareStatement(query);
+	        ResultSet rs = stmt.executeQuery();
+	        while (rs.next()) {
+	            int level = rs.getInt("level");
+	            int boardNO = rs.getInt("boardNO");
+	            int parentNO = rs.getInt("parentNO");
+	            String title = rs.getString("title");
+	            String content = rs.getString("content");
+	            int memberNO = rs.getInt("memberNO");
+	            Date regdate = rs.getDate("REGDATE");
+	            String memberID = rs.getString("memberID"); // memberID 추가
+	            String name = rs.getString("name"); // name 추가
+
+	            BoardVO board = new BoardVO();
+	            board.setLevel(level);
+	            board.setBoardNO(boardNO);
+	            board.setParentNO(parentNO);
+	            board.setTitle(title);
+	            board.setContent(content);
+	            board.setMemberNO(memberNO);
+	            board.setRegdate(regdate);
+	            board.setMemberID(memberID); // memberID 값 설정
+	            board.setName(name); // name 값 설정
+
+	            boardList.add(board);
+	        }
+	        rs.close();
+	        stmt.close();
+	        conn.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return boardList;
 	}
 	
-//	private static String BOARD_INSERT =
-//			" insert into board(seq, title, writer, content, hit ) " +
-//			" values((select nvl(max(seq),0)+1 from board),?,?,?,?) ";
-//	
-//	public void insertBoard(BoardVO vo) {
-//		try {
-//			conn = JDBCUtil.getConnection();
-//			stmt = conn.prepareStatement(BOARD_INSERT);
-//			stmt.setString(1, vo.getTitle());
-//			stmt.setString(2, vo.getWriter());
-//			stmt.setString(3, vo.getContent());
-//			stmt.setInt(4, vo.getHit());
-//			stmt.executeUpdate();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			JDBCUtil.close(stmt, conn);
-//		}
-//	}
+	// 게시글 추가
+	public void addBoard(BoardVO vo) {
+	    try {
+	        conn = JDBCUtil.getConnection();
+	        
+	        // getNewArticleNO() 메서드를 여기에 정의하고 사용
+	        int boardNO = 0;
+	        String boardNOQuery = " SELECT jb_board_seq.NEXTVAL FROM DUAL ";
+	        stmt = conn.prepareStatement(boardNOQuery);
+	        ResultSet rs = stmt.executeQuery(boardNOQuery);
+	        if (rs.next()) {
+	        	boardNO = rs.getInt(1) + 1;
+	        }
+	        rs.close();
+	        stmt.close();
+	        
+	        int parentNO = 0;
+	        String title = vo.getTitle();
+	        String content = vo.getContent();
+	        int memberNO = vo.getMemberNO();
+	        
+	        String query = 
+	        		" INSERT INTO jb_board (boardNO, parentNO, title, content, memberNO) "
+	                + " VALUES (?, ? ,?, ?, ?) ";
+	        stmt = conn.prepareStatement(query);
+	        stmt.setInt(1, boardNO);
+	        stmt.setInt(2, parentNO);
+	        stmt.setString(3, title);
+	        stmt.setString(4, content);
+	        stmt.setInt(5, memberNO);
+	        stmt.executeUpdate();
+	        stmt.close();
+	        conn.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
 	
-	private static String BOARD_LIST =
-			" select * from board ";
-	
-	public List<BoardVO> getBoardList(BoardVO vo){
-		List<BoardVO> boardList = new ArrayList<BoardVO>();
-		try {
-			conn = JDBCUtil.getConnection();
-			stmt = conn.prepareStatement(BOARD_LIST);
-			rs = stmt.executeQuery();
-			while(rs.next()) {
-				BoardVO board = new BoardVO();
-				board.setSeq(rs.getInt("SEQ"));
-				board.setTitle(rs.getString("TITLE"));
-				board.setWriter(rs.getString("WRITER"));
-				board.setContent(rs.getString("CONTENT"));
-				board.setRegDate(rs.getDate("REGDATE"));
-				board.setHit(rs.getInt("HIT"));
-				boardList.add(board);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			JDBCUtil.close(rs, stmt, conn);
-		}
-		return boardList;
+	// 게시판 번호로 검색
+	public BoardVO selectBoardNo(BoardVO vo) {
+	    BoardVO board = new BoardVO();
+	    try {
+	        conn = JDBCUtil.getConnection();
+	        String query = 
+	        		  " SELECT b.boardNO, b.parentNO, b.title, b.content, b.memberNO, b.REGDATE, m.memberID, m.name "
+	                + " FROM jb_board b "
+	                + " JOIN jb_member m ON b.memberNO = m.memberNO "
+	                + " WHERE b.boardNO = ? ";
+	        stmt = conn.prepareStatement(query);
+	        stmt.setInt(1, vo.getBoardNO());
+	        ResultSet rs = stmt.executeQuery();
+	        rs.next();
+	        int boardNO2 = rs.getInt("boardNO");
+	        int parentNO = rs.getInt("parentNO");
+	        String title = rs.getString("title");
+	        String content = rs.getString("content");
+	        int memberNO = rs.getInt("memberNO");
+	        Date regdate = rs.getDate("REGDATE");
+	        String memberID = rs.getString("memberID"); // memberID 추가
+	        String name = rs.getString("name"); // name 추가
+
+	        board.setBoardNO(boardNO2);
+	        board.setParentNO(parentNO);
+	        board.setTitle(title);
+	        board.setContent(content);
+	        board.setMemberNO(memberNO);
+	        board.setRegdate(regdate);
+	        board.setMemberID(memberID); // memberID 값 설정
+	        board.setName(name); // name 값 설정
+
+	        rs.close();
+	        stmt.close();
+	        conn.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return board;
 	}
 
-	private static String BOARD_UPDATE =
-			" update board " +
-			" set title=?, content=?, hit=? where seq=? ";
 	
+	// 게시글 수정
 	public void updateBoard(BoardVO vo) {
+		int boardNO = vo.getBoardNO();
+		String title = vo.getTitle();
+		String content = vo.getContent();
 		try {
 			conn = JDBCUtil.getConnection();
-			stmt = conn.prepareStatement(BOARD_UPDATE);
-			stmt.setString(1, vo.getTitle());
-			stmt.setString(2, vo.getContent());
-			stmt.setInt(3, vo.getHit());
-			stmt.setInt(4, vo.getSeq());
-			stmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			JDBCUtil.close(stmt, conn);
-		}
-	}
-	
-	private static String BOARD_DELETE =
-			" delete board where seq=? ";
-	
-	public void deleteBoard(BoardVO vo) {
-		try {
-			conn = JDBCUtil.getConnection();
-			stmt = conn.prepareStatement(BOARD_DELETE);
-			stmt.setInt(1, vo.getSeq());
-			stmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			JDBCUtil.close(stmt, conn);
-		}
-	}
-	
-	private static String BOARD_GET =
-			" select * from board where seq = ? ";
-	
-	public BoardVO getBorad(BoardVO vo) {
-		BoardVO board = null; 
-		try {
-			conn = JDBCUtil.getConnection();
-			stmt = conn.prepareStatement(BOARD_GET);
-			stmt.setInt(1, vo.getSeq());
+			String query = " update jb_board set title=?, content=? " +
+						   " where boardNO=? ";
 			
-			rs = stmt.executeQuery();
-			if(rs.next()) {
-				board = new BoardVO();
-				board.setSeq(rs.getInt("SEQ"));
-				board.setTitle(rs.getString("TITLE"));
-				board.setWriter(rs.getString("WRITER"));
-				board.setContent(rs.getString("CONTENT"));
-				board.setRegDate(rs.getDate("REGDATE"));
-				board.setHit(rs.getInt("HIT")+1);
-			}
+			stmt = conn.prepareStatement(query);
+			stmt.setString(1, title);
+			stmt.setString(2, content);
+			stmt.setInt(3, boardNO);
+			stmt.executeUpdate();
+			stmt.close();
+			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			JDBCUtil.close(rs, stmt, conn);
 		}
-		updateBoard(board);
-		return board;
+	}
+	
+	// 게시글 삭제
+	public void deleteBoard(int boardNO) {
+		try {
+			conn = JDBCUtil.getConnection();
+			String query = 
+					" DELETE FROM jb_board " +
+						 " WHERE boardNO in ( " +
+											" SELECT boardNO FROM  jb_board " +
+											" START WITH boardNO = ? " +
+											" CONNECT BY PRIOR  boardNO = parentNO ) ";
+			System.out.println(query);
+			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, boardNO);
+			stmt.executeUpdate();
+			stmt.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
-	private static String BOARD_SEARCH =
-			" select * from board WHERE WRITER=? ORDER BY REGDATE DESC ";	
-	
-	public List<BoardVO> searchBoard(BoardVO vo) {
-		List<BoardVO> boardList = new ArrayList<BoardVO>();
+	public List<Integer> selectRemovedArticles(int  articleNO) {
+		List<Integer> articleNOList = new ArrayList<Integer>();
 		try {
 			conn = JDBCUtil.getConnection();
-			stmt = conn.prepareStatement(BOARD_SEARCH);
-			stmt.setString(1, vo.getWriter());
-			
-			rs = stmt.executeQuery();
-			while(rs.next()) {
-				BoardVO board = new BoardVO();
-				board.setSeq(rs.getInt("SEQ"));
-				board.setTitle(rs.getString("TITLE"));
-				board.setWriter(rs.getString("WRITER"));
-				board.setContent(rs.getString("CONTENT"));
-				board.setRegDate(rs.getDate("REGDATE"));
-				board.setHit(rs.getInt("HIT"));
-				boardList.add(board);
+			String query = "SELECT articleNO FROM  t_board  ";
+			query += " START WITH articleNO = ?";
+			query += " CONNECT BY PRIOR  articleNO = parentNO";
+			System.out.println(query);
+			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, articleNO);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				articleNO = rs.getInt("articleNO");
+				articleNOList.add(articleNO);
 			}
+			stmt.close();
+			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			JDBCUtil.close(rs, stmt, conn);
 		}
-		return boardList;
+		return articleNOList;
 	}
 	
-	
-	
-	
-	
+	// 답글 생성
+	public void addReply(BoardVO vo) {
+	    try {
+	        conn = JDBCUtil.getConnection();
+
+	        // 원 게시물의 boardNO 가져오기
+	        int parentNO = vo.getParentNO();
+
+	        // getNewArticleNO() 메서드를 여기에 정의하고 사용
+	        int boardNO = 0;
+	        String boardNOQuery = " SELECT jb_board_seq.NEXTVAL FROM DUAL ";
+	        stmt = conn.prepareStatement(boardNOQuery);
+	        ResultSet rs = stmt.executeQuery(boardNOQuery);
+	        if (rs.next()) {
+	            boardNO = rs.getInt(1)+1;
+	        }
+	        rs.close();
+	        stmt.close();
+	        
+	        String title = vo.getTitle();
+	        String content = vo.getContent();
+	        int memberNO = vo.getMemberNO();
+	        
+	        String query = 
+	                " INSERT INTO jb_board (boardNO, parentNO, title, content, memberNO) "
+	                + " VALUES (?, ? ,?, ?, ?) ";
+	        stmt = conn.prepareStatement(query);
+	        stmt.setInt(1, boardNO);
+	        stmt.setInt(2, parentNO); // 원 게시물 부모 번호 설정
+	        stmt.setString(3, title);
+	        stmt.setString(4, content);
+	        stmt.setInt(5, memberNO);
+	        stmt.executeUpdate();
+	        stmt.close();
+	        conn.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	
 

@@ -28,8 +28,10 @@ public class BoardVO {
 	private int memberNO;
 	private String title;
 	private String content;
-	private String imageFileName;
 	private Date regdate;
+	
+	private String memberID;
+	private String name;
 	
 	public int getLevel() {
 		return level;
@@ -67,17 +69,23 @@ public class BoardVO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getImageFileName() {
-		return imageFileName;
-	}
-	public void setImageFileName(String imageFileName) {
-		this.imageFileName = imageFileName;
-	}
 	public Date getRegdate() {
 		return regdate;
 	}
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
+	}
+	public String getMemberID() {
+		return memberID;
+	}
+	public void setMemberID(String memberID) {
+		this.memberID = memberID;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 }
