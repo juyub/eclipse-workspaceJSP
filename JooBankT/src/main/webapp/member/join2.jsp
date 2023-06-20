@@ -1,0 +1,240 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+	integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="../css/user.css">
+<style>
+html{
+	background: url("/JooBankT/image/backWall.jpg");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+.user-box {
+	width: 400px;
+}
+
+#join-table {
+	margin: 5%;
+}
+
+.btc {
+	display: inline-block;
+	color: #fff;
+	background-color: #007bff;
+	margin: 3%;
+	border: 1px solid transparent;
+	border-radius: 0.25rem;
+	transition: color .15s ease-in-out, background-color .15s ease-in-out,
+		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+td {
+	padding: 5px;
+}
+
+</style>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+	function ajaxCheckId(id, callback) {
+	  $.ajax({
+	    type: "GET",
+	    url: "idCheck.jsp",
+	    data: { userID: id },
+	    success: function (response) {
+	      if (response.includes("사용 가능")) {
+	        // 사용 가능한 ID
+	        callback(true);
+	      } else {
+	        // 중복된 ID
+	        callback(false);
+	      }
+	    },
+	    error: function () {
+	      alert("아이디 중복 확인 중 오류가 발생했습니다. 다시 시도해 주세요.");
+	    },
+	  });
+	}
+	
+	function checkForm() {
+		let f = document.joinForm;
+		if (f.id.value == '') {
+			alert('ID를 입력하세요')
+			f.id.focus()
+			return false;
+		}
+		if (f.password.value == '') {
+			alert('패스워드를 입력하세요')
+			f.password.focus()
+			return false;
+		}
+		if (f.password.value != f.passwordCheck.value) {
+			alert("비밀번호가 일치하지 않습니다. 다시 확인하시고 입력해 주세요.");
+			f.passwordCheck.focus();
+			return false;
+		}	
+		// 중복 ID를 확인하기 위해 AJAX 사용
+		  ajaxCheckId(f.id.value, function (isAvailable) {
+		    if (isAvailable) {
+		      // 사용 가능한 ID인 경우 폼 제출
+		      f.submit();
+		    } else {
+		      // 중복된 ID인 경우 경고창 표시
+		      alert("존재하는 아이디입니다.");
+		    }
+		  });
+		  return false; // AJAX가 완료되기를 기다리기 위해 false 반환
+		/* return true; */
+	}
+	
+	function formatPhoneNumber(input) {
+	    // 입력 내용에서 하이픈을 제거
+	    var phoneNumber = input.value.replace(/-/g, '');
+
+	    // 입력 내용이 4자리 이상일 때만 첫 번째 하이픈 추가
+	    if (phoneNumber.length >= 4) {
+	        phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
+	    }
+
+	    // 입력 내용이 7자리 이상일 때만 두 번째 하이픈 추가
+	    if (phoneNumber.length >= 8) {
+	        phoneNumber = phoneNumber.replace(/(\d{3})-(\d{4})(\d+)/, '$1-$2-$3');
+	    }
+
+	    // 변경된 값을 다시 입력 필드에 설정
+	    input.value = phoneNumber;
+	}
+	
+	function idCheck(id) {
+		var form = document.joinForm;
+		if (id == "") {
+			alert("아이디를 먼저 입력해주세요!");
+			form.userID.focus();
+		} else {
+			url = "idCheck.jsp?userID=" + id;
+			window.open(url, "post", "width=300,height=150,left=800,top=400");
+		}
+	}
+	
+	function togglePasswordVisibility(id) {
+		  var input = document.getElementById(id);
+		  if (input.type === "password") {
+		    input.type = "text";
+		  } else {
+		    input.type = "password";
+		  }
+		}
+	
+	function execDaumPostcode() {
+		new daum.Postcode( {
+			oncomplete: function( data ) {
+				document.getElementById( 'zip-code' ).value = data.zonecode;
+				document.getElementById( 'address-1' ).value = data.address;
+				document.getElementById( 'address-1-1' ).value = data.jibunAddress;
+				document.getElementById( 'address-2' ).focus();
+			}
+		} ).open();
+	}
+	function execDaumPostcodeReset() {
+		document.getElementById( 'zip-code' ).value = null;
+		document.getElementById( 'address-1' ).value = null;
+		document.getElementById( 'address-1-1' ).value = null;
+		document.getElementById( 'address-2' ).value = null;
+	}
+</script>
+</head>
+<body>
+	<div id="user-box" class="user-box" align="center">
+		<h1>회원가입</h1>
+		<form action="${ pageContext.request.contextPath }/join.do" method="post" name="joinForm"
+			onsubmit="return checkForm()">
+			<table id="join-table" border="1">
+				<tr>
+					<td><label for="id">아이디</label></td>
+					<td><input type="text" class="form-control" id="id" name="id"
+						pattern="[a-z0-9]+" />
+						<!-- <span class="tip">* 영어 소문자와 숫자.</span></td> -->
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="button" value="ID중복확인" class="btc"
+						onClick="idCheck(this.form.id.value)"></td>
+				</tr>
+				<tr>
+					<td>비밀번호</td>
+					<td>
+					<span>
+					<input type="password" class="form-control" id="password"
+						name="password" pattern="[a-z0-9]+" required />
+					<input type="checkbox" onclick="togglePasswordVisibility('password')"> 비밀번호 보기
+					</span><br>
+					<!-- <span class="tip">* 영어 소문자와 숫자.</span>  -->
+					</td>
+				</tr>
+				<tr>
+					<td>비밀번호<br>확인</td>
+					<td>
+					<span>
+					<input type="password" class="form-control" id="passwordCheck"
+							name="passwordCheck" pattern="[a-z0-9]+" required 
+							oninput="passwordChecked()" />
+					<!-- <input type="checkbox" onclick="togglePasswordVisibility('passwordCheck')"> 비밀번호 보기
+					</span><br> -->
+					<!-- <span class="tip">* 비밀번호를 한번 더 입력하세요.</span> -->
+					</td>
+				</tr>
+				<tr>
+					<td>이름</td>
+					<td><input type="text" class="form-control" id="name"
+						name="name" /></td>
+				</tr>
+				<tr>
+					<td>연락처</td>
+					<td><input type="text" class="form-control" id="phone"
+						name="phone" maxlength="13"
+           				oninput="formatPhoneNumber(this)"
+           				/></td>
+				</tr>
+				<tr>
+					<td>이메일</td>
+					<td><input type="text" class="form-control" id="mail" name="mail"></td>
+				</tr>
+				<tr>
+					<td>주소</td>
+					<td>
+					<input type="text" id="zip-code" placeholder="우편번호" readonly>
+					<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기">
+					<input type="button" onclick="execDaumPostcodeReset()" value="초기화">
+		
+					<input type="text" id="address-1" placeholder="도로명주소" style="width: 300px" readonly>
+					<input type="text" id="address-1-1" placeholder="지번주소" style="width: 300px" readonly>
+					<input type="text" id="address-2" placeholder="상세주소" style="width: 300px">
+					</td>
+				</tr>
+			</table>
+			<button type="submit" class="btn btn-primary">회원가입</button>
+		</form>
+		<br> 
+		<a href="loginPage.do"> 로그인 </a> &nbsp;&nbsp;&nbsp;
+		<a href="indexPage.do"> 뒤로가기 </a>
+	</div>
+</body>
+</html>

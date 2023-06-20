@@ -51,7 +51,6 @@ td {
 	padding: 5px;
 }
 </style>
-
 </head>
 <body>
 	<div id="user-box" class="user-box" align="center">

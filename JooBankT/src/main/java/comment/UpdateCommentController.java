@@ -10,6 +10,7 @@ public class UpdateCommentController implements Controller {
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
 
+		String boardNO = request.getParameter("boardNO");
 		String commentNO = request.getParameter("commentNO");
 		String content = request.getParameter("content");
 		
@@ -20,7 +21,8 @@ public class UpdateCommentController implements Controller {
 		CommentDAO dao = new CommentDAO();
 		dao.updateComment(vo);
 		
-		return "/board/getBoard.jsp";
+//		return "/board/getBoard.jsp";
+		return "redirect:getBoard.do?boardNO="+boardNO;
 	}
 
 }

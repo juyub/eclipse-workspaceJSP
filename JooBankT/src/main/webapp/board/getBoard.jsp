@@ -134,6 +134,7 @@
 			        <td>
 			        <c:if test="${comment.memberID == login.memberID}">
 		                <input type="hidden" name="commentNO" value="${comment.commentNO}"/>
+		                <input type="hidden" name="boardNO" value="${board.boardNO}"/>
 		                <button type="submit">수정</button>
 		                <button><a href="deleteComment.do?commentNO=${ comment.commentNO }">삭제</a></button>
 		                </form>
