@@ -32,7 +32,7 @@ public class LoginController implements Controller {
 			return "index.jsp";
 		} else {
 			request.setAttribute("loginFailed", true);
-			return "JooBankTT/login/login.jsp";
+			return "JooBankT/login/login.jsp";
 		}
 
 	}

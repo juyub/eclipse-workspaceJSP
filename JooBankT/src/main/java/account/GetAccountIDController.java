@@ -5,22 +5,22 @@ import javax.servlet.http.HttpServletResponse;
 
 import controller.Controller;
 
-public class CreateAccountController implements Controller {
+public class GetAccountIDController implements Controller {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
 
-		String memberNO = request.getParameter("memberNO");
-		String accountPassword = request.getParameter("accountPassword");
+		String accountID = request.getParameter("accountId");
 		
 		AccountVO vo = new AccountVO();
-		vo.setMemberNO(Integer.parseInt(memberNO));
-		vo.setAccountPassword(accountPassword);
+		vo.setAccountID(Integer.parseInt(accountID));
 		
 		AccountDAO dao = new AccountDAO();
-		dao.createAccount(vo);
+		AccountVO account = dao.getAccountID(vo);
 		
-		return "myAccountList.do";
+		request.setAttribute("account", account);
+		
+		return null;
 	}
 
 }

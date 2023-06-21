@@ -4,18 +4,18 @@ import java.util.Date;
 
 /*
 	CREATE TABLE jb_account (
-		accountID NUMBER(12) PRIMARY KEY,
-		memberNO NUMBER(10, 0),
-		accountPassword NUMBER(4),
-		balance DECIMAL(15, 2),
-		bankCode NUMBER(3),
-		openDate DATE,
-		FOREIGN KEY (memberNO) REFERENCES jb_member(memberNO),
-		FOREIGN KEY (bankCode) REFERENCES bank_cd(bankCode)
+	    accountID NUMBER(12) PRIMARY KEY,
+	    memberNO NUMBER(10, 0),
+	    accountPassword VARCHAR2(4),
+	    balance DECIMAL(15, 2),
+	    bankCode VARCHAR2(3),
+	    openedDate DATE,
+	    FOREIGN KEY (memberNO) REFERENCES jb_member(memberNO),
+	    FOREIGN KEY (bankCode) REFERENCES bank_cd(bankCode)
 	);
 	
 	CREATE TABLE bank_cd (
-	    bankCode NUMBER(3) PRIMARY KEY,
+	    bankCode VARCHAR2(3) PRIMARY KEY,
 	    bankName VARCHAR2(50)
 	);
 */
@@ -24,12 +24,14 @@ public class AccountVO {
 
     private int accountID;
     private int memberNO;
-    private int accountPassword;
+    private String accountPassword;
     private double balance;
-    private int bankCode;
-    private Date openDate;
+    private String bankCode;
+    private Date openedDate;
     
     private String bankName;
+    
+    private String name;
 
 	public int getAccountID() {
 		return accountID;
@@ -47,11 +49,11 @@ public class AccountVO {
 		this.memberNO = memberNO;
 	}
 
-	public int getAccountPassword() {
+	public String getAccountPassword() {
 		return accountPassword;
 	}
 
-	public void setAccountPassword(int accountPassword) {
+	public void setAccountPassword(String accountPassword) {
 		this.accountPassword = accountPassword;
 	}
 
@@ -63,20 +65,20 @@ public class AccountVO {
 		this.balance = balance;
 	}
 
-	public int getBankCode() {
+	public String getBankCode() {
 		return bankCode;
 	}
 
-	public void setBankCode(int bankCode) {
+	public void setBankCode(String bankCode) {
 		this.bankCode = bankCode;
 	}
 
-	public Date getOpenDate() {
-		return openDate;
+	public Date getOpenedDate() {
+		return openedDate;
 	}
 
-	public void setOpenDate(Date openDate) {
-		this.openDate = openDate;
+	public void setOpenedDate(Date openedDate) {
+		this.openedDate = openedDate;
 	}
 
 	public String getBankName() {
@@ -86,5 +88,13 @@ public class AccountVO {
 	public void setBankName(String bankName) {
 		this.bankName = bankName;
 	}
-    
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 }
