@@ -12,7 +12,7 @@ public class TransferController implements Controller {
 
 		int sourceAccountID = Integer.parseInt(request.getParameter("sourceAccountID"));
         int targetAccountID = Integer.parseInt(request.getParameter("targetAccountID"));
-        double transferAmount = Double.parseDouble(request.getParameter("transferAmount"));
+        int transferAmount = Integer.parseInt(request.getParameter("transferAmount"));
 
         AccountDAO accountDAO = new AccountDAO();
         int result = accountDAO.transfer(sourceAccountID, targetAccountID, transferAmount);

@@ -75,7 +75,8 @@
 			
 			/* console.log(rank, name, audiCnt) */
 			$('#searchResult').append('<h4>' + rank + '위</h4>')
-			$('#searchResult').append('<strong>' + name + '</strong> (' + audiCnt + '명)')
+			$('#searchResult').append('<strong>' + name + '</strong> (' + audiCnt + '명)<br>')
+			$('#searchResult').append('<button>상세보기</button>')
 			$('#searchResult').append('<hr>')
 			
 		}

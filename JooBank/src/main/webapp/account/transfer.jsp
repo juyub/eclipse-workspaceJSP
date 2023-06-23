@@ -8,11 +8,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 </head>
 <body>
 <form action="${contextPath}/transfer.do" method="post">
-송금계좌 : <input type="text" name="sourceAccountID" value= "${account.accountID}" readonly> <br>
-계좌잔액 : <input type="text" name="balance" value= "<fmt:formatNumber type="number" pattern="###,###" value="${account.balance}" />" readonly> <br>
+송금계좌 : <input type="text" name="sourceAccountID" value= "${account.ac_number}" readonly> <br>
+계좌잔액 : <input type="text" name="AC_MONEY" value= "<fmt:formatNumber type="number" pattern="###,###" value="${account.AC_MONEY}" />" readonly> <br>
 예금주 : <input type="text" name="name" value= "${account.name}" readonly> <br>
 <br>
 이체할 은행 :  <br>

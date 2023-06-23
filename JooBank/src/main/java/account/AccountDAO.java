@@ -81,7 +81,7 @@ public class AccountDAO {
 	}
 	
 	// AccountID 로 조회
-	public AccountVO getAccountID(AccountVO vo) {
+	public AccountVO getAc_number(AccountVO vo) {
 		AccountVO account = null;
 		String query =
 				" SELECT c.ac_number, c.id, ui.NAME, c.AC_NAME, c.AC_MONEY, c.AC_OP_DATE, c.bank_name, d.pd_name "
@@ -140,6 +140,8 @@ public class AccountDAO {
 //	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
+	    } finally {
+	        JDBCUtil.close(stmt, conn);
 	    }
 
 	    return result;
@@ -160,18 +162,20 @@ public class AccountDAO {
 
 	        // Insert transaction history for withdrawal
 //	        if (result > 0) {
-//	            double transactionedBalance = getCurrentBalance(accountID) - withdrawAmount;
-//	            insertTransaction(accountID, "3", withdrawAmount, "withdraw", accountID, "withdraw", transactionedBalance);
+//	            int transactionedBalance = getCurrentAC_MONEY(ac_number) - withdrawAmount;
+//	            insertTransaction(ac_number, "3", withdrawAmount, "withdraw", ac_number, "withdraw", transactionedBalance);
 //	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
+	    } finally {
+	        JDBCUtil.close(stmt, conn);
 	    }
 
 	    return result;
 	}
 	
 	// 이체
-	public int transfer(int senderAccountID, int receiverAccountID, double transferAmount) {
+	public int transfer(int senderAccountID, int receiverAccountID, int transferAmount) {
 	    int result = 0;
 
 	    // 출금
@@ -181,51 +185,50 @@ public class AccountDAO {
 	    int depositResult = deposit(receiverAccountID, transferAmount);
 
 	    // 입출금 결과가 성공적이면 이체 내역 저장
-	    if (withdrawalResult > 0 && depositResult > 0) {
-	        double senderTransactionedBalance = getCurrentAC_MONEY(senderAccountID) - transferAmount;
-	        double receiverTransactionedBalance = getCurrentAC_MONEY(receiverAccountID) + transferAmount;
-
-	        // 출금 이력 추가
-	        insertTransaction(senderAccountID, "3", transferAmount, "transfer", receiverAccountID, "transfer", senderTransactionedBalance);
-
-	        // 입금 이력 추가
-	        insertTransaction(receiverAccountID, "3", transferAmount, "transfer", senderAccountID, "transfer", receiverTransactionedBalance);
-
-	        result = 1;
-	    } else {
-	        // 실패한 경우 롤백 처리
-	        try {
-	            conn.rollback();
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	    }
+//	    if (withdrawalResult > 0 && depositResult > 0) {
+//	        int senderTransactionedBalance = getCurrentAC_MONEY(senderAccountID) - transferAmount;
+//	        int receiverTransactionedBalance = getCurrentAC_MONEY(receiverAccountID) + transferAmount;
+//
+//	        // 출금 이력 추가
+//	        insertTransaction(senderAccountID, "3", transferAmount, "transfer", receiverAccountID, "transfer", senderTransactionedBalance);
+//
+//	        // 입금 이력 추가
+//	        insertTransaction(receiverAccountID, "3", transferAmount, "transfer", senderAccountID, "transfer", receiverTransactionedBalance);
+//
+//	        result = 1;
+//	    } else {
+//	        // 실패한 경우 롤백 처리
+//	        try {
+//	            conn.rollback();
+//	        } catch (Exception e) {
+//	            e.printStackTrace();
+//	        }
+//	    }
 
 	    return result;
 	}
 	
 	// 입출금내역
-	public void insertTransaction(int accountID, String bankCode, double amount, String transactionType, int targetAccountID, String transactionDetails, double transactionedBalance) {
-	    String query = "INSERT INTO transaction_info(transactionID, accountID, bankCode, transactionAmount, transactionType, targetAccountID, transactionDetail, transactionedBalance, transactionTime) "
-	            + "VALUES(transaction_id_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, TRUNC(SYSTIMESTAMP, 'MI'))";
-
-	    try {
-	        conn = JDBCUtil.getConnection();
-	        stmt = conn.prepareStatement(query);
-	        stmt.setInt(1, accountID);
-	        stmt.setString(2, bankCode);
-	        stmt.setDouble(3, amount);
-	        stmt.setString(4, transactionType);
-	        stmt.setInt(5, targetAccountID);
-	        stmt.setString(6, transactionDetails);
-	        stmt.setDouble(7, transactionedBalance);
-
-	        stmt.executeUpdate();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	}
-	
+//	public void insertTransaction(int ac_number, String bankCode, int amount, String transactionType, int targetAccountID, String transactionDetails, int transactionedBalance) {
+//	    String query = "INSERT INTO ac_record(ac_number, id, rc_type, rc_name, rc_money) "
+//	                 + "VALUES(?, ?, ?, ?, ?)";
+//
+//	    try {
+//	        conn = JDBCUtil.getConnection();
+//	        stmt = conn.prepareStatement(query);
+//	        stmt.setInt(1, ac_number);
+//	        stmt.setString(2, bankCode);
+//	        stmt.setString(3, transactionType);
+//	        stmt.setString(4, transactionDetails);
+//	        stmt.setInt(5, amount);
+//
+//	        stmt.executeUpdate();
+//	    } catch (Exception e) {
+//	        e.printStackTrace();
+//	    } finally {
+//	        JDBCUtil.close(stmt, conn);
+//	    }
+//	}
 	
 	public int getCurrentAC_MONEY(int ac_number) {
 	    String query = "SELECT AC_MONEY FROM account WHERE ac_number = ?";
@@ -238,50 +241,15 @@ public class AccountDAO {
 
 	        ResultSet rs = stmt.executeQuery();
 	        if (rs.next()) {
-	        	currentAC_MONEY = rs.getInt("AC_MONEY");
+	            currentAC_MONEY = rs.getInt("AC_MONEY");
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
+	    } finally {
+	        JDBCUtil.close(rs, stmt, conn);
 	    }
 
 	    return currentAC_MONEY;
 	}
-
-	
-	public boolean transferMoney(String sourceAccountNumber, String targetAccountNumber, double transferAmount, String transactionDetailName) {
-        try {
-        	conn = JDBCUtil.getConnection();
-        	conn.setAutoCommit(false);
-
-            String updateSourceAccountSql  = "UPDATE account SET balance = balance - ? WHERE account_number = ?";
-            
-            PreparedStatement updateSourceAccountStmt  = conn.prepareStatement(updateSourceAccountSql);
-            updateSourceAccountStmt.setDouble(1, transferAmount);
-            updateSourceAccountStmt.setString(2, sourceAccountNumber);
-            
-            int affectedRows1 = stmt.executeUpdate();
-
-            String updateTargetAccountSql = "UPDATE account SET balance = balance + ? WHERE account_number = ?";
-            PreparedStatement updateTargetAccountStmt = conn.prepareStatement(updateTargetAccountSql);
-            updateTargetAccountStmt.setDouble(1, transferAmount);
-            updateTargetAccountStmt.setString(2, targetAccountNumber);
-            
-            int affectedRows2 = updateTargetAccountStmt.executeUpdate();
-
-            if (affectedRows1 > 0 && affectedRows2 > 0) {
-                conn.commit();
-                return true;
-            } else {
-                conn.rollback();
-                return false;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-
-	
 	
 }

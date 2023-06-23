@@ -18,7 +18,7 @@ public class WithdrawPageController implements Controller {
 		vo.setAc_number(Integer.parseInt(ac_number));
 		
 		AccountDAO dao = new AccountDAO();
-		AccountVO account = dao.getAccountID(vo);
+		AccountVO account = dao.getAc_number(vo);
 		
 		request.setAttribute("account", account);
 		

@@ -10,13 +10,13 @@ public class GetAccountIDController implements Controller {
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
 
-		String accountID = request.getParameter("accountId");
+		String ac_number = request.getParameter("ac_number");
 		
 		AccountVO vo = new AccountVO();
-		vo.setAccountID(Integer.parseInt(accountID));
+		vo.setAc_number(Integer.parseInt(ac_number));
 		
 		AccountDAO dao = new AccountDAO();
-		AccountVO account = dao.getAccountID(vo);
+		AccountVO account = dao.getAc_number(vo);
 		
 		request.setAttribute("account", account);
 		
