@@ -40,7 +40,7 @@
 								<td>${ account.name }</td>
 							</tr>
 							<tr>
-								<td ><a href="getBook.do?bookno=${ account.ac_number }">${ account.ac_number }</a></td>
+								<td ><a href="${contextPath}/getAc_recordList.do?ac_number=${ account.ac_number }">${ account.ac_number }</a></td>
 								<td COLSPAN="2" align="right" style="width:250px">
 								 잔액 : <fmt:formatNumber type="number" pattern="###,###" value="${account.AC_MONEY}" /> 원
 								 </td>

@@ -10,12 +10,12 @@ public class TransferController implements Controller {
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
 
-		int sourceAccountID = Integer.parseInt(request.getParameter("sourceAccountID"));
-        int targetAccountID = Integer.parseInt(request.getParameter("targetAccountID"));
+		int sendAc_number = Integer.parseInt(request.getParameter("sendAc_number"));
+        int receivAc_number = Integer.parseInt(request.getParameter("receivAc_number"));
         int transferAmount = Integer.parseInt(request.getParameter("transferAmount"));
 
         AccountDAO accountDAO = new AccountDAO();
-        int result = accountDAO.transfer(sourceAccountID, targetAccountID, transferAmount);
+        int result = accountDAO.transfer(sendAc_number, receivAc_number, transferAmount);
 
         if (result > 0) {
             request.setAttribute("message", "Transfer successful!");
@@ -23,7 +23,7 @@ public class TransferController implements Controller {
             request.setAttribute("message", "Transfer failed!");
         }
 
-        return "redirect:/JooBankT/myAccountList.do";
+        return "redirect:/JooBank/myAccountList.do";
     }
 
 }

@@ -8,17 +8,25 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<script>
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+    
+    function formatInput(input) {
+        input.value = numberWithCommas(input.value.replace(/,/g, ''));
+    }
+</script>
 </head>
 <body>
 <form action="${contextPath}/transfer.do" method="post">
-송금계좌 : <input type="text" name="sourceAccountID" value= "${account.ac_number}" readonly> <br>
+송금계좌 : <input type="text" name="sendAc_number" value= "${account.ac_number}" readonly> <br>
 계좌잔액 : <input type="text" name="AC_MONEY" value= "<fmt:formatNumber type="number" pattern="###,###" value="${account.AC_MONEY}" />" readonly> <br>
 예금주 : <input type="text" name="name" value= "${account.name}" readonly> <br>
 <br>
 이체할 은행 :  <br>
-이체할 계좌 : <input type="text" name="targetAccountID"> <br>
-이체할 금액 : 	<input type="text" name="transferAmount" > 원 <br>				
+이체할 계좌 : <input type="text" name="receivAc_number"> <br>
+이체할 금액 : 	<input type="text" name="transferAmount" onkeyup="formatInput(this);"> 원 <br>				
 <input type="submit" value="이체">
 </form>
 </body>

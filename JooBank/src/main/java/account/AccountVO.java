@@ -29,14 +29,15 @@ import java.util.Date;
 	    pd_content VARCHAR2(1000)
 	);
 	
-	create table ac_record (
-		rc_no NUMBER(15) PRIMARY KEY,
+	CREATE TABLE ac_record (
+	    rc_no NUMBER PRIMARY KEY,
 	    ac_number NUMBER(15),
 	    id VARCHAR2(50),
 	    rc_type VARCHAR2(50),
 	    rc_name VARCHAR2(50),
 	    rc_money NUMBER(15),
-	    rc_time timestamp default TRUNC(SYSTIMESTAMP, 'MI')
+	    rc_time TIMESTAMP DEFAULT TRUNC(SYSTIMESTAMP, 'MI'),
+	    FOREIGN KEY (ac_number, id) REFERENCES account(ac_number, id)
 	);
 */
 
