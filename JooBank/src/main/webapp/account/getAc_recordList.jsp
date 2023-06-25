@@ -23,5 +23,33 @@
 		</tr>
 		</table>
 	</c:forEach>
+	<br>
+	 <c:choose>
+        <c:when test="${currentPage > 1}">
+            <a href="${contextPath}/getAc_recordList.do?pageNo=${currentPage-1}&ac_number=${ac_number}">Previous</a>
+        </c:when>
+        <c:otherwise>
+            <span>Previous</span>
+        </c:otherwise>
+    </c:choose>
+    <c:forEach begin="1" end="${totalPageCount}" var="pageNumber">
+        <c:choose>
+            <c:when test="${pageNumber == currentPage}">
+                <span>${pageNumber}</span>
+            </c:when>
+            <c:otherwise>
+                <a href="${contextPath}/getAc_recordList.do?pageNo=${pageNumber}&ac_number=${ac_number}">${pageNumber}</a>
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
+    <c:choose>
+        <c:when test="${currentPage < totalPageCount}">
+            <a href="${contextPath}/getAc_recordList.do?pageNo=${currentPage+1}&ac_number=${ac_number}">Next</a>
+        </c:when>
+        <c:otherwise>
+            <span>Next</span>
+        </c:otherwise>
+    </c:choose>
+	
 </body>
 </html>

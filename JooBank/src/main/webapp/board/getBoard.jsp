@@ -95,7 +95,7 @@
 				</tr>
 				<tr>
 					<td width="20%" align="center" bgcolor="#FF9933">등록일자</td>
-					<td><input type=text value="<fmt:formatDate value="${board.regtime}" />" disabled /></td>
+					<td><input type=text value="<fmt:formatDate value="${board.regtime}" pattern="yy/MM/dd HH:mm:ss"/>" disabled /></td>
 				</tr>
 				<tr id="tr_btn_modify"  >
 				   <td colspan="2" align="center" >
@@ -131,7 +131,7 @@
 		 	 <form action="${contextPath}/updateComment.do" method="post">
 			    <tr>
 			        <td>${comment.id} : <input type="text" name = "content" value="${comment.content}"></td>
-			        <td><fmt:formatDate value="${comment.regtime}" pattern="yy/MM/dd"/></td>
+			        <td><fmt:formatDate value="${comment.regtime}" pattern="yy/MM/dd HH:mm:ss"/></td>
 			        <td>
 			        <c:if test="${comment.id == login.id}">
 		                <input type="hidden" name="commentNO" value="${comment.commentNO}"/>

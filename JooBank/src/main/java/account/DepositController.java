@@ -11,7 +11,9 @@ public class DepositController implements Controller {
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
 
 		int ac_number = Integer.parseInt(request.getParameter("ac_number"));
-        int depositAmount = Integer.parseInt(request.getParameter("depositAmount"));
+//		String depositAmountStr = request.getParameter("depositAmount").replaceAll(",", "");
+//		int depositAmount = Integer.parseInt(depositAmountStr);
+		int depositAmount = Integer.parseInt(request.getParameter("depositAmount"));
 
         AccountDAO dao = new AccountDAO();
         int result = dao.deposit(ac_number, depositAmount);

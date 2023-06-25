@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import comment.CommentDAO;
 import comment.CommentVO;
@@ -22,7 +23,9 @@ public class GetBoardController implements Controller {
 		BoardDAO dao= new BoardDAO();
 		BoardVO board = dao.selectBoardNo(vo);
 		
-		request.setAttribute("board",board);
+        dao.updateHit(board.getBoardNO());
+	    
+	    request.setAttribute("board",board);
 		
 		CommentDAO dao1= new CommentDAO();
 		List<CommentVO> commentList = dao1.getCommentListByBoardNO(Integer.parseInt(boardNO));

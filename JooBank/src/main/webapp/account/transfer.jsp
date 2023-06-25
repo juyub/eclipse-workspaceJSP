@@ -16,10 +16,20 @@
     function formatInput(input) {
         input.value = numberWithCommas(input.value.replace(/,/g, ''));
     }
+    
+    function removeCommas(input) {
+        input.value = input.value.replace(/,/g, '');
+    }
+
+    function onSubmitForm(form) {
+        removeCommas(form.transferAmount);
+        return true;
+    }
+    
 </script>
 </head>
 <body>
-<form action="${contextPath}/transfer.do" method="post">
+<form action="${contextPath}/transfer.do" method="post" onsubmit="return onSubmitForm(this);">
 송금계좌 : <input type="text" name="sendAc_number" value= "${account.ac_number}" readonly> <br>
 계좌잔액 : <input type="text" name="AC_MONEY" value= "<fmt:formatNumber type="number" pattern="###,###" value="${account.AC_MONEY}" />" readonly> <br>
 예금주 : <input type="text" name="name" value= "${account.name}" readonly> <br>
