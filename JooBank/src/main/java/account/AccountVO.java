@@ -36,7 +36,7 @@ import java.util.Date;
 	    rc_type VARCHAR2(50),
 	    rc_name VARCHAR2(50),
 	    rc_money NUMBER(15),
-	    rc_time TIMESTAMP DEFAULT TRUNC(SYSTIMESTAMP, 'MI'),
+	    rc_time TIMESTAMP DEFAULT SYSTIMESTAMP,
 	    FOREIGN KEY (ac_number, id) REFERENCES account(ac_number, id)
 	);
 */

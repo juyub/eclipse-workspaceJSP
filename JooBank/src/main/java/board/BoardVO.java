@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 		id VARCHAR2(50),
 		title VARCHAR2(200),
 		CONTENT VARCHAR2(2000),
-		regtime TIMESTAMP DEFAULT TRUNC(SYSTIMESTAMP, 'MI'),
+		regtime TIMESTAMP DEFAULT SYSTIMESTAMP,
 		hit NUMBER(10, 0) DEFAULT 0,
 		FOREIGN KEY (id) REFERENCES jb_user(id)
 	);

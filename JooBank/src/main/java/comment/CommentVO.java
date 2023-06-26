@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 		boardNO number(10),
 		id VARCHAR2(50),
 		CONTENT VARCHAR2(2000),
-		regtime TIMESTAMP DEFAULT TRUNC(SYSTIMESTAMP, 'MI'),
+		regtime TIMESTAMP DEFAULT SYSTIMESTAMP,
 		FOREIGN KEY (id) REFERENCES jb_user (id),
 		FOREIGN KEY (boardNO) REFERENCES jb_board(boardNO)
 	);

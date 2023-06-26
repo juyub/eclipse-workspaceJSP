@@ -7,36 +7,45 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sun.jdi.request.InvalidRequestStateException;
 
+import account.AccountDAO;
+import account.AccountVO;
 import controller.Controller;
 
 public class GetAc_recordListController implements Controller {
 
-	 private static final int pageSize = 10; // 페이지당 보여줄 레코드 수
-	
+	private static final int pageSize = 10; // 페이지당 보여줄 레코드 수
+
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
 
-		  int ac_number = Integer.parseInt(request.getParameter("ac_number"));
-	        int pageNo;
-	        String pageNoParam = request.getParameter("pageNo");
-	        if (pageNoParam != null) {
-	            pageNo = Integer.parseInt(pageNoParam);
-	        } else {
-	            pageNo = 1; // 기본값으로 1을 설정
-	        }
+		int ac_number = Integer.parseInt(request.getParameter("ac_number"));
+		
+		AccountDAO accountDao = new AccountDAO();
+		AccountVO account = accountDao.getAccount(ac_number);
+		
+		request.setAttribute("account", account);
 
-	        Ac_recordDAO dao = new Ac_recordDAO();
-	        int totalRecordCount = dao.getAc_recordCount(ac_number); // 총 레코드 수를 가져옴
-	        int totalPageCount = (int) Math.ceil((double) totalRecordCount / pageSize); // 총 페이지 수 계산
+		
+		int pageNo;
+		String pageNoParam = request.getParameter("pageNo");
+		if (pageNoParam != null) {
+			pageNo = Integer.parseInt(pageNoParam);
+		} else {
+			pageNo = 1; // 기본값으로 1을 설정
+		}
 
-	        List<Ac_recordVO> recordList = dao.getAc_recordList(ac_number, pageNo, pageSize);
+		Ac_recordDAO dao = new Ac_recordDAO();
+		int totalRecordCount = dao.getAc_recordCount(ac_number); // 총 레코드 수를 가져옴
+		int totalPageCount = (int) Math.ceil((double) totalRecordCount / pageSize); // 총 페이지 수 계산
 
-	        request.setAttribute("ac_number", ac_number);
-	        request.setAttribute("recordList", recordList);
-	        request.setAttribute("totalPageCount", totalPageCount);
-	        request.setAttribute("currentPage", pageNo);
+		List<Ac_recordVO> recordList = dao.getAc_recordList(ac_number, pageNo, pageSize);
 
-	        return "/account/getAc_recordList.jsp";
+		request.setAttribute("ac_number", ac_number);
+		request.setAttribute("recordList", recordList);
+		request.setAttribute("totalPageCount", totalPageCount);
+		request.setAttribute("currentPage", pageNo);
+
+		return "/account/getAc_recordList.jsp";
 	}
 
 }

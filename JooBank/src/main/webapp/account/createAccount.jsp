@@ -14,9 +14,18 @@
       <tr>
         <td>이름</td>
         <td>
-        	<input type="text" name="name" value="${login.name}" readonly>
+       	 ${login.name}
         	<input type="hidden" name="id" value="${login.id}">
         </td>
+      </tr>
+      <tr>
+      	<td>
+      	상품명
+      	</td>
+      	<td>
+      	${product.pd_name}
+      	<input type="hidden" name="pd_number" value="${product.pd_number}">
+      	</td>
       </tr>
       <tr>
         <td>비밀번호</td>

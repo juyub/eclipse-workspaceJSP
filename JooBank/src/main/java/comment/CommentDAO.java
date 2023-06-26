@@ -100,6 +100,22 @@ public class CommentDAO {
 		}
 	}
 	
+	// 게시글 삭제시 댓글 삭제
+	public void deleteComment(int boardNO) {
+		String sql =
+				" delete jb_comment where boardNO=? ";
+		try {
+			conn = JDBCUtil.getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, boardNO);
+			stmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(stmt, conn);
+		}
+	}
+	
 }
 
 

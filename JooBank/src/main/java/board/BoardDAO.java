@@ -151,7 +151,7 @@ public class BoardDAO {
 		return board;
 	}
 
-	// 업데이트 메소드 추가
+	// 조회수증가 메소드
 	public void updateHit(int boardNO) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -191,7 +191,8 @@ public class BoardDAO {
 			String content = vo.getContent();
 			String id = vo.getId();
 
-			String query = " INSERT INTO jb_board (boardNO, parentNO, title, content, id) "
+			String query =
+					" INSERT INTO jb_board (boardNO, parentNO, title, content, id) "
 					+ " VALUES (?, ? ,?, ?, ?) ";
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, boardNO);
@@ -209,14 +210,46 @@ public class BoardDAO {
 
 	}
 
+	// 게시글 수정
 	public void updateBoard(BoardVO vo) {
-		// TODO Auto-generated method stub
-
+		try {
+			String sql = 
+					" update jb_board set title = ?, content = ? " +
+							" where boardNO = ? ";
+			
+			conn = JDBCUtil.getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, vo.getTitle());
+			stmt.setString(2, vo.getContent());
+			stmt.setInt(3, vo.getBoardNO());
+			stmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(stmt, conn);
+		}
 	}
 
-	public void deleteBoard(int parseInt) {
-		// TODO Auto-generated method stub
+	// 게시글 삭제
+	public void deleteBoard(int boardNO) {
+		String sql = 
+				" delete jb_board " +
+				" WHERE boardNO in ( " +
+								 " SELECT boardNO FROM  jb_board " +
+								 " START WITH boardNO = ? " +
+								 " CONNECT BY PRIOR  boardNO = parentNO " +
+								 " ) ";
 
+		try {
+			conn = JDBCUtil.getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, boardNO);
+			stmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(stmt, conn);
+		}
 	}
 
 }

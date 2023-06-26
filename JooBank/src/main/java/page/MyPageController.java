@@ -9,7 +9,7 @@ public class MyPageController implements Controller {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
-		return "member/myPage.jsp";
+		return "user/myPage.jsp";
 	}
 
 }

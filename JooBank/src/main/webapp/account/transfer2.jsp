@@ -28,7 +28,7 @@
 </script>
 </head>
 <body>
-<form action="${contextPath}/TrasferConfrimPage.do" method="post" onsubmit="return onSubmitForm(this);">
+<form action="${contextPath}/transfer.do" method="post" onsubmit="return onSubmitForm(this);">
 송금계좌 : <input type="text" name="sendAc_number" value= "${account.ac_number}" readonly> <br>
 계좌잔액 : <input type="text" name="AC_MONEY" value= "<fmt:formatNumber type="number" pattern="###,###" value="${account.AC_MONEY}" />" readonly> <br>
 예금주 : <input type="text" name="name" value= "${account.name}" readonly> <br>

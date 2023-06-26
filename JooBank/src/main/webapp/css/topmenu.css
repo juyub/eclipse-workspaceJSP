@@ -56,16 +56,23 @@ li {
 .cell1 {
   width: 10%;
 }
-
-.cell3 {
-  width: 15%;
+.cell2 {
+  width: 30%;
+  font-size:25px;
+  margin-right: 10px; 
+	margin-left: 10px; 
 }
-
 .cell4 {
   width: 15%;
 }
 
 .link-spacing {
-	font-size:30px;
-  margin-right: 30px; 
+	font-size:25px;
+	margin-right: 10px; 
+	margin-left: 10px; 
+}
+.link-spacing2 {
+	font-size:22px;
+	margin-right: 10px; 
+	margin-left: 10px; 
 }

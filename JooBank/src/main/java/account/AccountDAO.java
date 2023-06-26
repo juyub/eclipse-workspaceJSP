@@ -31,7 +31,7 @@ public class AccountDAO {
 	        stmt.setString(3, vo.getAC_PW());
 	        stmt.setInt(4, 0);
 	        stmt.setInt(5, 5);
-	        stmt.setInt(6, 1);
+	        stmt.setInt(6, vo.getPD_NUMBER());
 	
 	        stmt.executeUpdate();
 	    } catch (Exception e) {

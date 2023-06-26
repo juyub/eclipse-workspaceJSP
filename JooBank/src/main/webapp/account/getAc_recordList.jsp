@@ -10,6 +10,17 @@
 <title>Insert title here</title>
 </head>
 <body>
+	
+	<table>
+		<tr>
+		<td>${ account.bank_name }</td>
+		<td>${ account.pd_name }</td>
+		<td>${ account.name }</td>
+		<td>${ account.ac_number }</td>
+		<td>잔액 : <fmt:formatNumber type="number" pattern="###,###" value="${account.AC_MONEY}" /> 원</td>
+		</tr>
+	</table>
+
 	<c:forEach var="record" items="${recordList}" >
 		<br>
 		<table border="1" width="50%">
@@ -26,10 +37,10 @@
 	<br>
 	 <c:choose>
         <c:when test="${currentPage > 1}">
-            <a href="${contextPath}/getAc_recordList.do?pageNo=${currentPage-1}&ac_number=${ac_number}">Previous</a>
+            <a href="${contextPath}/getAc_recordList.do?pageNo=${currentPage-1}&ac_number=${ac_number}">이전</a>
         </c:when>
         <c:otherwise>
-            <span>Previous</span>
+            <span>이전</span>
         </c:otherwise>
     </c:choose>
     <c:forEach begin="1" end="${totalPageCount}" var="pageNumber">
@@ -44,10 +55,10 @@
     </c:forEach>
     <c:choose>
         <c:when test="${currentPage < totalPageCount}">
-            <a href="${contextPath}/getAc_recordList.do?pageNo=${currentPage+1}&ac_number=${ac_number}">Next</a>
+            <a href="${contextPath}/getAc_recordList.do?pageNo=${currentPage+1}&ac_number=${ac_number}">다음</a>
         </c:when>
         <c:otherwise>
-            <span>Next</span>
+            <span>다음</span>
         </c:otherwise>
     </c:choose>
 	

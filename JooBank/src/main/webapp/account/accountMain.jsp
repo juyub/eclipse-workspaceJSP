@@ -15,8 +15,6 @@
 		<jsp:include page="/topMenu.jsp" />
 	</header>
 	<section>
-		<button><a href="${contextPath}/account/createAccount.jsp">계좌개설하기</a></button>
-		<br> <br>
 		<c:choose>
 				<c:when test="${ empty accountList }"> 
 			 		계좌가 없습니다.

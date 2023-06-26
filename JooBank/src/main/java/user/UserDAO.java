@@ -64,6 +64,11 @@ public class UserDAO {
 		}
 		return user;
 	}
+
+	public void updateUser(UserVO vo) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

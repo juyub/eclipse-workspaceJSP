@@ -7,15 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- <link rel="stylesheet" type="text/css" href="../css/user.css"> -->
-<style>
-/* html{
-	background: url("/JooBankT/image/backWall.jpg");
-	background-size: 100% 100%;
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-} */
-</style>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 	function execDaumPostcode() {
@@ -45,16 +36,48 @@
         let address11 = document.getElementById('address-1-1').value.trim();
         let address2 = document.getElementById('address-2').value.trim();
 
-        let addressFull = address1 + " " + address11 + " " + address2;
+        let addressFull = address1 + ", " + address11 + ", " + address2;
 
         document.getElementById('address').value = addressFull;
     }
 </script>
+<!-- <link rel="stylesheet" type="text/css" href="/JooBank/css/user.css"> -->
+<style>
+html{
+	background: url("/JooBank/image/backWall.jpg");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+body {
+	width : 500px;
+	padding: 0;
+	font-family: verdana, sans-serif;
+	font-size: 15px;
+	margin: 0 auto;
+	margin-top:5%;
+}
+
+#user-box {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	padding: 20px;
+	transform: translate(-50%, -50%);
+	background: rgb(255, 255, 255, 0.8);
+	box-sizing: border-box;
+	box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
+	border-radius: 10px;
+	color: black;
+}
+</style>
+
 </head>
 <body>
-	<div >
+	<div id="user-box">
 		<h1>회원가입</h1>
-		<form action="${contextPath}/join.do" method="post" name="joinForm"
+		<form action="${contextPath}/join.do" method="post" name="joinForm" 
 			onsubmit="return checkForm()">
 			<table id="join-table" border="1">
 				<tr>
