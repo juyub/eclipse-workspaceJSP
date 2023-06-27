@@ -36,7 +36,9 @@ public class GetAc_recordListController implements Controller {
 
 		Ac_recordDAO dao = new Ac_recordDAO();
 		int totalRecordCount = dao.getAc_recordCount(ac_number); // 총 레코드 수를 가져옴
-		int totalPageCount = (int) Math.ceil((double) totalRecordCount / pageSize); // 총 페이지 수 계산
+//		int totalPageCount = (int) Math.ceil((double) totalRecordCount / pageSize); // 총 페이지 수 계산
+		int totalPageCount = (totalRecordCount + pageSize - 1) / pageSize; // 총 페이지 수 계산
+
 
 		List<Ac_recordVO> recordList = dao.getAc_recordList(ac_number, pageNo, pageSize);
 

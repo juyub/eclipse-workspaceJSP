@@ -41,14 +41,21 @@ public class DispatcherServlet extends HttpServlet {
 		
 		System.out.println("jsp : " + callPage);
 		
-		if(callPage.startsWith("redirect:")) {
-			
-			response.sendRedirect(callPage.substring("redirect:".length()));
-			
-		} else {
-			RequestDispatcher dispatcher = request.getRequestDispatcher(callPage);
-			dispatcher.forward(request, response);
-		}
+	    if (callPage != null) {
+	        if(callPage.startsWith("redirect:")) {
+	            response.sendRedirect(callPage.substring("redirect:".length()));
+	        } else {
+	            RequestDispatcher dispatcher = request.getRequestDispatcher(callPage);
+	            dispatcher.forward(request, response);
+	        }
+	    }
+		
+//		if(callPage.startsWith("redirect:")) {
+//			response.sendRedirect(callPage.substring("redirect:".length()));
+//		} else {
+//			RequestDispatcher dispatcher = request.getRequestDispatcher(callPage);
+//			dispatcher.forward(request, response);
+//		}
 		
 	}
 

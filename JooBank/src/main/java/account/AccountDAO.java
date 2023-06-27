@@ -3,7 +3,10 @@ package account;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import ac_record.Ac_recordDAO;
@@ -18,26 +21,27 @@ public class AccountDAO {
 	// 계좌 생성
 	public void createAccount(AccountVO vo) {
 	    String accountNumber = AccountNumberGenerator.generateAccountNumber();
-	    String query = 
-	    		  " INSERT INTO account (ac_number, id, AC_PW, AC_MONEY, bank_cd, AC_OP_DATE, PD_NUMBER)"
-	    			+ " VALUES (?, ?, ?, ?, ?, sysdate,?)";
-	
-	    try {
-	        conn = JDBCUtil.getConnection();
-	
-	        stmt = conn.prepareStatement(query);
+	    String query = "INSERT INTO account (ac_number, id, AC_PW, AC_MONEY, bank_cd, AC_OP_DATE, PD_NUMBER, AC_ED_DATE)"
+	            + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+	    try (Connection conn = JDBCUtil.getConnection();
+	         PreparedStatement stmt = conn.prepareStatement(query)) {
+
 	        stmt.setString(1, accountNumber);
 	        stmt.setString(2, vo.getId());
 	        stmt.setString(3, vo.getAC_PW());
 	        stmt.setInt(4, 0);
-	        stmt.setInt(5, 5);
-	        stmt.setInt(6, vo.getPD_NUMBER());
-	
+	        stmt.setInt(5, 204);
+	        
+	        vo.setAC_OP_DATE(new Date()); // 현재 날짜와 시간으로 설정
+	        
+	        stmt.setDate(6, new java.sql.Date(vo.getAC_OP_DATE().getTime()));
+	        stmt.setInt(7, vo.getPD_NUMBER());
+	        stmt.setDate(8, new java.sql.Date(vo.getAC_ED_DATE().getTime()));
+
 	        stmt.executeUpdate();
 	    } catch (Exception e) {
 	        e.printStackTrace();
-	    } finally {
-	        JDBCUtil.close(rs, stmt, conn);
 	    }
 	}
 
@@ -81,7 +85,7 @@ public class AccountDAO {
 		return accountList;
 	}
 	
-	// Ac_number 로 조회
+	// Ac_number VO로 조회
 	public AccountVO getAc_number(AccountVO vo) {
 		AccountVO account = null;
 		String query =
@@ -121,111 +125,7 @@ public class AccountDAO {
 		return account;
 	}
 	
-	// 입금
-	public int deposit(int ac_number, int depositAmount,boolean withTransactionLog) {
-	    String query = " UPDATE account SET AC_MONEY = AC_MONEY + ? WHERE ac_number = ? ";
-	    int result = 0;
-
-	    try {
-	        conn = JDBCUtil.getConnection();
-	        stmt = conn.prepareStatement(query);
-	        stmt.setInt(1, depositAmount);
-	        stmt.setInt(2, ac_number);
-
-	        result = stmt.executeUpdate();
-
-	        // Insert transaction history for deposit
-	        if (result > 0 && withTransactionLog) {
-	        	AccountVO account = getAccount(ac_number);
-		        String Id = account.getId();
-		        String Name = account.getName();
-		        
-		        Ac_recordDAO ac_recordDAO = new Ac_recordDAO(); // 클래스 인스턴스 생성
-	            ac_recordDAO.insertTransaction(ac_number, Id, "입금", Name, depositAmount);
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    } finally {
-	        JDBCUtil.close(stmt, conn);
-	    }
-
-	    return result;
-	}
-
-	// 출금
-	public int withdraw(int ac_number, int withdrawAmount,boolean withTransactionLog) {
-	    String query = " UPDATE account SET AC_MONEY = AC_MONEY - ? WHERE ac_number = ? ";
-	    int result = 0;
-
-	    try {
-	        conn = JDBCUtil.getConnection();
-	        stmt = conn.prepareStatement(query);
-	        stmt.setInt(1, withdrawAmount);
-	        stmt.setInt(2, ac_number);
-
-	        result = stmt.executeUpdate();
-
-	        // Insert transaction history for withdrawal
-	        if (result > 0 && withTransactionLog) {
-	        	AccountVO account = getAccount(ac_number);
-		        String Id = account.getId();
-		        String Name = account.getName();
-		        
-		        Ac_recordDAO ac_recordDAO = new Ac_recordDAO(); // 클래스 인스턴스 생성
-	            ac_recordDAO.insertTransaction(ac_number, Id, "출금", Name, withdrawAmount);
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    } finally {
-	        JDBCUtil.close(stmt, conn);
-	    }
-
-	    return result;
-	}
-
-	// 이체
-	public int transfer(int sendAc_number, int receivAc_number, int transferAmount) {
-	    int result = 0;
-
-	    // 출금
-	    int withdrawalResult = withdraw(sendAc_number, transferAmount, false);
-
-	    // 입금
-	    int depositResult = deposit(receivAc_number, transferAmount, false);
-
-	    // 입출금 결과가 성공적이면 이체 내역 저장
-	    if (withdrawalResult > 0 && depositResult > 0) {
-	    	
-	    	AccountVO sendAccount = getAccount(sendAc_number);
-	        int sendTransactionedAC_MONEY = sendAccount.getAC_MONEY();
-	        String sendId = sendAccount.getId();
-	        String sendName = sendAccount.getName();
-	        
-	        AccountVO receivAccount = getAccount(receivAc_number);
-	        int receivTransactionedAC_MONEY = receivAccount.getAC_MONEY();
-	        String receivId = receivAccount.getId();
-	        String receivName = receivAccount.getName();
-	        		
-	        // 출금 이력 추가
-	        Ac_recordDAO ac_recordDAO = new Ac_recordDAO(); // 클래스 인스턴스 생성
-            ac_recordDAO.insertTransaction(sendAc_number, sendId, "송금", receivName, transferAmount);
-
-	        // 입금 이력 추가
-            ac_recordDAO.insertTransaction(receivAc_number, receivId, "수금", sendName, transferAmount);
-
-	        result = 1;
-	    } else {
-	        // 실패한 경우 롤백 처리
-	        try {
-	            conn.rollback();
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	    }
-
-	    return result;
-	}
-
+	// Ac_number로 조회
 	public AccountVO getAccount(int ac_number) {
 	    AccountVO account = null;
 	    String query = "SELECT c.ac_number, c.id, ui.NAME, c.AC_NAME, c.AC_MONEY, c.AC_OP_DATE, c.bank_name, d.pd_name "
@@ -263,73 +163,135 @@ public class AccountDAO {
 	    
 	    return account;
 	}
-
-	// getAccount로 통합
-//	public int getCurrentAC_MONEY(int ac_number) {
-//	    String query = "SELECT AC_MONEY FROM account WHERE ac_number = ?";
-//	    int currentAC_MONEY = 0;
-//
-//	    try {
-//	        conn = JDBCUtil.getConnection();
-//	        stmt = conn.prepareStatement(query);
-//	        stmt.setInt(1, ac_number);
-//
-//	        ResultSet rs = stmt.executeQuery();
-//	        if (rs.next()) {
-//	            currentAC_MONEY = rs.getInt("AC_MONEY");
-//	        }
-//	    } catch (Exception e) {
-//	        e.printStackTrace();
-//	    } finally {
-//	        JDBCUtil.close(rs, stmt, conn);
-//	    }
-//
-//	    return currentAC_MONEY;
-//	}
-//	
-//	public String getId(int ac_number) {
-//	    String query = "SELECT id FROM account WHERE ac_number = ?";
-//	    String Id = null;
-//
-//	    try {
-//	        conn = JDBCUtil.getConnection();
-//	        stmt = conn.prepareStatement(query);
-//	        stmt.setInt(1, ac_number);
-//
-//	        ResultSet rs = stmt.executeQuery();
-//	        if (rs.next()) {
-//	        	Id = rs.getString("id");
-//	        }
-//	    } catch (Exception e) {
-//	        e.printStackTrace();
-//	    } finally {
-//	        JDBCUtil.close(rs, stmt, conn);
-//	    }
-//
-//	    return Id;
-//	}
 	
-	// 입출금내역 - Ac_recordDAO로 보냄
-//	public void insertTransaction(int ac_number, String id, String type, String name, int transferAmount) {
-//	    String query = "INSERT INTO ac_record(rc_no, ac_number, id, rc_type, rc_name, rc_money ) "
-//	                 + "VALUES(seq_rc_no.NEXTVAL,?, ?, ?, ?,?)";
-//
-//	    try {
-//	        conn = JDBCUtil.getConnection();
-//	        stmt = conn.prepareStatement(query);
-//	        stmt.setInt(1, ac_number);
-//	        stmt.setString(2, id);
-//            stmt.setString(3, type);
-//            stmt.setString(4, name);
-//	        stmt.setInt(5, transferAmount);
-//
-//	        stmt.executeUpdate();
-//	    } catch (Exception e) {
-//	        e.printStackTrace();
-//	    } finally {
-//	        JDBCUtil.close(stmt, conn);
-//	    }
-//	}
+	// Ac_number, AC_PW 확인
+	public boolean checkAC_PW (int ac_number, String AC_PW) {
+		boolean check = false;
+		String query = 
+				" select * from account " +
+				" where ac_number = ? and AC_PW = ? ";
+		try {
+			conn = JDBCUtil.getConnection();
+			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, ac_number);
+			stmt.setString(2, AC_PW);
+			rs = stmt.executeQuery();
+			
+			check = rs.next(); // true
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally { 
+			JDBCUtil.close(rs, stmt, conn);
+		}
+		return check;
+	}
+	
+	// 입금
+	public int deposit(int ac_number, int depositAmount,boolean withTransactionLog) {
+	    String query = " UPDATE account SET AC_MONEY = AC_MONEY + ? WHERE ac_number = ? ";
+	    int result = 0;
+
+	    try {
+	        conn = JDBCUtil.getConnection();
+	        stmt = conn.prepareStatement(query);
+	        stmt.setInt(1, depositAmount);
+	        stmt.setInt(2, ac_number);
+
+	        result = stmt.executeUpdate();
+
+	        // Insert transaction history for deposit
+	        if (result > 0 && withTransactionLog) {
+	        	AccountVO account = getAccount(ac_number);
+		        String Id = account.getId();
+		        String Name = account.getName();
+		        int AC_MONEY = account.getAC_MONEY();
+		        
+		        Ac_recordDAO ac_recordDAO = new Ac_recordDAO(); // 클래스 인스턴스 생성
+	            ac_recordDAO.insertTransaction(ac_number, Id, "입금", Name, depositAmount, AC_MONEY);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        JDBCUtil.close(stmt, conn);
+	    }
+
+	    return result;
+	}
+
+	// 출금
+	public int withdraw(int ac_number, int withdrawAmount, boolean withTransactionLog) {
+	    String query = " UPDATE account SET AC_MONEY = AC_MONEY - ? WHERE ac_number = ? ";
+	    int result = 0;
+
+	    try {
+	        conn = JDBCUtil.getConnection();
+	        stmt = conn.prepareStatement(query);
+	        stmt.setInt(1, withdrawAmount);
+	        stmt.setInt(2, ac_number);
+
+	        result = stmt.executeUpdate();
+
+	        // Insert transaction history for withdrawal
+	        if (result > 0 && withTransactionLog) {
+	        	AccountVO account = getAccount(ac_number);
+		        String Id = account.getId();
+		        String Name = account.getName();
+		        int AC_MONEY = account.getAC_MONEY();
+		        
+		        Ac_recordDAO ac_recordDAO = new Ac_recordDAO(); // 클래스 인스턴스 생성
+	            ac_recordDAO.insertTransaction(ac_number, Id, "출금", Name, withdrawAmount,AC_MONEY);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        JDBCUtil.close(stmt, conn);
+	    }
+
+	    return result;
+	}
+
+	// 이체
+	public int transfer(int sendAc_number, int receivAc_number, int transferAmount) {
+	    int result = 0;
+
+	    // 출금
+	    int withdrawalResult = withdraw(sendAc_number, transferAmount, false);
+
+	    // 입금
+	    int depositResult = deposit(receivAc_number, transferAmount, false);
+
+	    // 입출금 결과가 성공적이면 이체 내역 저장
+	    if (withdrawalResult > 0 && depositResult > 0) {
+	    	
+	    	AccountVO sendAccount = getAccount(sendAc_number);
+	        int sendTransferedAC_MONEY = sendAccount.getAC_MONEY();
+	        String sendId = sendAccount.getId();
+	        String sendName = sendAccount.getName();
+	        
+	        AccountVO receivAccount = getAccount(receivAc_number);
+	        int receivTransferedAC_MONEY = receivAccount.getAC_MONEY();
+	        String receivId = receivAccount.getId();
+	        String receivName = receivAccount.getName();
+	        		
+	        Ac_recordDAO ac_recordDAO = new Ac_recordDAO(); // 클래스 인스턴스 생성
+	        // 출금 이력 추가
+            ac_recordDAO.insertTransaction(sendAc_number, sendId, "송금", receivName, transferAmount, sendTransferedAC_MONEY);
+
+	        // 입금 이력 추가
+            ac_recordDAO.insertTransaction(receivAc_number, receivId, "수금", sendName, transferAmount, receivTransferedAC_MONEY);
+
+	        result = 1;
+	    } else {
+	        // 실패한 경우 롤백 처리
+	        try {
+	            conn.rollback();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return result;
+	}
 
 	// 오버로드 메서드를 추가
 	public int deposit(int ac_number, int depositAmount) {

@@ -30,6 +30,8 @@
 			<td >${record.rc_name}</td>
 			<td width="30%">
 			<fmt:formatNumber value="${record.rc_money}" pattern="###,###"/>원</td>
+			<td width="30%">
+			<fmt:formatNumber value="${record.rc_balance}" pattern="###,###"/>원</td>
 			<td><fmt:formatDate value="${record.rc_time}" pattern="yy/MM/dd HH:mm:ss"/></td>
 		</tr>
 		</table>

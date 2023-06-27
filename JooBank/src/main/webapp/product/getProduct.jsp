@@ -37,6 +37,19 @@
 		</td>
 	</tr>
 	<tr>
+		<td>
+		상품만기
+		</td>
+		<td>
+			<select name="pd_ed_date">
+				<c:forEach var="i" begin="1" end="20">
+					<c:set var="reverseIndex" value="${21 - i}" />
+					<option value="${reverseIndex}" ${product.pd_ed_date == reverseIndex ? 'selected' : ''}>${reverseIndex}</option>
+				</c:forEach>
+			</select>년
+		</td>
+	</tr>
+	<tr>
 	<button><a href="${contextPath}/createAccountPage.do?pd_number=${product.pd_number}">계좌개설하기</a></button>
 	</tr>
 	<tr>

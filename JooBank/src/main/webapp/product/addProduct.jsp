@@ -24,6 +24,16 @@
 		<td><textarea name="pd_content" rows="10" cols="30"></textarea></td>
 	</tr>
 	<tr>
+		<td>상품만기</td>
+		<td>
+			<select name="pd_ed_date">
+				<c:forEach var="i" begin="1" end="20">
+					<option value="${21 - i}">${21 - i}</option>
+				</c:forEach>
+			</select>년
+    	</td>
+	</tr>
+	<tr>
 		<td><input type="submit" value="상품등록" /></td>
 	</tr>
 </table>

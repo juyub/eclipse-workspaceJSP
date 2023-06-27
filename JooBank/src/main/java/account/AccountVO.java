@@ -15,18 +15,20 @@ import java.util.Date;
 	    PD_NUMBER NUMBER(15),
 	    bank_cd VARCHAR2(3),
 	    PRIMARY KEY (ac_number, id),
-	    FOREIGN KEY (bank_cd) REFERENCES bankinfo(bank_cd)
+	    FOREIGN KEY (bank_cd) REFERENCES bankinfo(bank_cd),
+	    FOREIGN KEY (PD_NUMBER) REFERENCES product(PD_NUMBER)
 	);
 	
 	CREATE TABLE bankinfo (
 	    bank_cd VARCHAR2(20) PRIMARY KEY,
-	    bank_name VARCHAR2(50)
+	    bank_name VARCHAR2(50),
 	);
 	
 	CREATE TABLE product (
 	    PD_NUMBER number(15) PRIMARY KEY,
 	    pd_name VARCHAR2(50),
-	    pd_content VARCHAR2(1000)
+	    pd_content VARCHAR2(1000),
+	    pd_ed_date NUMBER
 	);
 	
 	CREATE TABLE ac_record (
@@ -36,6 +38,7 @@ import java.util.Date;
 	    rc_type VARCHAR2(50),
 	    rc_name VARCHAR2(50),
 	    rc_money NUMBER(15),
+	    rc_balance number,
 	    rc_time TIMESTAMP DEFAULT SYSTIMESTAMP,
 	    FOREIGN KEY (ac_number, id) REFERENCES account(ac_number, id)
 	);

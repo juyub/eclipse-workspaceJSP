@@ -25,6 +25,18 @@
         removeCommas(form.transferAmount);
         return true;
     }
+    function onSubmitForm(form) {
+        var accountBalance = parseInt(form.AC_MONEY.value.replace(/,/g, ''), 10);
+        var transferAmount = parseInt(form.transferAmount.value.replace(/,/g, ''), 10);
+
+        if (transferAmount > accountBalance) {
+            alert("잔액이 부족합니다.");
+            return false;
+        }
+
+        removeCommas(form.transferAmount);
+        return true;
+    }
 </script>
 </head>
 <body>

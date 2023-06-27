@@ -32,6 +32,7 @@ public class ProductDAO {
 				product.setPd_number(rs.getInt("pd_number"));
 				product.setPd_name(rs.getString("pd_name"));
 				product.setPd_content(rs.getString("pd_content"));
+				product.setPd_ed_date(rs.getInt("pd_ed_date"));
 				productList.add(product);
 			}
 		} catch (Exception e) {
@@ -45,13 +46,14 @@ public class ProductDAO {
 	// 상품 등록
 	public void addProduct(ProductVO vo) {
 		try {	
-			String query = " INSERT INTO product (PD_NUMBER, pd_name, pd_content) "
-					+ " VALUES (?, ? ,?) ";
+			String query = " INSERT INTO product (PD_NUMBER, pd_name, pd_content, pd_ed_date) "
+					+ " VALUES (?, ?, ?, ?) ";
 			conn = JDBCUtil.getConnection();
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, vo.getPd_number());
 			stmt.setString(2, vo.getPd_name());
 			stmt.setString(3, vo.getPd_content());
+			stmt.setInt(4, vo.getPd_ed_date());
 			stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -76,6 +78,7 @@ public class ProductDAO {
 				product.setPd_number(rs.getInt("pd_number"));
 				product.setPd_name(rs.getString("pd_name"));
 				product.setPd_content(rs.getString("pd_content"));
+				product.setPd_ed_date(rs.getInt("pd_ed_date"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -89,13 +92,14 @@ public class ProductDAO {
 	public void updateProduct(ProductVO vo) {
 		try {	 
 			String query = 
-					" update product set pd_name = ?, pd_content = ? "
+					" update product set pd_name = ?, pd_content = ?, pd_ed_date = ? "
 					+ " where pd_number = ? ";
 			conn = JDBCUtil.getConnection();
 			stmt = conn.prepareStatement(query);
 			stmt.setString(1, vo.getPd_name());
 			stmt.setString(2, vo.getPd_content());
-			stmt.setInt(3, vo.getPd_number());
+			stmt.setInt(3, vo.getPd_ed_date());
+			stmt.setInt(4, vo.getPd_number());
 			stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -103,6 +107,8 @@ public class ProductDAO {
 			JDBCUtil.close(stmt, conn);
 		}		
 	}	
+	
+	// 상품 가입 조회
 	
 }
 

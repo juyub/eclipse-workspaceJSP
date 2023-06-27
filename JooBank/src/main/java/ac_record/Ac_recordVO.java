@@ -36,6 +36,7 @@ CREATE TABLE ac_record (
     rc_type VARCHAR2(50),
     rc_name VARCHAR2(50),
     rc_money NUMBER(15),
+    rc_balance number,
     rc_time TIMESTAMP DEFAULT SYSTIMESTAMP,
     FOREIGN KEY (ac_number, id) REFERENCES account(ac_number, id)
 );
@@ -49,6 +50,7 @@ public class Ac_recordVO {
     private String rc_type;
     private String rc_name;
     private int rc_money;
+    private int rc_balance;
     private Timestamp rc_time;
     
     private int AC_MONEY;
@@ -117,5 +119,14 @@ public class Ac_recordVO {
 	public void setAC_MONEY(int aC_MONEY) {
 		AC_MONEY = aC_MONEY;
 	}
+
+	public int getRc_balance() {
+		return rc_balance;
+	}
+
+	public void setRc_balance(int rc_balance) {
+		this.rc_balance = rc_balance;
+	}
+	
 	
 }

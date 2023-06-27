@@ -25,6 +25,7 @@
       	<td>
       	${product.pd_name}
       	<input type="hidden" name="pd_number" value="${product.pd_number}">
+      	<input type="hidden" name="pd_ed_date" value="${product.pd_ed_date}">
       	</td>
       </tr>
       <tr>

@@ -19,6 +19,9 @@
 				<tr>
 					<td >${product.pd_content}</td>
 				</tr>
+				<tr>
+					<td >${product.pd_ed_date}</td>
+				</tr>
 			</table>
 		</div></a>
 	</c:forEach>
