@@ -7,6 +7,7 @@
     <init-param>
       <param-name>propLoc</param-name>
       <param-value>C:\\Users\\User\\eclipse-workspaceJSP\\JooBank\\bean.properties</param-value>
+      <!-- <param-value>C:\\lecture\\jsp-workplace\\JooBank\\bean.properties</param-value> -->
     </init-param>
   </servlet>
   <servlet-mapping>

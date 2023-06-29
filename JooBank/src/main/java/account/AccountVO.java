@@ -40,6 +40,8 @@ import java.util.Date;
 	    rc_money NUMBER(15),
 	    rc_balance number,
 	    rc_time TIMESTAMP DEFAULT SYSTIMESTAMP,
+	    rc_number NUMBER,
+    	rc_text VARCHAR2(50),
 	    FOREIGN KEY (ac_number, id) REFERENCES account(ac_number, id)
 	);
 */

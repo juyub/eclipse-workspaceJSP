@@ -15,10 +15,11 @@ public class Ac_recordDAO {
 	private PreparedStatement stmt;
 	private ResultSet rs;
 
-	// 입출금내역 산입
-	public void insertTransaction(int ac_number, String id, String type, String name, int transferAmount, int AC_MONEY) {
-		String query = "INSERT INTO ac_record(rc_no, ac_number, id, rc_type, rc_name, rc_money, rc_balance ) "
-				+ "VALUES(seq_rc_no.NEXTVAL,?, ?, ?, ?,?,?)";
+	// 거래내역 산입
+	public void insertTransaction(int ac_number, String id, String type, String name, int transferAmount, int AC_MONEY, String rc_text, int rc_number) {
+		String query = 
+				" INSERT INTO ac_record(rc_no, ac_number, id, rc_type, rc_name, rc_money, rc_balance, rc_text, rc_number) "
+				+ " VALUES(seq_rc_no.NEXTVAL,?, ?, ?, ?, ?, ?, ?, ?) ";
 
 		try {
 			conn = JDBCUtil.getConnection();
@@ -29,6 +30,8 @@ public class Ac_recordDAO {
 			stmt.setString(4, name);
 			stmt.setInt(5, transferAmount);
 			stmt.setInt(6, AC_MONEY);
+			stmt.setString(7, rc_text);
+			stmt.setInt(8, rc_number);
 
 			stmt.executeUpdate();
 		} catch (Exception e) {
@@ -44,18 +47,11 @@ public class Ac_recordDAO {
 		String query = 
 				" SELECT * FROM ( "
 			    + " SELECT ac_record.ac_number, ac_record.id, ac_record.rc_type, ac_record.rc_name, ac_record.rc_money, ac_record.rc_time, "
-			    + " ac_record.rc_balance, bankinfo.bank_name, ROW_NUMBER() OVER (ORDER BY ac_record.rc_time DESC) as row_num FROM ac_record "
+			    + " ac_record.rc_balance, ac_record.rc_text, bankinfo.bank_name, ROW_NUMBER() OVER (ORDER BY ac_record.rc_time DESC) as row_num FROM ac_record "
 			    + " JOIN account ON ac_record.ac_number = account.ac_number AND ac_record.id = account.id "
 			    + " JOIN bankinfo ON account.bank_cd = bankinfo.bank_cd "
 			    + " WHERE ac_record.ac_number = ? ) T "
 			    + " WHERE T.row_num BETWEEN ((? - 1) * ?) + 1 AND ? * ? ";
-
-//				" SELECT * FROM "
-//				+ " (SELECT ac_record.ac_number, ac_record.id, ac_record.rc_type, ac_record.rc_name, ac_record.rc_money, ac_record.rc_time, "
-//				+ " ac_record.rc_balance, bankinfo.bank_name, ROWNUM as row_num " + "FROM ac_record "
-//				+ " JOIN account ON ac_record.ac_number = account.ac_number " + "AND ac_record.id = account.id "
-//				+ " JOIN bankinfo ON account.bank_cd = bankinfo.bank_cd " + "WHERE ac_record.ac_number = ? "
-//				+ " AND ROWNUM <= ? * ? " + "ORDER BY ac_record.rc_time DESC) T " + "WHERE T.row_num > ? * ? - ? ";
 
 		try {
 		    conn = JDBCUtil.getConnection();
@@ -77,6 +73,7 @@ public class Ac_recordDAO {
 		        record.setRc_time(rs.getTimestamp("rc_time"));
 		        record.setBank_name(rs.getString("bank_name"));
 		        record.setRc_balance(rs.getInt("rc_balance"));
+		        record.setRc_text(rs.getString("rc_text"));
 		        ac_recordList.add(record);
 		    }
 		} catch (Exception e) {

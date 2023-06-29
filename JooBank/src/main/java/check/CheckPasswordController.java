@@ -1,8 +1,9 @@
-package account;
+package check;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import account.AccountDAO;
 import controller.Controller;
 
 public class CheckPasswordController implements Controller {

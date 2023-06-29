@@ -27,6 +27,7 @@ public class GetBoardListController implements Controller{
 	        int pageSize = 10; // 페이지당 보여줄 게시글 수
 	        BoardDAO dao = new BoardDAO();
 	        List<BoardVO> boardList = dao.selectAllBoard(pageNo, pageSize);
+	        request.setAttribute("boardList", boardList);
 
 	        int totalBoardCount = dao.selectBoardCount(); // 게시글의 총 개수를 가져옴
 
@@ -35,7 +36,6 @@ public class GetBoardListController implements Controller{
 	        int startPage = (int) Math.floor((double) (pageNo - 1) / 10) * 10 + 1;
 	        int endPage = Math.min(startPage + 9, totalPageCount);
 
-	        request.setAttribute("boardList", boardList);
 	        request.setAttribute("totalPageCount", totalPageCount);
 	        request.setAttribute("startPage", startPage);
 	        request.setAttribute("endPage", endPage);

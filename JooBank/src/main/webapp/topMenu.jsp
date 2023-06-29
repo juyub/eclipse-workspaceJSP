@@ -94,7 +94,7 @@ li {
 <table style="width:90%" align="center" border="1">
 	<tr>
 		<td rowspan="2" class="cell1">
-      <a href="${contextPath}/main.do"><img src="/JooBank/image/logoicon.png" class="l-image" alt="로고"></a>
+      <a href="${contextPath}/main.do"><img src="/JooBank/image/JooBank.png" class="l-image" alt="로고"></a>
 		</td>
 		<td>
 		<a href="" class="link-spacing2">공지사항</a>

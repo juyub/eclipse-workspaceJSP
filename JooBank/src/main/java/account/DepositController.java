@@ -14,9 +14,11 @@ public class DepositController implements Controller {
 //		String depositAmountStr = request.getParameter("depositAmount").replaceAll(",", "");
 //		int depositAmount = Integer.parseInt(depositAmountStr);
 		int depositAmount = Integer.parseInt(request.getParameter("depositAmount"));
+		String bank_cd = request.getParameter("bank_cd");
+		String rc_text = request.getParameter("rc_text");
 
         AccountDAO dao = new AccountDAO();
-        int result = dao.deposit(ac_number, depositAmount);
+        int result = dao.deposit(ac_number, bank_cd, rc_text, depositAmount);
 
         if(result > 0) {
             return "redirect:/JooBank/myAccountList.do";

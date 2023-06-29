@@ -13,9 +13,12 @@ public class TransferController implements Controller {
 		int sendAc_number = Integer.parseInt(request.getParameter("sendAc_number"));
         int receivAc_number = Integer.parseInt(request.getParameter("receivAc_number"));
         int transferAmount = Integer.parseInt(request.getParameter("transferAmount"));
+        String sendBank_cd = request.getParameter("sendBank_cd");
+        String receivBank_cd = request.getParameter("receivBank_cd");
+        String rc_text = request.getParameter("rc_text");
 
         AccountDAO accountDAO = new AccountDAO();
-        int result = accountDAO.transfer(sendAc_number, receivAc_number, transferAmount);
+        int result = accountDAO.transfer(sendAc_number, sendBank_cd, receivAc_number, receivBank_cd, transferAmount,rc_text);
 
         if (result > 0) {
             request.setAttribute("message", "Transfer successful!");

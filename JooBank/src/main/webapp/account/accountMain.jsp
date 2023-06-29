@@ -12,7 +12,7 @@
 </head>
 <body>
 	<header>
-		<jsp:include page="/topMenu.jsp" />
+		<jsp:include page="../topMenu.jsp" />
 	</header>
 	<section>
 		<c:choose>
@@ -30,6 +30,9 @@
 							</td>
 							<td>
 							${ account.AC_OP_DATE }
+							</td>
+							<td>
+							${ account.AC_ED_DATE }
 							</td>
 							</tr>
 							<tr>

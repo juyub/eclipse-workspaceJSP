@@ -252,4 +252,101 @@ public class BoardDAO {
 		}
 	}
 
+	// 게시판 검색 depth + paging
+	public List<BoardVO> searchBoard(String search, int pageNo, int pageSize) {
+	    int start = (pageNo - 1) * pageSize + 1;
+	    int end = pageNo * pageSize;
+
+	    List<BoardVO> boardList = new ArrayList<>();
+
+	    String query = "SELECT * "
+	            + " FROM (SELECT a.*, ROWNUM rnum "
+	            + "      FROM (SELECT level, boardNO, parentNO, title, content, regtime, id, hit "
+	            + "            FROM jb_board "
+	            + "            WHERE title = ? OR id = ? "
+	            + "            START WITH parentNO = 0 "
+	            + "            CONNECT BY PRIOR boardNO = parentNO "
+	            + "            ORDER SIBLINGS BY boardNO DESC) a "
+	            + "      WHERE ROWNUM <= ?) "
+	            + " WHERE rnum >= ? ";
+
+	    try {
+	        conn = JDBCUtil.getConnection();
+	        stmt = conn.prepareStatement(query);
+	        stmt.setString(1, search);
+	        stmt.setString(2, search);
+	        stmt.setInt(3, end);
+	        stmt.setInt(4, start);
+	        ResultSet rs = stmt.executeQuery();
+	        while (rs.next()) {
+	            int level = rs.getInt("level");
+	            int boardNO = rs.getInt("boardNO");
+	            int parentNO = rs.getInt("parentNO");
+	            String title = rs.getString("title");
+	            String content = rs.getString("content");
+	            String id = rs.getString("id");
+	            Timestamp regtime = rs.getTimestamp("regtime");
+	            int hit = rs.getInt("hit");
+
+	            BoardVO board = new BoardVO();
+	            board.setLevel(level);
+	            board.setBoardNO(boardNO);
+	            board.setParentNO(parentNO);
+	            board.setTitle(title);
+	            board.setContent(content);
+	            board.setId(id);
+	            board.setRegtime(regtime);
+	            board.setHit(hit);
+
+	            boardList.add(board);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        JDBCUtil.close(rs, stmt, conn);
+	    }
+	    return boardList;
+	}
+	
+//	public List<BoardVO> searchBoard(String search) {
+//
+//		List<BoardVO> boardList = new ArrayList<BoardVO>();
+//		String query = 
+//				"select * from jb_board " + 
+//				" WHERE title = ? OR id = ? ";
+//		
+//		try {
+//			conn = JDBCUtil.getConnection();
+//			stmt = conn.prepareStatement(query);
+//			stmt.setString(1, search);
+//			stmt.setString(2, search);
+//			ResultSet rs = stmt.executeQuery();
+//			while (rs.next()) {
+//				int boardNO = rs.getInt("boardNO");
+//				int parentNO = rs.getInt("parentNO");
+//				String title = rs.getString("title");
+//				String content = rs.getString("content");
+//				String id = rs.getString("id");
+//				Timestamp regtime = rs.getTimestamp("regtime");
+//				int hit = rs.getInt("hit");
+//
+//				BoardVO board = new BoardVO();
+//				board.setBoardNO(boardNO);
+//				board.setParentNO(parentNO);
+//				board.setTitle(title);
+//				board.setContent(content);
+//				board.setId(id);
+//				board.setRegtime(regtime);
+//				board.setHit(hit);
+//
+//				boardList.add(board);
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			JDBCUtil.close(rs, stmt, conn);
+//		}
+//		return boardList;
+//	}
+
 }

@@ -12,9 +12,11 @@ public class WithdrawController implements Controller {
 		
 		int ac_number = Integer.parseInt(request.getParameter("ac_number"));
         int withdrawAmount = Integer.parseInt(request.getParameter("withdrawAmount"));
+        String bank_cd = request.getParameter("bank_cd");
+        String rc_text = request.getParameter("rc_text");
 
         AccountDAO dao = new AccountDAO();
-        int result = dao.withdraw(ac_number, withdrawAmount);
+        int result = dao.withdraw(ac_number, bank_cd, rc_text, withdrawAmount);
 
         if(result > 0) {
             return "redirect:/JooBank/myAccountList.do";
