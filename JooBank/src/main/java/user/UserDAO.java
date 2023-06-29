@@ -54,7 +54,12 @@ public class UserDAO {
 				user.setId(rs.getString("id"));
 				user.setPassword(rs.getString("password"));
 				user.setName(rs.getString("name"));
+				user.setUsercode(rs.getString("usercode"));
 				user.setPhone(rs.getString("phone"));
+				user.setEmail(rs.getString("email"));
+				user.setPostcode(rs.getString("postcode"));
+				user.setAddress(rs.getString("address"));
+				user.setJoindate(rs.getDate("joindate"));
 				user.setUser_type(rs.getString("user_type"));
 			}
 		} catch (Exception e) {
@@ -66,9 +71,29 @@ public class UserDAO {
 	}
 
 	public void updateUser(UserVO vo) {
-		// TODO Auto-generated method stub
-		
+		String query = 
+				" update USER_INFO "
+				+ " set password = ?, name =?, usercode = ?, phone = ?, email = ?, " +
+					  " postcode = ?, address = ?, user_type = ? "
+				+ " where id = ? ";
+		try {
+			conn = JDBCUtil.getConnection();
+			stmt = conn.prepareStatement(query);
+			stmt.setString(1, vo.getPassword());
+			stmt.setString(2, vo.getName());
+			stmt.setString(3, vo.getUsercode());
+			stmt.setString(4, vo.getPhone());
+			stmt.setString(5, vo.getEmail());
+			stmt.setString(6, vo.getPostcode());
+			stmt.setString(7, vo.getAddress());
+			stmt.setString(8, vo.getUser_type());
+			stmt.setString(9, vo.getId());
+			stmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(stmt, conn);
+		}
 	}
-	
 	
 }
