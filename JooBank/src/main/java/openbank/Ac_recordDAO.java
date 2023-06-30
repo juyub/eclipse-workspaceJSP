@@ -1,4 +1,4 @@
-package ac_record;
+package openbank;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,41 +8,14 @@ import java.util.List;
 
 import account.AccountVO;
 import common.JDBCUtil;
-import openbank.OpenbankDAO;
-import openbank.OpenbankVO;
 
 public class Ac_recordDAO {
 
 	private Connection conn;
 	private PreparedStatement stmt;
 	private ResultSet rs;
-	
+
 	// 거래내역 산입
-//	public void insertTransaction(long ac_number, String id, String type, String name, long transferAmount, long AC_MONEY, String rc_text, long rc_number) {
-//		String query = 
-//				" INSERT INTO ac_record(rc_no, ac_number, id, rc_type, rc_name, rc_money, rc_balance, rc_text, rc_number) "
-//				+ " VALUES(seq_rc_no.NEXTVAL,?, ?, ?, ?, ?, ?, ?, ?) ";
-//
-//		try {
-//			conn = JDBCUtil.getConnection();
-//			stmt = conn.prepareStatement(query);
-//			stmt.setLong(1, ac_number);
-//			stmt.setString(2, id);
-//			stmt.setString(3, type);
-//			stmt.setString(4, name);
-//			stmt.setLong(5, transferAmount);
-//			stmt.setLong(6, AC_MONEY);
-//			stmt.setString(7, rc_text);
-//			stmt.setLong(8, rc_number);
-//
-//			stmt.executeUpdate();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			JDBCUtil.close(stmt, conn);
-//		}
-//	}
-	
 	public void insertTransaction(long ac_number, String bank_cd, String type, String opBank_cd, long opAc_number, long transferAmount, String rc_text) {
 	    
 		String query;
@@ -95,7 +68,8 @@ public class Ac_recordDAO {
 	        JDBCUtil.close(stmt, conn);
 	    }
 	}
-	
+
+
 	// 거래 내역 목록
 	public List<Ac_recordVO> getAc_recordList(long ac_number, int pageNo, int pageSize) {
 		List<Ac_recordVO> ac_recordList = new ArrayList<Ac_recordVO>();
@@ -159,6 +133,5 @@ public class Ac_recordDAO {
 		}
 		return count;
 	}
-
 
 }

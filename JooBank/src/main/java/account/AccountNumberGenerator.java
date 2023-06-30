@@ -18,9 +18,9 @@ public class AccountNumberGenerator {
 
 	        // 생성된 계좌 번호를 사용하여 계좌가 있는지 확인
 	        accountNumber = accountNumberBuilder.toString();
-	        int accountNumberInt = Integer.parseInt(accountNumber);
+	        long accountNumberLong = Long.parseLong(accountNumber);
 	        AccountDAO dao = new AccountDAO();
-	        AccountVO account = dao.getAccount(accountNumberInt);
+	        AccountVO account = dao.getAccount(accountNumberLong);
 	        
 	        if (account == null) {
 	            accountNumberExists = false;

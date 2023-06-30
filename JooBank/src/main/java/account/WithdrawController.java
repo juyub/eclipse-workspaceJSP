@@ -10,8 +10,8 @@ public class WithdrawController implements Controller {
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
 		
-		int ac_number = Integer.parseInt(request.getParameter("ac_number"));
-        int withdrawAmount = Integer.parseInt(request.getParameter("withdrawAmount"));
+		long ac_number = Long.parseLong(request.getParameter("ac_number"));
+        long withdrawAmount = Long.parseLong(request.getParameter("withdrawAmount"));
         String bank_cd = request.getParameter("bank_cd");
         String rc_text = request.getParameter("rc_text");
 

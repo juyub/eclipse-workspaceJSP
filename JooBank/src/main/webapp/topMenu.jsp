@@ -129,7 +129,7 @@ li {
     <td colspan="2" class="cell3" align="center">
       <c:if test="${ not empty login }">
         <a href="${contextPath}/myAccountList.do" class="link-spacing">계좌</a>
-    <a href="getBookList.do" class="link-spacing">오픈뱅킹</a>
+    <a href="${contextPath}/obAcList.do" class="link-spacing">오픈뱅킹</a>
     <a href="${contextPath}/getBoardList.do" class="link-spacing">게시판</a>
       </c:if>
       <a href="${contextPath}/getProductList.do" class="link-spacing">상품</a>

@@ -11,7 +11,7 @@ public class CheckPasswordController implements Controller {
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
 
-		int ac_number = Integer.parseInt(request.getParameter("sendAc_number"));
+		long ac_number = Long.parseLong(request.getParameter("sendAc_number"));
         String AC_PW = request.getParameter("AC_PW");
 
         AccountDAO accountDao = new AccountDAO();

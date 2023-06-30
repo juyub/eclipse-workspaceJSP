@@ -60,7 +60,7 @@ input {
 	border-radius: 7px;
 }
 td{
-padding:3px;
+padding:5px;
 }
 
 </style>
@@ -95,7 +95,7 @@ padding:3px;
 		<br>
 			<button type="submit" class="btn btn-primary">로그인</button>
 		</form> <br>		
-	<a href="addUserPage.do"> 회원가입 </a> <br> <br>
+	<a href="addUserPage.do"> 회원가입 </a>
 	<a href="indexPage.do"> 뒤로가기 </a>
 	</div>
 	

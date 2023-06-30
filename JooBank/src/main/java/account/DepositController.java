@@ -10,10 +10,10 @@ public class DepositController implements Controller {
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
 
-		int ac_number = Integer.parseInt(request.getParameter("ac_number"));
+		long ac_number = Long.parseLong(request.getParameter("ac_number"));
 //		String depositAmountStr = request.getParameter("depositAmount").replaceAll(",", "");
 //		int depositAmount = Integer.parseInt(depositAmountStr);
-		int depositAmount = Integer.parseInt(request.getParameter("depositAmount"));
+		long depositAmount = Long.parseLong(request.getParameter("depositAmount"));
 		String bank_cd = request.getParameter("bank_cd");
 		String rc_text = request.getParameter("rc_text");
 

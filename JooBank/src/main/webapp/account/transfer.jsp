@@ -78,7 +78,7 @@
 	<section style="display: flex; justify-content: center;">
 
 		<form id="transferForm" action="${contextPath}/TrasferConfrimPage.do"
-			method="post" onSubmit="return onSubmitForm(this);">
+			method="post" onSubmit="return onSubmitForm(this);"> 
 			<table border="1">
 				<tr>
 					<td>송금계좌</td>
@@ -99,11 +99,13 @@
 				</tr>
 				<tr>
 					<td>이체할 은행</td>
-					<td><select name="selected_bank_cd">
+					<td>
+						<select name="selected_bank_cd">
 							<c:forEach items="${bankList}" var="bank">
 								<option value="${bank.bank_cd}">${bank.bank_name}</option>
 							</c:forEach>
-						</select></td>
+						</select>
+					</td>
 				</tr>
 				<tr>
 					<td>이체할 계좌</td>
@@ -135,7 +137,7 @@
 		</form>
 	</div>
 
-	<script>
+	<!-- <script>
 		function numberWithCommas(x) {
 			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		}
@@ -162,6 +164,6 @@
 			removeCommas(form.transferAmount);
 			return true;
 		}
-	</script>
+	</script> -->
 </body>
 </html>

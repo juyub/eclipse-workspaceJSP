@@ -13,7 +13,7 @@ import ac_record.Ac_recordDAO;
 import ac_record.Ac_recordVO;
 import common.JDBCUtil;
 
-public class AccountDAO {
+public class AccountDAO2 {
 
 	private Connection conn;
 	private PreparedStatement stmt;
@@ -32,7 +32,7 @@ public class AccountDAO {
 	        stmt.setString(2, vo.getId());
 	        stmt.setString(3, vo.getAC_PW());
 	        stmt.setInt(4, 0);
-	        stmt.setString(5, "204");
+	        stmt.setInt(5, 204);
 	        
 	        vo.setAC_OP_DATE(new Date()); // 현재 날짜와 시간으로 설정
 	        
@@ -68,10 +68,10 @@ public class AccountDAO {
 			rs = stmt.executeQuery();
 			while(rs.next()) {
 				AccountVO account = new AccountVO();
-				account.setAc_number(rs.getLong("ac_number"));
+				account.setAc_number(rs.getInt("ac_number"));
 				account.setId(rs.getString("id"));
 				account.setAC_NAME(rs.getString("AC_NAME"));
-				account.setAC_MONEY(rs.getLong("AC_MONEY"));
+				account.setAC_MONEY(rs.getInt("AC_MONEY"));
 				account.setAC_OP_DATE(rs.getDate("AC_OP_DATE"));
 				account.setAC_ED_DATE(rs.getDate("AC_ED_DATE"));
 				account.setBank_name(rs.getString("bank_name"));
@@ -88,7 +88,7 @@ public class AccountDAO {
 	}
 	
 	// Ac_number로 조회
-		public AccountVO getAccount(long ac_number) {
+		public AccountVO getAccount(int ac_number) {
 		    AccountVO account = null;
 		    String query = 
 		    		" SELECT c.ac_number, c.id, ui.NAME, c.AC_NAME, c.AC_MONEY, c.AC_OP_DATE, c.AC_ED_DATE, c.bank_cd, c.bank_name, d.pd_name "
@@ -104,15 +104,15 @@ public class AccountDAO {
 		    try {
 		        conn = JDBCUtil.getConnection();
 		        stmt = conn.prepareStatement(query);
-		        stmt.setLong(1, ac_number);
+		        stmt.setInt(1, ac_number);
 		        
 		        ResultSet rs = stmt.executeQuery();
 		        if (rs.next()) {
 		            account = new AccountVO();
-		            account.setAc_number(rs.getLong("ac_number"));
+		            account.setAc_number(rs.getInt("ac_number"));
 		            account.setId(rs.getString("id"));
 		            account.setAC_NAME(rs.getString("AC_NAME"));
-		            account.setAC_MONEY(rs.getLong("AC_MONEY"));
+		            account.setAC_MONEY(rs.getInt("AC_MONEY"));
 		            account.setAC_OP_DATE(rs.getDate("AC_OP_DATE"));
 		            account.setAC_ED_DATE(rs.getDate("AC_ED_DATE"));
 		            account.setBank_name(rs.getString("bank_name"));
@@ -130,7 +130,7 @@ public class AccountDAO {
 		}
 	
 	// Ac_number, bank_cd로 조회
-	public AccountVO getAccount(long Ac_number, String bank_cd) {
+	public AccountVO getAccount(int Ac_number, String bank_cd) {
 		AccountVO account = null;
 		String query =
 				" SELECT c.ac_number, c.id, ui.NAME, c.AC_NAME, c.AC_MONEY, c.AC_OP_DATE, c.AC_ED_DATE, c.bank_cd, c.bank_name, d.pd_name "
@@ -146,16 +146,16 @@ public class AccountDAO {
 		try {
 			conn = JDBCUtil.getConnection();
 			stmt = conn.prepareStatement(query);
-			stmt.setLong(1, Ac_number);
+			stmt.setInt(1, Ac_number);
 			stmt.setString(2, bank_cd);
 			
 			rs = stmt.executeQuery();
 			while(rs.next()) {
 				account = new AccountVO();
-				account.setAc_number(rs.getLong("ac_number"));
+				account.setAc_number(rs.getInt("ac_number"));
 				account.setId(rs.getString("id"));
 				account.setAC_NAME(rs.getString("AC_NAME"));
-				account.setAC_MONEY(rs.getLong("AC_MONEY"));
+				account.setAC_MONEY(rs.getInt("AC_MONEY"));
 				account.setAC_OP_DATE(rs.getDate("AC_OP_DATE"));
 				account.setAC_ED_DATE(rs.getDate("AC_ED_DATE"));
 				account.setBank_name(rs.getString("bank_name"));
@@ -173,35 +173,15 @@ public class AccountDAO {
 	}
 	
 	// Ac_number, bank_cd 확인
-	public boolean CheckAc_number (long ac_number, String bank_cd) {
+	public boolean CheckAc_number (int ac_number, String bank_cd) {
 		boolean check = false;
-		
-		String query;
-	    switch (bank_cd) {
-	        case "204":
-	        	query = " select * from account " +
-	    				" where ac_number = ? and bank_cd = ? ";
-	            break;
-	        case "159":
-	        	query = " select * from account@test_link " +
-	    				" where accnum = ? and bank_cd = ? ";
-	            break;
-	        case "111":
-	        	query = " select * from account@bhBank " +
-	        			" where ac_number = ? and bank_cd = ? ";
-	        	break;
-	        case "616":
-	        	query = " select * from account@sjBank " +
-	        			" where ac_number = ? and bank_cd = ? ";
-	        	break;
-	        default:
-	            // 다른 은행 코드에 대한 처리를 여기에 추가하거나 또는 에러 처리를 할 수 있습니다.
-	            throw new RuntimeException("지원되지 않는 은행 코드입니다.");
-	    }
+		String query = 
+				" select * from account " +
+				" where ac_number = ? and bank_cd = ? ";
 		try {
 			conn = JDBCUtil.getConnection();
 			stmt = conn.prepareStatement(query);
-			stmt.setLong(1, ac_number);
+			stmt.setInt(1, ac_number);
 			stmt.setString(2, bank_cd);
 			rs = stmt.executeQuery();
 			
@@ -215,7 +195,7 @@ public class AccountDAO {
 	}
 	
 	// Ac_number, AC_PW 확인
-	public boolean checkAC_PW (long ac_number, String AC_PW) {
+	public boolean checkAC_PW (int ac_number, String AC_PW) {
 		boolean check = false;
 		String query = 
 				" select * from account " +
@@ -223,7 +203,7 @@ public class AccountDAO {
 		try {
 			conn = JDBCUtil.getConnection();
 			stmt = conn.prepareStatement(query);
-			stmt.setLong(1, ac_number);
+			stmt.setInt(1, ac_number);
 			stmt.setString(2, AC_PW);
 			rs = stmt.executeQuery();
 			
@@ -237,7 +217,7 @@ public class AccountDAO {
 	}
 	
 	// 입금
-	public int deposit(long ac_number, String bank_cd, String rc_text, long depositAmount, boolean withTransactionLog) {
+	public int deposit(int ac_number, String bank_cd, String rc_text, int depositAmount, boolean withTransactionLog) {
 	    String query = 
 	    		" UPDATE account SET AC_MONEY = AC_MONEY + ? "
 	    		+ " WHERE ac_number = ? and bank_cd = ? ";
@@ -246,8 +226,8 @@ public class AccountDAO {
 	    try {
 	        conn = JDBCUtil.getConnection();
 	        stmt = conn.prepareStatement(query);
-	        stmt.setLong(1, depositAmount);
-	        stmt.setLong(2, ac_number);
+	        stmt.setInt(1, depositAmount);
+	        stmt.setInt(2, ac_number);
 	        stmt.setString(3, bank_cd);
 
 	        result = stmt.executeUpdate();
@@ -257,12 +237,12 @@ public class AccountDAO {
 	        	AccountVO account = getAccount(ac_number);
 		        String Id = account.getId();
 		        String Name = account.getName();
-		        long AC_MONEY = account.getAC_MONEY();
+		        int AC_MONEY = account.getAC_MONEY();
 		        
 		        Ac_recordDAO ac_recordDAO = new Ac_recordDAO(); // 클래스 인스턴스 생성
 //	            ac_recordDAO.insertTransaction(ac_number, Id, "입금", Name, depositAmount, AC_MONEY);
 	            
-//	            ac_recordDAO.insertTransaction(ac_number, Id, "입금", Name, depositAmount, AC_MONEY , rc_text, ac_number);
+	            ac_recordDAO.insertTransaction(ac_number, Id, "입금", Name, depositAmount, AC_MONEY , rc_text, ac_number);
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -274,7 +254,7 @@ public class AccountDAO {
 	}
 
 	// 출금
-	public int withdraw(long ac_number, String bank_cd, String rc_text, long withdrawAmount, boolean withTransactionLog) {
+	public int withdraw(int ac_number, String bank_cd, String rc_text, int withdrawAmount, boolean withTransactionLog) {
 	    String query = 
 	    		" UPDATE account SET AC_MONEY = AC_MONEY - ? "
 	    		+ " WHERE ac_number = ? and bank_cd = ? ";
@@ -283,8 +263,8 @@ public class AccountDAO {
 	    try {
 	        conn = JDBCUtil.getConnection();
 	        stmt = conn.prepareStatement(query);
-	        stmt.setLong(1, withdrawAmount);
-	        stmt.setLong(2, ac_number);
+	        stmt.setInt(1, withdrawAmount);
+	        stmt.setInt(2, ac_number);
 	        stmt.setString(3, bank_cd);
 
 	        result = stmt.executeUpdate();
@@ -294,12 +274,11 @@ public class AccountDAO {
 	        	AccountVO account = getAccount(ac_number);
 		        String Id = account.getId();
 		        String Name = account.getName();
-		        long AC_MONEY = account.getAC_MONEY();
+		        int AC_MONEY = account.getAC_MONEY();
 		        
 		        Ac_recordDAO ac_recordDAO = new Ac_recordDAO(); // 클래스 인스턴스 생성
 //	            ac_recordDAO.insertTransaction(ac_number, Id, "출금", Name, withdrawAmount,AC_MONEY);
-		        
-//	            ac_recordDAO.insertTransaction(ac_number, Id, "출금", Name, withdrawAmount,AC_MONEY,rc_text,ac_number);
+	            ac_recordDAO.insertTransaction(ac_number, Id, "출금", Name, withdrawAmount,AC_MONEY,rc_text,ac_number);
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -311,85 +290,54 @@ public class AccountDAO {
 	}
 
 	// 이체
-	public int transfer(long sendAc_number, String sendBank_cd, long receivAc_number, String receivBank_cd, long transferAmount, String rc_text) {
+	public int transfer(int sendAc_number, String sendBank_cd, int receivAc_number, String receivBank_cd, int transferAmount, String rc_text) {
 	    int result = 0;
 
-	    // 출금 쿼리문
-	    String withdrawalQuery = "UPDATE account SET AC_MONEY = AC_MONEY - ? WHERE ac_number = ? AND bank_cd = ?";
-	    int withdrawalResult = 0;
+	    // 출금
+	    int withdrawalResult = withdraw(sendAc_number, sendBank_cd, rc_text, transferAmount, false);
 
-	    // 입금 쿼리문
-	    String depositQuery;
-	    switch (receivBank_cd) {
-	        case "204":
-	            depositQuery = "UPDATE account SET AC_MONEY = AC_MONEY + ? WHERE ac_number = ? AND bank_cd = ?";
-	            break;
-	        case "159":
-	            depositQuery = "UPDATE account@test_link SET AC_MONEY = AC_MONEY + ? WHERE accnum = ? AND bank_cd = ?";
-	            break;
-	        case "111":
-	        	depositQuery = "UPDATE account@bhBank SET AC_MONEY = AC_MONEY + ? WHERE ac_number = ? AND bank_cd = ?";
-	        	break;
-	        case "616":
-	        	depositQuery = "UPDATE account@sjBank SET AC_MONEY = AC_MONEY + ? WHERE ac_number = ? AND bank_cd = ?";
-	        	break;
-	        default:
-	            // 다른 은행 코드에 대한 처리를 여기에 추가하거나 또는 에러 처리를 할 수 있습니다.
-	            throw new RuntimeException("지원되지 않는 은행 코드입니다.");
-	    }
-	    
-	    int depositResult = 0;
+	    // 입금
+	    int depositResult = deposit(receivAc_number, receivBank_cd, rc_text, transferAmount, false);
 
-	    try {
-	        conn = JDBCUtil.getConnection();
+	    // 입출금 결과가 성공적이면 이체 내역 저장
+	    if (withdrawalResult > 0 && depositResult > 0) {
+	    	
+	    	AccountVO sendAccount = getAccount(sendAc_number);
+	        int sendTransferedAC_MONEY = sendAccount.getAC_MONEY();
+	        String sendId = sendAccount.getId();
+	        String sendName = sendAccount.getName();
+	        
+	        AccountVO receivAccount = getAccount(receivAc_number);
+	        int receivTransferedAC_MONEY = receivAccount.getAC_MONEY();
+	        String receivId = receivAccount.getId();
+	        String receivName = receivAccount.getName();
+	        		
+	        Ac_recordDAO ac_recordDAO = new Ac_recordDAO(); // 클래스 인스턴스 생성
+	        // 출금 이력 추가
+            ac_recordDAO.insertTransaction(sendAc_number, sendId, "송금", receivName, transferAmount, sendTransferedAC_MONEY,rc_text,receivAc_number);
 
-	        // 출금 쿼리 실행
-	        stmt = conn.prepareStatement(withdrawalQuery);
-	        stmt.setLong(1, transferAmount);
-	        stmt.setLong(2, sendAc_number);
-	        stmt.setString(3, sendBank_cd);
-	        withdrawalResult = stmt.executeUpdate();
+	        // 입금 이력 추가
+            ac_recordDAO.insertTransaction(receivAc_number, receivId, "수금", sendName, transferAmount, receivTransferedAC_MONEY,rc_text,sendAc_number);
 
-	        // 입금 쿼리 실행
-	        stmt = conn.prepareStatement(depositQuery);
-	        stmt.setLong(1, transferAmount);
-	        stmt.setLong(2, receivAc_number);
-	        stmt.setString(3, receivBank_cd);
-	        depositResult = stmt.executeUpdate();
-
-	        // 입출금 결과가 성공적이면 이체 내역 저장
-	        if (withdrawalResult > 0 && depositResult > 0) {
-	        	
-	        	Ac_recordDAO ac_recordDAO = new Ac_recordDAO();
-
-	            // 출금 이력 추가
-	            ac_recordDAO.insertTransaction(sendAc_number, sendBank_cd, "송금", receivBank_cd, receivAc_number, transferAmount, rc_text);
-
-	            // 입금 이력 추가
-	            ac_recordDAO.insertTransaction(receivAc_number, receivBank_cd, "수금", sendBank_cd, sendAc_number, transferAmount, rc_text);
-
-	            result = 1;
-	            result = 1;
-	        } else {
-	            // 실패한 경우 롤백 처리
+	        result = 1;
+	    } else {
+	        // 실패한 경우 롤백 처리
+	        try {
 	            conn.rollback();
+	        } catch (Exception e) {
+	            e.printStackTrace();
 	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    } finally {
-	        JDBCUtil.close(stmt, conn);
 	    }
 
 	    return result;
 	}
 
-
 	// 오버로드 메서드를 추가
-	public int deposit(long ac_number, String bank_cd, String rc_text, long depositAmount) {
+	public int deposit(int ac_number, String bank_cd, String rc_text, int depositAmount) {
 	    return deposit(ac_number, bank_cd, rc_text, depositAmount, true);
 	}
 
-	public int withdraw(long ac_number, String bank_cd, String rc_text, long withdrawAmount) {
+	public int withdraw(int ac_number, String bank_cd, String rc_text, int withdrawAmount) {
 	    return withdraw(ac_number, bank_cd, rc_text, withdrawAmount, true);
 	}
 	

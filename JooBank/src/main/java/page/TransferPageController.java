@@ -19,11 +19,11 @@ public class TransferPageController implements Controller {
 		String ac_number = request.getParameter("ac_number");
 		
 //		AccountVO vo = new AccountVO();
-//		vo.setAc_number(Integer.parseInt(ac_number));
+//		vo.setAc_number(Long.parseLong(ac_number));
 		
 		AccountDAO dao = new AccountDAO();
 //		AccountVO account = dao.getAc_number(vo);
-		AccountVO account = dao.getAccount(Integer.parseInt(ac_number));
+		AccountVO account = dao.getAccount(Long.parseLong(ac_number));
 		
 		BankinfoDAO bankinfoDao = new BankinfoDAO();
 		List<BankinfoVO> bankList = bankinfoDao.getBankList();

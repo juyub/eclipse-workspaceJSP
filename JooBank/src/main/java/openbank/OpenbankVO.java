@@ -4,11 +4,11 @@ import java.util.Date;
 
 public class OpenbankVO {
 
-    private int ac_number;
+    private long ac_number;
     private String id;
     private String AC_PW;
     private String AC_NAME;
-    private int AC_MONEY;
+    private long AC_MONEY;
     private String bankCode;
     private Date AC_OP_DATE;
     private Date AC_ED_DATE;
@@ -22,11 +22,11 @@ public class OpenbankVO {
     
     private String name;
 
-	public int getAc_number() {
+	public long getAc_number() {
 		return ac_number;
 	}
 
-	public void setAc_number(int ac_number) {
+	public void setAc_number(long ac_number) {
 		this.ac_number = ac_number;
 	}
 
@@ -54,11 +54,11 @@ public class OpenbankVO {
 		AC_NAME = aC_NAME;
 	}
 
-	public int getAC_MONEY() {
+	public long getAC_MONEY() {
 		return AC_MONEY;
 	}
 
-	public void setAC_MONEY(int aC_MONEY) {
+	public void setAC_MONEY(long aC_MONEY) {
 		AC_MONEY = aC_MONEY;
 	}
 
@@ -133,7 +133,5 @@ public class OpenbankVO {
 	public void setName(String name) {
 		this.name = name;
 	}
-    
-    
 	
 }

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 import controller.Controller;
 import user.UserVO;
 
-public class GetAccountListController implements Controller {
+public class GetObAcListController implements Controller {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -17,15 +17,19 @@ public class GetAccountListController implements Controller {
 		HttpSession session = request.getSession();
 		UserVO user = (UserVO) session.getAttribute("login");
 		
-		AccountVO vo = new AccountVO();
+		OpenbankVO vo = new OpenbankVO();
 		vo.setId(user.getId());
 		
-		AccountDAO dao = new AccountDAO();
-		List<AccountVO> accountList = dao.myAccountList(vo);
+		OpenbankDAO dao = new OpenbankDAO();
+//		List<OpenbankVO> nsAcList = dao.nsAcList(vo);
+		List<OpenbankVO> bhAcList = dao.bhAcList(vo);
+		List<OpenbankVO> plAcList = dao.plAcList(vo);
 		
-		request.setAttribute("accountList", accountList);
+//		request.setAttribute("nsAcList", nsAcList);
+		request.setAttribute("bhAcList", bhAcList);
+		request.setAttribute("plAcList", plAcList);
 				
-		return "/account/accountMain.jsp";
+		return "/openbank/openbankMain.jsp";
 	}
 
 }

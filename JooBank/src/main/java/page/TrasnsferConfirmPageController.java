@@ -15,9 +15,11 @@ public class TrasnsferConfirmPageController implements Controller {
 		String sendAc_number = request.getParameter("sendAc_number");
 		String sendBank_cd = request.getParameter("sendBank_cd");
 		String transferAmount = request.getParameter("transferAmount");
-		int receivAc_number = Integer.parseInt(request.getParameter("receivAc_number"));
+		long receivAc_number = Long.parseLong(request.getParameter("receivAc_number"));
 		String selected_bank_cd = request.getParameter("selected_bank_cd");
 		String rc_text = request.getParameter("rc_text");
+		
+		System.out.println(selected_bank_cd);
 		
 		AccountDAO dao = new AccountDAO();
 		
@@ -28,6 +30,9 @@ public class TrasnsferConfirmPageController implements Controller {
 		request.setAttribute("sendAc_number", sendAc_number);
 		request.setAttribute("sendBank_cd", sendBank_cd);
 		request.setAttribute("rc_text", rc_text);
+		
+		request.setAttribute("receivAc_number", receivAc_number);
+		request.setAttribute("selected_bank_cd", selected_bank_cd);
 		
 		return "/account/transferConfirm.jsp";
 	}

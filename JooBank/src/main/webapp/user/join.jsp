@@ -71,6 +71,9 @@ body {
 	border-radius: 10px;
 	color: black;
 }
+td {
+  padding: 5px;
+}
 </style>
 
 </head>

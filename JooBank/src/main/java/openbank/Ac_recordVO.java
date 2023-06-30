@@ -1,4 +1,4 @@
-package ac_record;
+package openbank;
 
 import java.sql.Timestamp;
 
@@ -125,5 +125,5 @@ public class Ac_recordVO {
 	public void setBank_name(String bank_name) {
 		this.bank_name = bank_name;
 	}
-    
+	
 }
