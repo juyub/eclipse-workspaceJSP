@@ -5,13 +5,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sun.jdi.request.InvalidRequestStateException;
-
-import account.AccountDAO;
-import account.AccountVO;
 import controller.Controller;
 
-public class GetAc_recordListController implements Controller {
+public class GetOb_recordListController implements Controller {
 
 	private static final int pageSize = 10; // 페이지당 보여줄 레코드 수
 
@@ -19,12 +15,12 @@ public class GetAc_recordListController implements Controller {
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
 
 		long ac_number = Long.parseLong(request.getParameter("ac_number"));
+		String bank_cd = request.getParameter("bank_cd");
 		
-		AccountDAO accountDao = new AccountDAO();
-		AccountVO account = accountDao.getAccount(ac_number);
+		OpenbankDAO obDao = new OpenbankDAO();
+		OpenbankVO obAccount = obDao.getAccount(ac_number, bank_cd);
 		
-		request.setAttribute("account", account);
-
+		request.setAttribute("obAccount", obAccount);
 		
 		int pageNo;
 		String pageNoParam = request.getParameter("pageNo");
@@ -40,14 +36,16 @@ public class GetAc_recordListController implements Controller {
 		int totalPageCount = (totalRecordCount + pageSize - 1) / pageSize; // 총 페이지 수 계산
 
 
-		List<Ac_recordVO> recordList = dao.getAc_recordList(ac_number, pageNo, pageSize);
+		List<Ac_recordVO> recordList = dao.getAc_recordList(ac_number, bank_cd, pageNo, pageSize);
 
 		request.setAttribute("ac_number", ac_number);
+		request.setAttribute("bank_cd", bank_cd);
 		request.setAttribute("recordList", recordList);
+
 		request.setAttribute("totalPageCount", totalPageCount);
 		request.setAttribute("currentPage", pageNo);
 
-		return "/account/getAc_recordList.jsp";
+		return "/openbank/getOb_recordList.jsp";
 	}
 
 }

@@ -15,7 +15,7 @@
 		<jsp:include page="../topMenu.jsp" />
 	</header>
 	<section>
-		<%-- <c:choose>
+		<c:choose>
 			 <c:when test="${ empty nsAcList }"> 
 		 		계좌가 없습니다.
 		 	</c:when>
@@ -39,7 +39,7 @@
 							<td>${ account.name }</td>
 						</tr>
 						<tr>
-							<td ><a href="${contextPath}/getAc_recordList.do?ac_number=${ account.ac_number }">${ account.ac_number }</a></td>
+							<td ><a href="${contextPath}/obRecordList.do?ac_number=${ account.ac_number }&bank_cd=${account.bank_cd}">${ account.ac_number }</a></td>
 							<td COLSPAN="2" align="right" style="width:250px">
 							 잔액 : <fmt:formatNumber type="number" pattern="###,###" value="${account.AC_MONEY}" /> 원
 							 </td>
@@ -47,7 +47,7 @@
 					</table>
 				</c:forEach>
 			</c:otherwise>
-		</c:choose> --%>
+		</c:choose>
 		<c:choose>
 			<c:when test="${ empty bhAcList }"> 
 		 		계좌가 없습니다.
@@ -72,7 +72,7 @@
 							<td>${ account.name }</td>
 						</tr>
 						<tr>
-							<td ><a href="${contextPath}/getAc_recordList.do?ac_number=${ account.ac_number }">${ account.ac_number }</a></td>
+							<td ><a href="${contextPath}/obRecordList.do?ac_number=${ account.ac_number }&bank_cd=${account.bank_cd}">${ account.ac_number }</a></td>
 							<td COLSPAN="2" align="right" style="width:250px">
 							 잔액 : <fmt:formatNumber type="number" pattern="###,###" value="${account.AC_MONEY}" /> 원
 							 </td>
@@ -105,7 +105,7 @@
 							<td>${ account.name }</td>
 						</tr>
 						<tr>
-							<td ><a href="${contextPath}/getAc_recordList.do?ac_number=${ account.ac_number }">${ account.ac_number }</a></td>
+							<td ><a href="${contextPath}/obRecordList.do?ac_number=${ account.ac_number }&bank_cd=${account.bank_cd}">${ account.ac_number }</a></td>
 							<td COLSPAN="2" align="right" style="width:250px">
 							 잔액 : <fmt:formatNumber type="number" pattern="###,###" value="${account.AC_MONEY}" /> 원
 							 </td>

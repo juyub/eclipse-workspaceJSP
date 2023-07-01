@@ -39,7 +39,6 @@ table {
 			<table border="1" width="60%" style="margin-bottom: 1%;">
 			<tr align="center">
 				<td >${record.rc_type}</td>
-				<td >${record.bank_name}</td>
 				<td >${record.rc_name}</td>
 				<td width="20%">
 				<fmt:formatNumber value="${record.rc_money}" pattern="###,###"/>원</td>

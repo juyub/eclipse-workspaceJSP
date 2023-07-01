@@ -28,7 +28,7 @@ public class ObTransferPageController implements Controller {
 		
 		request.setAttribute("bankList", bankList);
 		
-		return "/openbank/transfer.jsp";
+		return "/openbank/obTransfer.jsp";
 	}
 
 }

@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import account.AccountVO;
 import common.JDBCUtil;
 import openbank.OpenbankDAO;
 import openbank.OpenbankVO;
@@ -48,19 +47,19 @@ public class Ac_recordDAO {
 		String query;
 	    switch (bank_cd) {
 	        case "204":
-	            query = " INSERT INTO ac_record (rc_no, ac_number, id, rc_type, rc_name, rc_money, rc_balance, rc_text, rc_number)"
+	            query = " INSERT INTO ac_record (rc_no, ac_number, id, rc_type, rc_name, rc_money, rc_text, rc_number, rc_balance)"
 	            		+ " VALUES(seq_rc_no.NEXTVAL,?, ?, ?, ?, ?, ?, ?, ?)";
 	            break;
 	        case "159":
-	    		query = " INSERT INTO ac_record@test_link (rc_no, ac_number, id, rc_type, rc_name, rc_money, rc_balance, rc_text, rc_number) "
-	    				+ " VALUES(seq_rc_no.NEXTVAL,?, ?, ?, ?, ?, ?, ?, ?) ";
+	    		query = " INSERT INTO ac_record@XE@shBank (rc_no, accnum, id, rc_type, rc_name, rc_money, rc_text, rc_number) "
+	    				+ " VALUES((select nvl(max(rc_no),0)+1 from ac_record@XE@shBank),?, ?, ?, ?, ?, ?, ?) ";
 	    		break;
 	    	case "111":
-	    		query = " INSERT INTO ac_record@bhBank (rc_no, ac_number, id, rc_type, rc_name, rc_money, rc_balance, rc_text, rc_number) "
+	    		query = " INSERT INTO ac_record@XE@bhBank (rc_no, ac_number, id, rc_type, rc_name, rc_money, rc_text, rc_number, rc_balance) "
 	    				+ " VALUES(seq_rc_no.NEXTVAL,?, ?, ?, ?, ?, ?, ?, ?) "; 
 	    		break;
 	    	case "616":
-	    		query = " INSERT INTO ac_record@sjBank (rc_no, ac_number, id, rc_type, rc_name, rc_money, rc_balance, rc_text, rc_number) "
+	    		query = " INSERT INTO ac_record@XE@sjBank (rc_no, ac_number, id, rc_type, rc_name, rc_money, rc_text, rc_number, rc_balance) "
 	    				+ " VALUES(seq_rc_no.NEXTVAL,?, ?, ?, ?, ?, ?, ?, ?) "; 
 	    		break;
 	    	default:
@@ -84,9 +83,12 @@ public class Ac_recordDAO {
 	        stmt.setString(3, type);
 	        stmt.setString(4, Name);
 	        stmt.setLong(5, transferAmount);
-	        stmt.setLong(6, AC_MONEY);
-	        stmt.setString(7, rc_text);
-	        stmt.setLong(8, opAc_number);
+	        stmt.setString(6, rc_text);
+	        stmt.setLong(7, opAc_number);
+	        
+	        if (!"159".equals(bank_cd)) {   // bank_cd가 "159"가 아닐 때
+	            stmt.setLong(8, AC_MONEY);
+	        }
 
 	        stmt.executeUpdate();
 	    } catch (Exception e) {

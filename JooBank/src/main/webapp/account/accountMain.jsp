@@ -24,8 +24,10 @@
 						<table border="1">
 							<tr>
 							<td>
+							<c:if test="${ login.user_type eq 'admin' }">
 							<button><a href="${contextPath}/depositPage.do?ac_number=${ account.ac_number }">입금</a></button>&nbsp;&nbsp;
 							<button><a href="${contextPath}/withdrawPage.do?ac_number=${ account.ac_number }">출금</a></button>&nbsp;&nbsp;
+							</c:if>
 							<button><a href="${contextPath}/trasferPage.do?ac_number=${ account.ac_number }">이체</a></button>
 							</td>
 							<td>

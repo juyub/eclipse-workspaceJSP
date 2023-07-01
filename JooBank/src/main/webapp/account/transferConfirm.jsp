@@ -33,6 +33,7 @@
 				type : 'POST',
 				data : {
 					sendAc_number : $('input[name="sendAc_number"]').val(),
+					sendBank_cd : $('input[name="sendBank_cd"]').val(),
 					AC_PW : password.val()
 				},
 				success : function(response) {

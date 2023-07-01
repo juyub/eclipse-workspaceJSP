@@ -33,6 +33,7 @@
 				type : 'POST',
 				data : {
 					sendAc_number : $('input[name="sendAc_number"]').val(),
+					sendBank_cd : $('input[name="sendBank_cd"]').val(),
 					AC_PW : password.val()
 				},
 				success : function(response) {
@@ -61,7 +62,7 @@
 			}
 		});
 
-		transferForm = $("form[action='${contextPath}/transfer.do']");
+		transferForm = $("form[action='${contextPath}/obTransfer.do']");
 		$("#transfer").on("click", function() {
 			passwordDialog.dialog("open");
 		});
@@ -78,12 +79,12 @@
 		<jsp:include page="../topMenu.jsp" />
 	</header>
 	<section style="display: flex; justify-content: center;">
-		<form id="transfer-form" action="${contextPath}/transfer.do"
+		<form id="transfer-form" action="${contextPath}/obTransfer.do"
 			method="post">
 			<table border="1">
 				<tr>
 					<td>이체할 은행</td>
-					<td>${account.bank_name} </td>
+					<td>${account.bank_name}</td>
 				</tr>
 				<tr>
 					<td>이체할 계좌</td>
@@ -123,11 +124,9 @@
 	<div id="password-dialog" title="이체 비밀번호 확인">
 		<form>
 			<fieldset>
-				<label for="password">비밀번호</label> <input type="password"
-					name="password" id="password"
-					class="text ui-widget-content ui-corner-all"> <input
-					type="submit" tabindex="-1"
-					style="position: absolute; top: -1000px">
+				<label for="password">비밀번호</label>
+				<input type="password" name="password" id="password" class="text ui-widget-content ui-corner-all">
+				<input type="submit" tabindex="-1" style="position: absolute; top: -1000px">
 			</fieldset>
 		</form>
 	</div>

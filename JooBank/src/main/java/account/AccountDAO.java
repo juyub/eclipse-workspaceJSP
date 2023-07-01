@@ -172,69 +172,6 @@ public class AccountDAO {
 		return account;
 	}
 	
-	// Ac_number, bank_cd 확인
-	public boolean CheckAc_number (long ac_number, String bank_cd) {
-		boolean check = false;
-		
-		String query;
-	    switch (bank_cd) {
-	        case "204":
-	        	query = " select * from account " +
-	    				" where ac_number = ? and bank_cd = ? ";
-	            break;
-	        case "159":
-	        	query = " select * from account@test_link " +
-	    				" where accnum = ? and bank_cd = ? ";
-	            break;
-	        case "111":
-	        	query = " select * from account@bhBank " +
-	        			" where ac_number = ? and bank_cd = ? ";
-	        	break;
-	        case "616":
-	        	query = " select * from account@sjBank " +
-	        			" where ac_number = ? and bank_cd = ? ";
-	        	break;
-	        default:
-	            // 다른 은행 코드에 대한 처리를 여기에 추가하거나 또는 에러 처리를 할 수 있습니다.
-	            throw new RuntimeException("지원되지 않는 은행 코드입니다.");
-	    }
-		try {
-			conn = JDBCUtil.getConnection();
-			stmt = conn.prepareStatement(query);
-			stmt.setLong(1, ac_number);
-			stmt.setString(2, bank_cd);
-			rs = stmt.executeQuery();
-			
-			check = rs.next(); // true
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally { 
-			JDBCUtil.close(rs, stmt, conn);
-		}
-		return check;
-	}
-	
-	// Ac_number, AC_PW 확인
-	public boolean checkAC_PW (long ac_number, String AC_PW) {
-		boolean check = false;
-		String query = 
-				" select * from account " +
-				" where ac_number = ? and AC_PW = ? ";
-		try {
-			conn = JDBCUtil.getConnection();
-			stmt = conn.prepareStatement(query);
-			stmt.setLong(1, ac_number);
-			stmt.setString(2, AC_PW);
-			rs = stmt.executeQuery();
-			
-			check = rs.next(); // true
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally { 
-			JDBCUtil.close(rs, stmt, conn);
-		}
-		return check;
-	}
 	
 	// 입금
 	public int deposit(long ac_number, String bank_cd, String rc_text, long depositAmount, boolean withTransactionLog) {
@@ -325,13 +262,13 @@ public class AccountDAO {
 	            depositQuery = "UPDATE account SET AC_MONEY = AC_MONEY + ? WHERE ac_number = ? AND bank_cd = ?";
 	            break;
 	        case "159":
-	            depositQuery = "UPDATE account@test_link SET AC_MONEY = AC_MONEY + ? WHERE accnum = ? AND bank_cd = ?";
+	            depositQuery = "UPDATE account@XE@shBank SET AC_MONEY = AC_MONEY + ? WHERE accnum = ? AND bank_cd = ?";
 	            break;
 	        case "111":
-	        	depositQuery = "UPDATE account@bhBank SET AC_MONEY = AC_MONEY + ? WHERE ac_number = ? AND bank_cd = ?";
+	        	depositQuery = "UPDATE account@XE@bhBank SET AC_MONEY = AC_MONEY + ? WHERE ac_number = ? AND bank_cd = ?";
 	        	break;
 	        case "616":
-	        	depositQuery = "UPDATE account@sjBank SET AC_MONEY = AC_MONEY + ? WHERE ac_number = ? AND bank_cd = ?";
+	        	depositQuery = "UPDATE account@XE@sjBank SET AC_MONEY = AC_MONEY + ? WHERE ac_number = ? AND bank_cd = ?";
 	        	break;
 	        default:
 	            // 다른 은행 코드에 대한 처리를 여기에 추가하거나 또는 에러 처리를 할 수 있습니다.

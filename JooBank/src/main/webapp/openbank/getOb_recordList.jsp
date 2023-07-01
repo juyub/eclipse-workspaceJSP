@@ -25,13 +25,13 @@ table {
 		<td></td><td>상품명</td><td>예금주</td><td>계좌번호</td><td>잔액</td><td>개설일</td><td>만기일</td>
 		</tr>
 			<tr>
-			<td>${ account.bank_name }</td>
-			<td>${ account.pd_name }</td>
-			<td>${ account.name }</td>
-			<td>${ account.ac_number }</td>
-			<td><fmt:formatNumber type="number" pattern="###,###" value="${account.AC_MONEY}" /> 원</td>
-			<td>${ account.AC_OP_DATE }</td>
-			<td>${ account.AC_ED_DATE }</td>
+			<td>${ obAccount.bank_name }</td>
+			<td>${ obAccount.pd_name }</td>
+			<td>${ obAccount.name }</td>
+			<td>${ obAccount.ac_number }</td>
+			<td><fmt:formatNumber type="number" pattern="###,###" value="${obAccount.AC_MONEY}" /> 원</td>
+			<td>${ obAccount.AC_OP_DATE }</td>
+			<td>${ obAccount.AC_ED_DATE }</td>
 			</tr>
 		</table>
 		<br>

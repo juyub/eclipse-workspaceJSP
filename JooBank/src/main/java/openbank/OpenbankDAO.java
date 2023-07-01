@@ -21,11 +21,11 @@ public class OpenbankDAO {
 				" SELECT c.accnum, c.id, ui.NAME, c.AC_NAME, c.AC_MONEY, c.AC_OP_DATE, c.AC_ED_DATE, c.bank_cd, c.bank_name, d.pd_name "
 				+ " FROM ("
 				 +  " SELECT a.accnum, a.id, a.AC_NAME, a.AC_MONEY, a.AC_OP_DATE, a.AC_ED_DATE, a.PD_NUMBER, a.bank_cd, b.bank_name "
-				 +   " FROM account@test_link a "
+				 +   " FROM account@XE@shBank a "
 				 +  " JOIN bankinfo b ON b.bank_cd = a.bank_cd "
 			    + " ) c "
-				+ " JOIN product@test_link d ON d.PD_NUMBER = c.PD_NUMBER "
-				+ " JOIN USER_INFO@test_link ui ON ui.ID = c.id "
+				+ " JOIN product@XE@shBank d ON d.PD_NUMBER = c.PD_NUMBER "
+				+ " JOIN USER_INFO@XE@shBank ui ON ui.ID = c.id "
 				+ " WHERE c.id = ? ORDER BY c.AC_OP_DATE DESC ";
 
 		try {
@@ -63,10 +63,10 @@ public class OpenbankDAO {
 				" SELECT c.Ac_number, c.id, ui.name, c.AC_NAME, c.AC_MONEY, c.AC_OP_DATE, c.AC_ED_DATE, c.bank_cd, c.bank_name "
 				+ "	FROM ( "
 				+ "	SELECT a.Ac_number, a.id, a.AC_NAME, a.AC_MONEY, a.AC_OP_DATE, a.AC_ED_DATE, a.PD_NUMBER, a.bank_cd, b.bank_name "
-				+ "	FROM account@bhBank a"
+				+ "	FROM account@XE@bhBank a"
 				+ "	JOIN bankinfo b ON b.bank_cd = a.bank_cd "
 				+ "	) c"
-				+ " JOIN USER_INFO@bhBank ui ON ui.ID = c.id "
+				+ " JOIN USER_INFO@XE@bhBank ui ON ui.ID = c.id "
 				+ " WHERE c.id = ? ORDER BY c.AC_OP_DATE DESC ";
 
 		try {
@@ -103,11 +103,11 @@ public class OpenbankDAO {
 				" SELECT c.Ac_number, c.id, ui.NAME, c.AC_NAME, c.AC_MONEY, c.AC_OP_DATE, c.AC_ED_DATE, c.bank_cd, c.bank_name, d.pd_name "
 				+ " FROM ("
 				 +  " SELECT a.Ac_number, a.id, a.AC_NAME, a.AC_MONEY, a.AC_OP_DATE, a.AC_ED_DATE, a.PD_NUMBER, a.bank_cd, b.bank_name "
-				 +   " FROM account@sjBank a "
+				 +   " FROM account@XE@sjBank a "
 				 +  " JOIN bankinfo b ON b.bank_cd = a.bank_cd "
 			    + " ) c "
-				+ " JOIN products@sjBank d ON d.PD_NUMBER = c.PD_NUMBER "
-				+ " JOIN USER_INFO@sjBank ui ON ui.ID = c.id "
+				+ " JOIN products@XE@sjBank d ON d.PD_NUMBER = c.PD_NUMBER "
+				+ " JOIN USER_INFO@XE@sjBank ui ON ui.ID = c.id "
 				+ " WHERE c.id = ? ORDER BY c.AC_OP_DATE DESC ";
 
 		try {
@@ -214,33 +214,33 @@ public class OpenbankDAO {
 	        	query = " SELECT c.accnum, c.id, ui.NAME, c.AC_NAME, c.AC_MONEY, c.AC_OP_DATE, c.AC_ED_DATE, c.bank_cd, c.bank_name, d.pd_name "
 						+ " FROM ("
 						+  " SELECT a.accnum, a.id, a.AC_NAME, a.AC_MONEY, a.AC_OP_DATE, a.AC_ED_DATE, a.PD_NUMBER, a.bank_cd, b.bank_name "
-						+   " FROM account@test_link a "
-						+  " JOIN bankinfo@test_link b ON b.bank_cd = a.bank_cd "
+						+   " FROM account@XE@shBank a "
+						+  " JOIN bankinfo@XE@shBank b ON b.bank_cd = a.bank_cd "
 					    + " ) c "
-						+ " JOIN product@test_link d ON d.PD_NUMBER = c.PD_NUMBER "
-						+ " JOIN USER_INFO@test_link ui ON ui.ID = c.id "
+						+ " JOIN product@XE@shBank d ON d.PD_NUMBER = c.PD_NUMBER "
+						+ " JOIN USER_INFO@XE@shBank ui ON ui.ID = c.id "
 						+ " where c.accnum = ? and c.bank_cd = ? ";
 	            break;
 	        case "111":
-	        	query = " SELECT c.ac_number, c.id, ui.NAME, c.AC_NAME, c.AC_MONEY, c.AC_OP_DATE, c.AC_ED_DATE, c.bank_cd, c.bank_name, d.pd_name "
+	        	query = " SELECT c.ac_number, c.id, ui.NAME, c.AC_NAME, c.AC_MONEY, c.AC_OP_DATE, c.AC_ED_DATE, c.bank_cd, c.bank_name "  /*, d.pd_name*/
 						+ " FROM ("
 						 +  " SELECT a.ac_number, a.id, a.AC_NAME, a.AC_MONEY, a.AC_OP_DATE, a.AC_ED_DATE, a.PD_NUMBER, a.bank_cd, b.bank_name "
-						 +   " FROM account@bhBank a "
-						 +  " JOIN bankinfo@bhBank b ON b.bank_cd = a.bank_cd "
+						 +   " FROM account@XE@bhBank a "
+						 +  " JOIN bankinfo b ON b.bank_cd = a.bank_cd "
 					    + " ) c "
-						+ " JOIN product@bhBank d ON d.PD_NUMBER = c.PD_NUMBER "
-						+ " JOIN USER_INFO@bhBank ui ON ui.ID = c.id "
+						+ " JOIN USER_INFO@XE@bhBank ui ON ui.ID = c.id "
 						+ " where c.ac_number = ? and c.bank_cd = ? ";
+//						+ " JOIN product@bhBank d ON d.PD_NUMBER = c.PD_NUMBER "
 	            break;
 	        case "616":
 	        	query = " SELECT c.ac_number, c.id, ui.NAME, c.AC_NAME, c.AC_MONEY, c.AC_OP_DATE, c.AC_ED_DATE, c.bank_cd, c.bank_name, d.pd_name "
 	        			+ " FROM ("
 	        			+  " SELECT a.ac_number, a.id, a.AC_NAME, a.AC_MONEY, a.AC_OP_DATE, a.AC_ED_DATE, a.PD_NUMBER, a.bank_cd, b.bank_name "
-	        			+   " FROM account@sjBank a "
+	        			+   " FROM account@XE@sjBank a "
 	        			+  " JOIN bankinfo b ON b.bank_cd = a.bank_cd "
 	        			+ " ) c "
-	        			+ " JOIN products@sjBank d ON d.PD_NUMBER = c.PD_NUMBER "
-	        			+ " JOIN USER_INFO@sjBank ui ON ui.ID = c.id "
+	        			+ " JOIN products@XE@sjBank d ON d.PD_NUMBER = c.PD_NUMBER "
+	        			+ " JOIN USER_INFO@XE@sjBank ui ON ui.ID = c.id "
 	        			+ " where c.ac_number = ? and c.bank_cd = ? ";
 	        	break;
 	        default:
@@ -271,7 +271,9 @@ public class OpenbankDAO {
 				account.setAC_OP_DATE(rs.getDate("AC_OP_DATE"));
 				account.setAC_ED_DATE(rs.getDate("AC_ED_DATE"));
 				account.setBank_name(rs.getString("bank_name"));
+				if (!"111".equals(bank_cd)) {
 				account.setPd_name(rs.getString("pd_name"));
+				}
 				account.setName(rs.getString("name"));
 				account.setBank_cd(rs.getString("bank_cd"));
 			}
@@ -298,15 +300,15 @@ public class OpenbankDAO {
         					+ " WHERE ac_number = ? AND bank_cd = ?";
             break;
         case "159":
-        	withdrawalQuery = " UPDATE account@test_link SET AC_MONEY = AC_MONEY - ? "
+        	withdrawalQuery = " UPDATE account@XE@shBank SET AC_MONEY = AC_MONEY - ? "
         					+ " WHERE accnum = ? AND bank_cd = ? ";
             break;
         case "111":
-        	withdrawalQuery = " UPDATE account@bhBank SET AC_MONEY = AC_MONEY - ? "
+        	withdrawalQuery = " UPDATE account@XE@bhBank SET AC_MONEY = AC_MONEY - ? "
         					+ " WHERE ac_number = ? AND bank_cd = ? ";
             break;
         case "616":
-        	withdrawalQuery = " UPDATE account@sjBank SET AC_MONEY = AC_MONEY - ?"
+        	withdrawalQuery = " UPDATE account@XE@sjBank SET AC_MONEY = AC_MONEY - ?"
         					+ " WHERE ac_number = ? AND bank_cd = ? ";
         	break;
         default:
@@ -323,13 +325,13 @@ public class OpenbankDAO {
 	            depositQuery = "UPDATE account SET AC_MONEY = AC_MONEY + ? WHERE ac_number = ? AND bank_cd = ?";
 	            break;
 	        case "159":
-	            depositQuery = "UPDATE account@test_link SET AC_MONEY = AC_MONEY + ? WHERE accnum = ? AND bank_cd = ?";
+	            depositQuery = "UPDATE account@XE@shBank SET AC_MONEY = AC_MONEY + ? WHERE accnum = ? AND bank_cd = ?";
 	            break;
 	        case "111":
-	            depositQuery = "UPDATE account@bhBank SET AC_MONEY = AC_MONEY + ? WHERE ac_number = ? AND bank_cd = ?";
+	            depositQuery = "UPDATE account@XE@bhBank SET AC_MONEY = AC_MONEY + ? WHERE ac_number = ? AND bank_cd = ?";
 	            break;    
 	        case "616":
-	        	depositQuery = "UPDATE account@sjBank SET AC_MONEY = AC_MONEY + ? WHERE ac_number = ? AND bank_cd = ?";
+	        	depositQuery = "UPDATE account@XE@sjBank SET AC_MONEY = AC_MONEY + ? WHERE ac_number = ? AND bank_cd = ?";
 	        	break;    
 	        default:
 	            // 다른 은행 코드에 대한 처리를 여기에 추가하거나 또는 에러 처리를 할 수 있습니다.

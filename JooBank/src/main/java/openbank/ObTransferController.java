@@ -14,7 +14,7 @@ public class ObTransferController implements Controller {
         long receivAc_number = Long.parseLong(request.getParameter("receivAc_number"));
         long transferAmount = Long.parseLong(request.getParameter("transferAmount"));
         String sendBank_cd = request.getParameter("sendBank_cd");
-        String receivBank_cd = request.getParameter("selected_bank_cd");
+        String receivBank_cd = request.getParameter("receivBank_cd");
         String rc_text = request.getParameter("rc_text");
 
         System.out.println(receivBank_cd);
@@ -29,7 +29,7 @@ public class ObTransferController implements Controller {
             request.setAttribute("message", "Transfer failed!");
         }
 
-        return "redirect:/JooBank/myAccountList.do";
+        return "redirect:/JooBank/obAcList.do";
     }
 
 }

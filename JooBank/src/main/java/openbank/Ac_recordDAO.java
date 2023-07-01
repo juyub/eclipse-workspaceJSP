@@ -21,20 +21,20 @@ public class Ac_recordDAO {
 		String query;
 	    switch (bank_cd) {
 	        case "204":
-	            query = " INSERT INTO ac_record (rc_no, ac_number, id, rc_type, rc_name, rc_money, rc_balance, rc_text, rc_number)"
+	            query = " INSERT INTO ac_record (rc_no, ac_number, id, rc_type, rc_name, rc_money, rc_text, rc_number, rc_balance)"
 	            		+ " VALUES(seq_rc_no.NEXTVAL,?, ?, ?, ?, ?, ?, ?, ?)";
 	            break;
 	        case "159":
-	    		query = " INSERT INTO ac_record@test_link (rc_no, ac_number, id, rc_type, rc_name, rc_money, rc_balance, rc_text, rc_number) "
-	    				+ " VALUES(seq_rc_no.NEXTVAL,?, ?, ?, ?, ?, ?, ?, ?) ";
+	    		query = " INSERT INTO ac_record@XE@shBank (rc_no, accnum, id, rc_type, rc_name, rc_money, rc_text, rc_number) "
+	    				+ " VALUES((select nvl(max(rc_no),0)+1 from ac_record@XE@shBank),?, ?, ?, ?, ?, ?, ?) ";
 	    		break;
 	    	case "111":
-	    		query = " INSERT INTO ac_record@bhBank (rc_no, ac_number, id, rc_type, rc_name, rc_money, rc_balance, rc_text, rc_number) "
-	    				+ " VALUES(seq_rc_no.NEXTVAL,?, ?, ?, ?, ?, ?, ?, ?) "; 
+	    		query = " INSERT INTO ac_record@XE@bhBank (rc_no, ac_number, id, rc_type, rc_name, rc_money, rc_text, rc_number, rc_balance) "
+	    				+ " VALUES((select nvl(max(rc_no),0)+1 from ac_record@XE@bhBank),?, ?, ?, ?, ?, ?, ?, ?) "; 
 	    		break;
 	    	case "616":
-	    		query = " INSERT INTO ac_record@sjBank (rc_no, ac_number, id, rc_type, rc_name, rc_money, rc_balance, rc_text, rc_number) "
-	    				+ " VALUES(seq_rc_no.NEXTVAL,?, ?, ?, ?, ?, ?, ?, ?) "; 
+	    		query = " INSERT INTO ac_record@XE@sjBank (rc_no, ac_number, id, rc_type, rc_name, rc_money, rc_text, rc_number, rc_balance) "
+	    				+ " VALUES((select nvl(max(rc_no),0)+1 from ac_record@XE@sjBank),?, ?, ?, ?, ?, ?, ?, ?) "; 
 	    		break;
 	    	default:
 	    		// 다른 은행 코드에 대한 처리를 여기에 추가하거나 또는 에러 처리를 할 수 있습니다.
@@ -52,14 +52,18 @@ public class Ac_recordDAO {
 	    try {
 	        conn = JDBCUtil.getConnection();  
 	        stmt = conn.prepareStatement(query);
-	        stmt.setLong(1, ac_number);
+	        
+            stmt.setLong(1, ac_number);
 	        stmt.setString(2, Id);
 	        stmt.setString(3, type);
 	        stmt.setString(4, Name);
 	        stmt.setLong(5, transferAmount);
-	        stmt.setLong(6, AC_MONEY);
-	        stmt.setString(7, rc_text);
-	        stmt.setLong(8, opAc_number);
+	        stmt.setString(6, rc_text);
+	        stmt.setLong(7, opAc_number);
+	        
+	        if (!"159".equals(bank_cd)) {   // bank_cd가 "159"가 아닐 때
+	            stmt.setLong(8, AC_MONEY);
+	        }
 
 	        stmt.executeUpdate();
 	    } catch (Exception e) {
@@ -71,16 +75,44 @@ public class Ac_recordDAO {
 
 
 	// 거래 내역 목록
-	public List<Ac_recordVO> getAc_recordList(long ac_number, int pageNo, int pageSize) {
+	public List<Ac_recordVO> getAc_recordList(long ac_number, String bank_cd, int pageNo, int pageSize) {
 		List<Ac_recordVO> ac_recordList = new ArrayList<Ac_recordVO>();
-		String query = 
-				" SELECT * FROM ( "
-			    + " SELECT ac_record.ac_number, ac_record.id, ac_record.rc_type, ac_record.rc_name, ac_record.rc_money, ac_record.rc_time, "
-			    + " ac_record.rc_balance, ac_record.rc_text, bankinfo.bank_name, ROW_NUMBER() OVER (ORDER BY ac_record.rc_time DESC) as row_num FROM ac_record "
-			    + " JOIN account ON ac_record.ac_number = account.ac_number AND ac_record.id = account.id "
-			    + " JOIN bankinfo ON account.bank_cd = bankinfo.bank_cd "
-			    + " WHERE ac_record.ac_number = ? ) T "
-			    + " WHERE T.row_num BETWEEN ((? - 1) * ?) + 1 AND ? * ? ";
+		
+		String query;
+		switch (bank_cd) {
+	        case "204":
+	            query = " SELECT * FROM ( "
+	            		+ " SELECT a.ac_number, a.id, a.rc_type, a.rc_name, a.rc_money, a.rc_time, "
+	            		+ " a.rc_balance, a.rc_text, ROW_NUMBER() OVER (ORDER BY a.rc_time DESC) as row_num FROM ac_record a "
+	            		+ " WHERE a.ac_number = ? ) T "
+	            		+ " WHERE T.row_num BETWEEN ((? - 1) * ?) + 1 AND ? * ? ";
+
+	            break;
+	        case "159":
+	    		query = " SELECT * FROM ( "
+	            		+ " SELECT a.accnum, a.id, a.rc_type, a.rc_name, a.rc_money, a.rc_time, "
+	            		+ " a.rc_text, ROW_NUMBER() OVER (ORDER BY a.rc_time DESC) as row_num FROM ac_record@XE@shBank a "
+	            		+ " WHERE a.accnum = ? ) T "
+	            		+ " WHERE T.row_num BETWEEN ((? - 1) * ?) + 1 AND ? * ? "; 
+	    		break;
+	    	case "111":
+	    		query = " SELECT * FROM ( "
+	            		+ " SELECT a.ac_number, a.id, a.rc_type, a.rc_name, a.rc_money, a.rc_time, "
+	            		+ " a.rc_balance, a.rc_text, ROW_NUMBER() OVER (ORDER BY a.rc_time DESC) as row_num FROM ac_record@XE@bhBank a "
+	            		+ " WHERE a.ac_number = ? ) T "
+	            		+ " WHERE T.row_num BETWEEN ((? - 1) * ?) + 1 AND ? * ? "; 
+	    		break;
+	    	case "616":
+	    		query = " SELECT * FROM ( "
+	            		+ " SELECT a.ac_number, a.id, a.rc_type, a.rc_name, a.rc_money, a.rc_time, "
+	            		+ " a.rc_balance, a.rc_text, ROW_NUMBER() OVER (ORDER BY a.rc_time DESC) as row_num FROM ac_record@XE@sjBank a "
+	            		+ " WHERE a.ac_number = ? ) T "
+	            		+ " WHERE T.row_num BETWEEN ((? - 1) * ?) + 1 AND ? * ? "; 
+	    		break;
+	    	default:
+	    		// 다른 은행 코드에 대한 처리를 여기에 추가하거나 또는 에러 처리를 할 수 있습니다.
+	    		throw new RuntimeException("지원되지 않는 은행 코드입니다.");
+	    }
 
 		try {
 		    conn = JDBCUtil.getConnection();
@@ -94,15 +126,28 @@ public class Ac_recordDAO {
 		    rs = stmt.executeQuery();
 		    while (rs.next()) {
 		        Ac_recordVO record = new Ac_recordVO();
-		        record.setAc_number(rs.getLong("ac_number"));
+		        
+		        long accNumber;
+			    if ("159".equals(bank_cd)) {
+			        accNumber = rs.getLong("accnum");
+			    } else {
+			        accNumber = rs.getLong("ac_number");
+			    }
+			    record.setAc_number(accNumber);
+//			    record.setAc_number(rs.getLong("ac_number"));
+		        
 		        record.setId(rs.getString("id"));
 		        record.setRc_type(rs.getString("rc_type"));
 		        record.setRc_name(rs.getString("rc_name"));
 		        record.setRc_money(rs.getLong("rc_money"));
 		        record.setRc_time(rs.getTimestamp("rc_time"));
-		        record.setBank_name(rs.getString("bank_name"));
-		        record.setRc_balance(rs.getLong("rc_balance"));
+//		        record.setBank_name(rs.getString("bank_name"));
 		        record.setRc_text(rs.getString("rc_text"));
+		        
+		        if (!"159".equals(bank_cd)) {   // bank_cd가 "159"가 아닐 때
+		        	record.setRc_balance(rs.getLong("rc_balance"));
+		        }
+		        
 		        ac_recordList.add(record);
 		    }
 		} catch (Exception e) {

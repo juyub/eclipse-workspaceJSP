@@ -21,11 +21,11 @@ public class GetObAcListController implements Controller {
 		vo.setId(user.getId());
 		
 		OpenbankDAO dao = new OpenbankDAO();
-//		List<OpenbankVO> nsAcList = dao.nsAcList(vo);
+		List<OpenbankVO> nsAcList = dao.nsAcList(vo);
 		List<OpenbankVO> bhAcList = dao.bhAcList(vo);
 		List<OpenbankVO> plAcList = dao.plAcList(vo);
 		
-//		request.setAttribute("nsAcList", nsAcList);
+		request.setAttribute("nsAcList", nsAcList);
 		request.setAttribute("bhAcList", bhAcList);
 		request.setAttribute("plAcList", plAcList);
 				

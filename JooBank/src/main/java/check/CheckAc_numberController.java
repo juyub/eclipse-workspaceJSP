@@ -3,8 +3,6 @@ package check;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import account.AccountDAO;
-import account.AccountVO;
 import controller.Controller;
 
 public class CheckAc_numberController implements Controller {
@@ -15,7 +13,7 @@ public class CheckAc_numberController implements Controller {
 		long receivAc_number = Long.parseLong(request.getParameter("receivAc_number"));
 		String selected_bank_cd = request.getParameter("selected_bank_cd");
 		
-		AccountDAO dao = new AccountDAO();
+		CheckDAO dao = new CheckDAO();
 		
 		boolean account = dao.CheckAc_number(receivAc_number, selected_bank_cd);
 		
