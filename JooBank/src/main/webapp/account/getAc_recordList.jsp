@@ -13,6 +13,20 @@
 table {
     border-collapse: collapse;
 }
+td {
+    padding:10px;
+}
+table.no-inner-edges td {
+    border: none;
+}
+.table-no-inner-edges td {
+    border: none;
+}
+</style>
+<style type="text/css">
+table {
+    border-collapse: collapse;
+}
 </style>
 </head>
 <body>
@@ -36,7 +50,7 @@ table {
 		</table>
 		<br>
 		<c:forEach var="record" items="${recordList}" >
-			<table border="1" width="60%" style="margin-bottom: 1%;">
+			<table class="table-no-inner-edges" border="1" width="60%" style="margin-bottom: 1%;">
 			<tr align="center">
 				<td >${record.rc_type}</td>
 				<td >${record.rc_name}</td>

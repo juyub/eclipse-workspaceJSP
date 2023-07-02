@@ -13,6 +13,15 @@
 table {
     border-collapse: collapse;
 }
+td {
+    padding:10px;
+}
+table.no-inner-edges td {
+    border: none;
+}
+.table-no-inner-edges td {
+    border: none;
+}
 </style>
 </head>
 <body>
@@ -20,6 +29,7 @@ table {
 		<jsp:include page="../topMenu.jsp" />
 	</header>
 	<section style="display: flex; flex-direction: column; align-items: center;">
+		
 		<table border="1">
 		<tr>
 		<td></td><td>상품명</td><td>예금주</td><td>계좌번호</td><td>잔액</td><td>개설일</td><td>만기일</td>
@@ -34,9 +44,10 @@ table {
 			<td>${ obAccount.AC_ED_DATE }</td>
 			</tr>
 		</table>
+		
 		<br>
 		<c:forEach var="record" items="${recordList}" >
-			<table border="1" width="60%" style="margin-bottom: 1%;">
+			<table class="table-no-inner-edges" border="1" width="60%" style="margin-bottom: 1%;">
 			<tr align="center">
 				<td >${record.rc_type}</td>
 				<td >${record.bank_name}</td>

@@ -11,67 +11,66 @@
 </head>
 <body>
 <header>
-		<jsp:include page="/topMenu.jsp" />
-	</header>
-	<section style="display: flex; justify-content: center;">
-		<form action="${contextPath}/updateProduct.do" method="post">
-		<table>
-		<c:if test="${ login.user_type eq 'admin' }">
-		<tr>
-			<td>
-			상품번호
-			</td>
-			<td>
-			${product.pd_number}
-			<input type="hidden" name="pd_number" value="${product.pd_number}">
-			</td>
-		</tr>
-		</c:if>
-		<tr>
-			<td>
-			상품명
-			</td>
-			<td>
-			<input type="text" name="pd_name" value="${product.pd_name}"> 
-			</td>
-		</tr>
-		<tr>
-			<td>
-			상품설명
-			</td>
-			<td>
-			<input type="text" name="pd_content" value="${product.pd_content}">
-			</td>
-		</tr>
-		<tr>
-			<td>
-			상품만기
-			</td>
-			<td>
-				<select name="pd_ed_date">
-					<c:forEach var="i" begin="1" end="20">
-						<c:set var="reverseIndex" value="${21 - i}" />
-						<option value="${reverseIndex}" ${product.pd_ed_date == reverseIndex ? 'selected' : ''}>${reverseIndex}</option>
-					</c:forEach>
-				</select>년
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2">
-			<c:if test="${ !empty login }">
-				<button>
-				<a href="${contextPath}/createAccountPage.do?pd_number=${product.pd_number}">계좌개설하기</a>
-				</button>
-			</c:if>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2">
-			<c:if test="${ login.user_type eq 'admin' }"><input type="submit" value="수정"></c:if>
-			</td>
-		</tr>
-		</table>
-		</form>
-	</section>
+        <jsp:include page="/topMenu.jsp" />
+    </header>
+    <section style="display: flex; justify-content: center;">
+        <form action="${contextPath}/updateProduct.do" method="post">
+        <table>
+        <c:if test="${ login.user_type eq 'admin' }">
+        <tr>
+            <td>
+            상품번호
+            </td>
+            <td>
+            ${product.pd_number}
+            </td>
+        </tr>
+        </c:if>
+        <tr>
+            <td>
+            상품명
+            </td>
+            <td>
+                <input type="text" name="pd_name" value="${product.pd_name}" ${ login.user_type ne 'admin' ? 'disabled' : '' }>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            상품설명
+            </td>
+            <td>
+                <input type="text" name="pd_content" value="${product.pd_content}" ${ login.user_type ne 'admin' ? 'disabled' : '' }>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            상품만기
+            </td>
+            <td>
+                <select name="pd_ed_date" ${ login.user_type ne 'admin' ? 'disabled' : '' }>
+                    <c:forEach var="i" begin="1" end="20">
+                        <c:set var="reverseIndex" value="${21 - i}" />
+                        <option value="${reverseIndex}" ${product.pd_ed_date == reverseIndex ? 'selected' : ''}>${reverseIndex}</option>
+                    </c:forEach>
+                </select>년
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+            <c:if test="${ !empty login }">
+                <button>
+                <a href="${contextPath}/createAccountPage.do?pd_number=${product.pd_number}">계좌개설하기</a>
+                </button>
+            </c:if>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+            <c:if test="${ login.user_type eq 'admin' }"><input type="submit" value="수정"></c:if>
+            </td>
+        </tr>
+        </table>
+        </form>
+    </section>
 </body>
 </html>

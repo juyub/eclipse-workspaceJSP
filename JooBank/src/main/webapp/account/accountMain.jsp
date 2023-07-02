@@ -9,6 +9,21 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="/JooBank/css/main.css">
+<style type="text/css">
+table {
+    border-collapse: collapse;
+    margin:10px;
+}
+td {
+    padding:10px;
+}
+table.no-inner-edges td {
+    border: none;
+}
+.table-no-inner-edges td {
+    border: none;
+}
+</style>
 </head>
 <body>
 	<header>
@@ -21,7 +36,7 @@
 			 	</c:when>
 				<c:otherwise>
 					<c:forEach var="account" items="${ accountList }">
-						<table border="1">
+						<table class="table-no-inner-edges" border="1">
 							<tr>
 							<td>
 							<c:if test="${ login.user_type eq 'admin' }">

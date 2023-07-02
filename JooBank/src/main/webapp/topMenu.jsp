@@ -91,14 +91,14 @@ li {
 
 <!-- <link rel="stylesheet" type="text/css" href="/css/topmenu.css"> -->
  
-<table style="width:90%" align="center" border="1">
+<table style="width:90%" align="center" border="0">
 	<tr>
 		<td rowspan="2" class="cell1">
       <a href="${contextPath}/main.do"><img src="/JooBank/image/JooBank.png" class="l-image" alt="로고"></a>
 		</td>
 		<td>
-		<a href="" class="link-spacing2">공지사항</a>
-    	<a href="" class="link-spacing2">지점안내</a>
+		<!-- <a href="" class="link-spacing2">공지사항</a>
+    	<a href="" class="link-spacing2">지점안내</a> -->
 		</td>
 		<td align="right">
 	      <c:if test="${ not empty login }">
@@ -127,12 +127,12 @@ li {
 	</tr>
   <tr>
     <td colspan="2" class="cell3" align="center">
+      <a href="${contextPath}/getProductList.do" class="link-spacing">상품</a>
       <c:if test="${ not empty login }">
         <a href="${contextPath}/myAccountList.do" class="link-spacing">계좌</a>
     <a href="${contextPath}/obAcList.do" class="link-spacing">오픈뱅킹</a>
     <a href="${contextPath}/getBoardList.do" class="link-spacing">게시판</a>
       </c:if>
-      <a href="${contextPath}/getProductList.do" class="link-spacing">상품</a>
     </td>
   </tr>
 </table>
