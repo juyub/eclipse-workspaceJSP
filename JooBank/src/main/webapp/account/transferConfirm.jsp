@@ -19,6 +19,12 @@
 #password-dialog {
 	display: none;
 }
+table {
+    border-collapse: collapse;
+}
+td {
+padding:10px;
+}
 </style>
 <script>
 	$(function() {

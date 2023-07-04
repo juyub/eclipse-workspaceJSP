@@ -3,8 +3,6 @@ package openbank;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import account.AccountDAO;
-import account.AccountVO;
 import controller.Controller;
 
 public class ObTrasnsferConfirmPageController implements Controller {
@@ -21,9 +19,9 @@ public class ObTrasnsferConfirmPageController implements Controller {
 		
 		System.out.println(selected_bank_cd);
 		
-		AccountDAO dao = new AccountDAO();
+		OpenbankDAO dao = new OpenbankDAO();
 		
-		AccountVO account = dao.getAccount(receivAc_number, selected_bank_cd);
+		OpenbankVO account = dao.getAccount(receivAc_number, selected_bank_cd);
 		
 		request.setAttribute("account", account);
 		request.setAttribute("transferAmount", transferAmount);

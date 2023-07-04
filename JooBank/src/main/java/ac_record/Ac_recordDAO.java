@@ -56,11 +56,11 @@ public class Ac_recordDAO {
 	    		break;
 	    	case "111":
 	    		query = " INSERT INTO ac_record@XE@bhBank (rc_no, ac_number, id, rc_type, rc_name, rc_money, rc_text, rc_number, rc_balance) "
-	    				+ " VALUES(seq_rc_no.NEXTVAL,?, ?, ?, ?, ?, ?, ?, ?) "; 
+	    				+ " VALUES((select nvl(max(rc_no),0)+1 from ac_record@XE@bhBank),?, ?, ?, ?, ?, ?, ?, ?) "; 
 	    		break;
 	    	case "616":
 	    		query = " INSERT INTO ac_record@XE@sjBank (rc_no, ac_number, id, rc_type, rc_name, rc_money, rc_text, rc_number, rc_balance) "
-	    				+ " VALUES(seq_rc_no.NEXTVAL,?, ?, ?, ?, ?, ?, ?, ?) "; 
+	    				+ " VALUES((select nvl(max(rc_no),0)+1 from ac_record@XE@sjBank),?, ?, ?, ?, ?, ?, ?, ?) "; 
 	    		break;
 	    	default:
 	    		// 다른 은행 코드에 대한 처리를 여기에 추가하거나 또는 에러 처리를 할 수 있습니다.
