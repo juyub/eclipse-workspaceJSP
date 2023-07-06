@@ -1,4 +1,4 @@
-package board;
+package boardCopy;
 
 import java.util.List;
 
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import board.BoardDAO;
+import board.BoardVO;
 
 @Controller
 public class GetBoardListController {
@@ -23,15 +24,31 @@ public class GetBoardListController {
 //        this.boardDAO = boardDAO;
 //    }
 
-//	@RequestMapping("/getBoardList")
 	@RequestMapping("/index")
 	public String index(Model model) {
-		List<BoardVO> boardList = boardDAO.getBoardList();
-		model.addAttribute("data", boardList);
-		
-//		 return "getBoardList.jsp";
-		return "/WEB-INF/view/index.jsp";				
+	    List<BoardVO> boardList = boardDAO.getBoardList();
+	    model.addAttribute("data", boardList);
+
+	    return "/WEB-INF/view/index.jsp";            
 	}
+
+	@RequestMapping("/getBoardList")
+	public String getBoardList(Model model) {
+	    List<BoardVO> boardList = boardDAO.getBoardList();
+	    model.addAttribute("data", boardList);
+
+	    return "getBoardList.jsp";            
+	}
+	
+////	@RequestMapping("/getBoardList")
+//	@RequestMapping("/index")
+//	public String index(Model model) {
+//		List<BoardVO> boardList = boardDAO.getBoardList();
+//		model.addAttribute("data", boardList);
+//		
+////		 return "getBoardList.jsp";
+//		return "/WEB-INF/view/index.jsp";				
+//	}
 	
 //    @Override
 //    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {

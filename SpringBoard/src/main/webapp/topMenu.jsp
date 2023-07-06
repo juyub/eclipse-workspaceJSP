@@ -19,7 +19,7 @@ a {
   	<img src="/SpringBoard/image/user.png" class="l-image" alt="로고"></a>
   	</td>
     <td align="center">
-    <a href="index" class="link-spacing">게시판</a>
+    <a href="getBoardList" class="link-spacing">게시판</a>
     </td>
   </tr>
 </table>

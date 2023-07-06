@@ -32,7 +32,8 @@ section {
 		<jsp:include page="/topMenu.jsp" />
 	</header>
 	<section>
-		<h1>게시글 목록</h1>
+	
+		<h1>index페이지</h1>
 		
 		<table border="1">
 			<tr>
