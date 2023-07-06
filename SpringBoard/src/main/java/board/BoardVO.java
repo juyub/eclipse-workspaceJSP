@@ -2,6 +2,9 @@ package board;
 
 import java.util.Date;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class BoardVO {
 	
 	private int seq;
@@ -9,13 +12,12 @@ public class BoardVO {
 	private String writer;
 	private String content;
 	private Date regDate;
-	private int hit;
+	private Integer hit;
 	
-	
-	public int getHit() {
+	public Integer getHit() {
 		return hit;
 	}
-	public void setHit(int hit) {
+	public void setHit(Integer hit) {
 		this.hit = hit;
 	}
 	public int getSeq() {

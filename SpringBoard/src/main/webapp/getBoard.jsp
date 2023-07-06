@@ -1,21 +1,29 @@
-<%@page import="board.BoardVO"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="css/main.css">
+<!-- <link rel="stylesheet" type="text/css" href="css/main.css"> -->
 <style>
 table {
 	border-collapse: collapse;
 }
-
 td {
 	padding: 5px;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+section {
+  margin-left: 5%;
+  margin-right: 5%;
+  padding: 20px;
 }
 </style>
 </head>
@@ -25,6 +33,9 @@ td {
 	</header>
 	
 	<section>
+	<br>
+	<button><a href="javascript:history.back()">뒤로가기</a></button>
+	<br><br>
 	<form action="updateBoard.do" method="post">
 		<input name="seq" type="hidden" value="${ board.seq }">
 		<table border="1">
@@ -47,12 +58,12 @@ td {
 			</tr>
 			<tr>
 				<th>작성일자</th>
-				<td>${board.regDate}</td>
+				<td><fmt:formatDate value="${board.regDate}" pattern="yy/MM/dd HH:mm:ss"/></td>
 			</tr>
-			<tr>
+			<%-- <tr>
 				<th>조회수</th>
 				<td><input type="text" name="hit" value="${board.hit}" readonly/></td>
-			</tr>
+			</tr> --%>
 			
 			<c:if test="${user.name eq board.writer}">
 			<tr>
@@ -65,7 +76,6 @@ td {
 		</c:if>
 		<!-- <a href="getBoardList.do">list</a> -->
 	</form>
-		<button><a href="javascript:history.back()">뒤로가기</a></button>
 	</section>
 </body>
 </html>
