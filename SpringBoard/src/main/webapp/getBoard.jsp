@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
@@ -34,47 +34,44 @@ section {
 	
 	<section>
 	<br>
-	<button><a href="javascript:history.back()">µÚ·Î°¡±â</a></button>
+	<button><a href="javascript:history.back()">ë’¤ë¡œê°€ê¸°</a></button>
 	<br><br>
-	<form action="updateBoard.do" method="post">
+	<form action="updateBoard" method="post">
 		<input name="seq" type="hidden" value="${ board.seq }">
 		<table border="1">
 			<%-- <tr>
-	            <th>¹øÈ£</th>
+	            <th>ë²ˆí˜¸</th>
 	            <td>${board.seq}</td>
 	        </tr> --%>
 			<tr>
-				<th>Á¦¸ñ</th>
+				<th>ì œëª©</th>
 				<td><input name="title" type="text" value="${board.title}"></td>
 			</tr>
 			<tr>
-				<th>ÀÛ¼ºÀÚ</th>
+				<th>ì‘ì„±ì</th>
 				<td>${board.writer}</td>
 			</tr>
 			<tr>
-				<th>³»¿ë</th>
-				<td><textarea name="content" cols="40" rows="10">${board.content}</textarea>
+				<th>ë‚´ìš©</th>
+				<td>
+				<textarea name="content" cols="40" rows="10">${board.content}</textarea>
 				</td>
 			</tr>
 			<tr>
-				<th>ÀÛ¼ºÀÏÀÚ</th>
+				<th>ì‘ì„±ì¼ì</th>
 				<td><fmt:formatDate value="${board.regDate}" pattern="yy/MM/dd HH:mm:ss"/></td>
 			</tr>
 			<%-- <tr>
-				<th>Á¶È¸¼ö</th>
+				<th>ì¡°íšŒìˆ˜</th>
 				<td><input type="text" name="hit" value="${board.hit}" readonly/></td>
 			</tr> --%>
-			
-			<c:if test="${user.name eq board.writer}">
 			<tr>
-				<td colspan="2"><input type="submit" value="¼öÁ¤" /></td>
+				<td colspan="2">
+				<input type="submit" value="ìˆ˜ì •" />
+				<button><a href="deleteBoard?seq=${ board.seq }">ì‚­ì œ</a></button>
+				</td>
 			</tr>
-			</c:if>
 		</table>
-		<c:if test="${ user.role == 'Admin' }">
-		<a href="deleteBoard.do?seq=${ board.seq }">delete</a>
-		</c:if>
-		<!-- <a href="getBoardList.do">list</a> -->
 	</form>
 	</section>
 </body>

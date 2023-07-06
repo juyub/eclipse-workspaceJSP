@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class BoardController {
@@ -21,7 +23,7 @@ public class BoardController {
 	@RequestMapping("index")
 	public String index(Model model) {
 	    List<BoardVO> boardList = boardDAO.getBoardList();
-	    model.addAttribute("data", boardList);
+	    model.addAttribute("boardList", boardList);
 
 	    return "/WEB-INF/view/index.jsp";            
 	}
@@ -29,23 +31,38 @@ public class BoardController {
 	@RequestMapping("getBoardList")
 	public String getBoardList(Model model) {
 	    List<BoardVO> boardList = boardDAO.getBoardList();
-	    model.addAttribute("data", boardList);
+	    model.addAttribute("boardList", boardList);
 
 	    return "getBoardList.jsp";            
 	}
 	
 	@RequestMapping("getBoard")
 	public String getBoard(String seq, Model model) {
-
-//	    BoardVO vo = this.boardVO;
-//	    vo.setSeq(Integer.parseInt(seq));
-//	    BoardVO board = boardDAO.getBorad(vo);
-
 	    BoardVO board = boardDAO.getBorad(seq);
-
 	    model.addAttribute("board", board);
 		
 	    return "getBoard.jsp";
+	}
+	
+	@RequestMapping("addBoard")
+	public String addBoard(BoardVO vo) {
+		boardDAO.addBoard(vo);
+		
+		return "redirect:/getBoardList";
+	}
+	
+	@RequestMapping("updateBoard")
+	public String updateBoard(BoardVO vo) {
+		boardDAO.updateBoard(vo);
+		
+		return "redirect:getBoard?seq=" + vo.getSeq();
+	}
+	
+	@RequestMapping("deleteBoard")
+	public String deleteBoard(String seq) {
+		boardDAO.deleteBoard(seq);
+		
+		return "redirect:/getBoardList";
 	}
 	
 }

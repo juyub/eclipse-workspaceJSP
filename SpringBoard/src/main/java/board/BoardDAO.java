@@ -31,7 +31,7 @@ public class BoardDAO {
 //	}
 
 	public List<BoardVO> getBoardList(){
-		String sql = " select * from board ";
+		String sql = " select * from board order by seq desc ";
 		
 		// spring JDBC
 		JdbcTemplate template = new JdbcTemplate();
@@ -102,6 +102,30 @@ public class BoardDAO {
 		BoardVO board = template.queryForObject(sql, new BeanPropertyRowMapper<>(BoardVO.class), seq);
 		
 		return board;
+	}
+	
+	public void addBoard(BoardVO vo) {
+		String sql = 
+				" insert into board(seq, title, writer, content) " +
+		        " values((select nvl(max(seq), 0) + 1 from board), ?, ?, ?) ";
+		
+	    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+	    jdbcTemplate.update(sql, vo.getTitle(), vo.getWriter(), vo.getContent());
+	}
+	
+	public void updateBoard(BoardVO vo) {
+		String sql = 
+				" UPDATE board SET title = ?, content = ? WHERE seq = ? ";
+		
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		jdbcTemplate.update(sql, vo.getTitle(), vo.getContent(), vo.getSeq());
+	}
+
+	public void deleteBoard(String seq) {
+		String sql = " delete from board WHERE seq = ? ";
+		
+	    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+	    jdbcTemplate.update(sql, seq);
 	}
 
 }

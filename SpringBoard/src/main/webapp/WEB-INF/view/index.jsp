@@ -39,7 +39,7 @@ section {
 			<tr>
 				<td>no. </td><td>title</td><td>writer</td><td>date</td><!-- <td>hit</td> -->
 			</tr>
-			<c:forEach var="board" items="${ data }" >
+			<c:forEach var="board" items="${ boardList }" >
 			<tr>
 				<td>${ board.seq }</td>
 				<td style="width: 35%;"><a href="getBoard?seq=${ board.seq }">${ board.title }</a></td>
