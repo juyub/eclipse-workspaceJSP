@@ -30,6 +30,7 @@
 			<version>19.8.0.0</version>
 		</dependency>
 
+		<!-- jstl -->
 		<dependency>
 			<groupId>javax.servlet.jsp.jstl</groupId>
 			<artifactId>javax.servlet.jsp.jstl-api</artifactId>

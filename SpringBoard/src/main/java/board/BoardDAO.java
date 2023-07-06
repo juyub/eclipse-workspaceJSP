@@ -62,13 +62,12 @@ public class BoardDAO {
 	}
 
 	public BoardVO getBorad(BoardVO vo) {
-
 		String sql = " select * from board WHERE seq = ? ";
 		
 	    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 	    RowMapper<BoardVO> rowMapper = new BeanPropertyRowMapper<>(BoardVO.class);
-	    BoardVO result = jdbcTemplate.queryForObject(sql.toString(), new Object[]{vo.getSeq()}, rowMapper);
-	    return result;
+	    BoardVO board = jdbcTemplate.queryForObject(sql.toString(), new Object[]{vo.getSeq()}, rowMapper);
+	    return board;
 		
 //		BoardVO board = null; 
 //		try {
@@ -93,6 +92,16 @@ public class BoardDAO {
 //			JDBCUtil.close(rs, stmt, conn);
 //		}
 //		return board;
+	}
+
+	public BoardVO getBorad(String seq) {
+		String sql = " select * from board WHERE seq = ? ";
+		
+		// spring JDBC
+		JdbcTemplate template = new JdbcTemplate(dataSource);
+		BoardVO board = template.queryForObject(sql, new BeanPropertyRowMapper<>(BoardVO.class), seq);
+		
+		return board;
 	}
 
 }
