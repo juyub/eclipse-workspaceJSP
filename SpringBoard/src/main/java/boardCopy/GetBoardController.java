@@ -35,10 +35,11 @@ public class GetBoardController {
 	public String getBoard(HttpServletRequest request, Model model) {
 	    String seq = request.getParameter("seq");
 
-	    BoardVO vo = this.boardVO;
-	    vo.setSeq(Integer.parseInt(seq));
+//	    BoardVO vo = this.boardVO;
+//	    vo.setSeq(Integer.parseInt(seq));
 
-	    BoardVO board = boardDAO.getBorad(vo);
+//	    BoardVO board = boardDAO.getBorad(vo);
+	    BoardVO board = boardDAO.getBorad(seq);
 
 	    model.addAttribute("board", board);
 		

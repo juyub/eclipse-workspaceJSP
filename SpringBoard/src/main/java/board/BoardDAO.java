@@ -61,38 +61,38 @@ public class BoardDAO {
 		return boardList;
 	}
 
-	public BoardVO getBorad(BoardVO vo) {
-		String sql = " select * from board WHERE seq = ? ";
-		
-	    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-	    RowMapper<BoardVO> rowMapper = new BeanPropertyRowMapper<>(BoardVO.class);
-	    BoardVO board = jdbcTemplate.queryForObject(sql.toString(), new Object[]{vo.getSeq()}, rowMapper);
-	    return board;
-		
-//		BoardVO board = null; 
-//		try {
-////			conn = JDBCUtil.getConnection();
-//			conn = dataSource.getConnection();
-//			stmt = conn.prepareStatement(sql);
-//			stmt.setInt(1, vo.getSeq());
-//			
-//			rs = stmt.executeQuery();
-//			if(rs.next()) {
-//				board = new BoardVO();
-//				board.setSeq(rs.getInt("SEQ"));
-//				board.setTitle(rs.getString("TITLE"));
-//				board.setWriter(rs.getString("WRITER"));
-//				board.setContent(rs.getString("CONTENT"));
-//				board.setRegDate(rs.getDate("REGDATE"));
-//				board.setHit(rs.getInt("HIT")+1);
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			JDBCUtil.close(rs, stmt, conn);
-//		}
-//		return board;
-	}
+//	public BoardVO getBorad(BoardVO vo) {
+//		String sql = " select * from board WHERE seq = ? ";
+//		
+//	    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+//	    RowMapper<BoardVO> rowMapper = new BeanPropertyRowMapper<>(BoardVO.class);
+//	    BoardVO board = jdbcTemplate.queryForObject(sql.toString(), new Object[]{vo.getSeq()}, rowMapper);
+//	    return board;
+//		
+////		BoardVO board = null; 
+////		try {
+//////			conn = JDBCUtil.getConnection();
+////			conn = dataSource.getConnection();
+////			stmt = conn.prepareStatement(sql);
+////			stmt.setInt(1, vo.getSeq());
+////			
+////			rs = stmt.executeQuery();
+////			if(rs.next()) {
+////				board = new BoardVO();
+////				board.setSeq(rs.getInt("SEQ"));
+////				board.setTitle(rs.getString("TITLE"));
+////				board.setWriter(rs.getString("WRITER"));
+////				board.setContent(rs.getString("CONTENT"));
+////				board.setRegDate(rs.getDate("REGDATE"));
+////				board.setHit(rs.getInt("HIT")+1);
+////			}
+////		} catch (Exception e) {
+////			e.printStackTrace();
+////		} finally {
+////			JDBCUtil.close(rs, stmt, conn);
+////		}
+////		return board;
+//	}
 
 	public BoardVO getBorad(String seq) {
 		String sql = " select * from board WHERE seq = ? ";
