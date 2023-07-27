@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+	<bean class="di.xml.HankookTire" id="hankook" />
+	<bean class="di.xml.KumhoTire" id="kumho" />
+
+	<!-- 
+		Tire tire = new HankookTire();
+		Car car = new Car();
+		car.setTire(tire); 
+	-->
+	<!--
+	<bean class="di.xml.Car"  id="car" >
+		<property name="tire" ref="kumho" />
+	</bean>
+	-->
+	
+	<!-- 
+		Tire tire = new HankookTire();
+		Car car = new Car(tire);
+	-->
+	
+	<bean class="di.xml.Car" id="car">
+		<constructor-arg ref="kumho" />
+	</bean>
+	
+	<!-- 
+	<bean class="di.xml.Car" id="car">
+		<constructor-arg ref="kumho" />
+		<constructor-arg ref="hankook" />
+	</bean>
+	 -->
+	 
+	 <!-- 
+	<bean class="di.xml.Car" id="car">
+		<constructor-arg ref="kumho" />
+		<constructor-arg value="hello" />
+	</bean>
+     -->   
+</beans>
+
+
+
+
+

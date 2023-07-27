@@ -6,8 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import biz.common.JDBCUtil;
-import biz.user.UserVO;
+import common.JDBCUtil;
 
 public class BoardDAO {
 	

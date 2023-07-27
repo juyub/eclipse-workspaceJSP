@@ -1,0 +1,27 @@
+		메소드		요청URI				jsp위치
+전체게시글조회	GET		/board				/WEB-INF/jsp/board/list.jsp
+상세게시글조회	GET		/board/detail?no=4	/WEB-INF/jsp/board/detail.jsp
+					/board/4
+					/board/21
+게시글삭제		DELETE	/board/21	
+게시글등록폼	GET		/board/write		/WEB-INF/jsp/board/write.jsp
+게시글등록		POST	/board/write		전체게시글조회페이지
+로그인폼		GET		/login				/WEB-INF/jsp/login/login.jsp
+로그인		POST	/login				로그인성공 main페이지, 로그인실패 로그인페이지로 이동
+로그아웃		GET		/logout				main페이지 이동
+회원가입폼		GET		/member/register
+전체회원리스트	GET		/member
+특정회원검색	GET		/member/hong
+댓글등록		POST	/reply				status code 200 / 500, 404 코드 전송
+댓글리스트조회	GET		/reply/게시판번호		해당게시물의 댓글정보가 json객체로 전송
+					/reply/42
+					/reply/4
+
+
+
+
+
+
+
+
+
