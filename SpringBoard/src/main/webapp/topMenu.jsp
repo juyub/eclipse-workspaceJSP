@@ -29,7 +29,7 @@ a {
   <tr>
   	<td style="width: 80px;">
   	<a href="${contextPath}/index">
-  	<img src="/image/user.png" class="l-image" alt="로고"></a>
+  	<img src="${contextPath}/image/user.png" class="l-image" alt="로고"></a>
   	</td>
     <td align="center">
     <a href="getBoardList" class="link-spacing">게시판</a>

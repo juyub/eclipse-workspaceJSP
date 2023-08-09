@@ -8,8 +8,6 @@ import java.util.List;
 
 import common.JDBCUtil;
 
-
-
 public class BoardDAO {
 	
 	private Connection conn;

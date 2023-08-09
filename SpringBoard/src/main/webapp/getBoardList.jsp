@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,7 +50,7 @@ section {
 					<td><fmt:formatDate value="${ board.regDate }" pattern="yy/MM/dd HH:mm:ss"/></td>
 					<td>
 						<a href="deleteBoard?seq=${ board.seq }">
-						<img src="/image/deleteIcon.png" style="width:15px;"></a>
+						<img src="${contextPath}/image/deleteIcon.png" style="width:15px;"></a>
 					</td>
 					<%-- <td>${ board.hit } </td> --%>
 				</tr>
