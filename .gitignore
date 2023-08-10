@@ -32,3 +32,5 @@ JooBoard/.settings/
 tp-JooBank/.settings/
 tp-JooLib/.settings/
 tp-JooLibT/.settings/
+SpringBoard/src/main/resources/config.properties
+tp-JooBank/src/main/resources/config.properties

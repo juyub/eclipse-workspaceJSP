@@ -35,12 +35,13 @@ a {
     <a href="getBoardList" class="link-spacing">게시판</a>
     <!-- <a href="#" id="fetch-boards" class="link-spacing">타게시판</a> -->
     <a href="getBoardListRest" class="link-spacing">타게시판</a>
+    <a href="news" class="link-spacing">뉴스</a>
     </td>
   </tr>
 </table>
 
 <script>
-	$("#fetch-boards").on("click", function(e) {
+	/* $("#fetch-boards").on("click", function(e) {
 	  e.preventDefault();
 	  fetchBoardData();
 	});
@@ -62,7 +63,7 @@ a {
 	$(document).ready(function() {
 	  displayBoardDataFromSession();
 		// 작업 후 이 함수가 데이터를 처리하여 표시합니다.
-	});
+	}); */
     
     /* $(document).ready(function() {
       // 클릭 이벤트 리스너 추가
@@ -87,7 +88,7 @@ a {
         });
       }
     }); */
-  </script>
+</script>
 
 </body>
 </html>

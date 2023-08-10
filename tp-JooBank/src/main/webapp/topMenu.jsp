@@ -91,7 +91,7 @@ li {
 
 <!-- <link rel="stylesheet" type="text/css" href="/css/topmenu.css"> -->
  
-<table style="width:90%" align="center" border="1">
+<table style="width:90%" align="center" border="0">
 	<tr>
 		<td rowspan="2" class="cell1">
       <a href="${contextPath}/main.do"><img src="${contextPath}/image/JooBank.png" class="l-image" alt="로고"></a>
@@ -99,7 +99,8 @@ li {
 		<td>
 		<!-- <a href="" class="link-spacing2">공지사항</a>
     	<a href="" class="link-spacing2">지점안내</a> -->
-    	<a href="${contextPath}/getNewsList.action" class="link-spacing2">뉴스</a>
+    	<a href="${contextPath}/naver.action" class="link-spacing2">뉴스</a>
+    	<a href="${contextPath}/getNewsList.action" class="link-spacing2">게시판</a>
     	<a href="${contextPath}/mario/mario.html" class="link-spacing2" target="_blank">쉬어가기</a>
 		</td>
 		<td align="right">
